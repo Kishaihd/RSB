@@ -1,12 +1,36 @@
 <!--This is what I want to be like a portal with particle effects. Cool as fuck to login to.-->
 <style>
+    .main-container {
+        background-color: white;
+        height: 30%;
+        min-height: 15rem;
+        width: 30%;
+        min-width: 25rem;
+        -webkit-border-radius: .25rem;
+        -moz-border-radius: .25rem;
+        border-radius: .25rem;
+        color: #110914;
+        padding: 2rem;
+    }
+
+    h1 {
+        margin: 0;
+    }
+
+    .prompt-text {
+        margin-bottom: 2rem;
+     }
+    
     material-button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        max-width: 60%;
+        background-color: #110914;
+        color: #ffffff;
     }
 </style>
 
-<material-button (click)="fbService.signIn()" raised>Sign in with Google to continue...</material-button>
-
+<div class="layout vertical center-center main-container">
+    <h1 class="flex layout vertical center-center">Language Study Buddy</h1>
+    <div class="flex layout vertical center-center">
+        <div class="prompt-text">Sign in to continue</div>
+        <material-button (click)="fbService.signIn()" raised>Google</material-button>
+    </div>
+</div>
