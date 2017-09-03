@@ -1,7 +1,7 @@
-<login-view *ngIf="fbService.fbUser == null"></login-view>
+<login-view *ngIf="fbService.fbUser == null" class="fit layout vertical center-center"></login-view>
 
 
-<div *ngIf="fbService.fbUser != null" class="wrapper">
+<div *ngIf="fbService.fbUser != null" class="fit layout vertical">
     <div class="topMenu">
         <span>
             <material-dropdown-select iconName="menu" slide="x">

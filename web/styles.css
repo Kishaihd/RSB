@@ -5,11 +5,8 @@
 @import url(https://fonts.googleapis.com/css?family=Material+Icons);
 
 body {
-  /*display: flex;*/
-  /*max-width: 600px;*/
-  /*width: 100%;*/
-  margin: 0 auto;
-  padding: 5vw;
+  background-color: #6F7D83;
+  color: white;
 }
 
 * {
