@@ -498,11 +498,16 @@ class FirebaseService {// implements OnInit {
     fbUser = newUser;
     _log.info("$runtimeType()::_authChanged()::fbUser = newUser: ${fbUser.toString()} = ${newUser.toString()}");
     if (newUser != null) { // newUser will be null on a logout()
-//      getUserMeta();
+      _log.info("$runtimeType()::_authChanged()::userData map: ${_userDataMap}");
     getSingleUserData(newUser.uid);
       _log.info("$runtimeType()::_authChanged()::new Learner.fromMap(getSingleUserData(${newUser.uid})");
       learner = new Learner.fromMap(_log, getSingleUserData(newUser.uid));
-    _log.info("$runtimeType()::_authChanged()::learner = ${learner.toMap}");
+    _log.info("$runtimeType()::_authChanged()::learner = ${learner}");
+//    if (_userDataMap.containsKey(newUser.uid)) {
+      _log.info("$runtimeType()::_authChanged():: _userDataMap = ${_userDataMap}");
+      _log.info("$runtimeType()::_authChanged():: _userDataMap.toString() = ${_userDataMap.toString()}");
+      _log.info("$runtimeType()::_authChanged():: _userDataMap.containsKey(${newUser.uid}) == ${_userDataMap.containsKey(newUser.uid)}");
+//    }
 //  _userMetaMap = await getUserMeta();
 //      getUserMeta().then((Map newMap) {
 //        _userMetaMap = newMap;

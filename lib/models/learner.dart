@@ -28,89 +28,91 @@ class Learner {
   Map<String, Map<String, String>> _myVocabLists = {};
 
   // Default Constructor
-  Learner(LoggerService this._log, String uid, String newName, String newEmail, [bool hasLang, List<String> langList, String newCurrentLang, bool hasVoc, Map<String, Map<String, String>> vocabLists]) {
+  Learner(LoggerService this._log, String newUid, String newName, String newEmail, [List<String> langList, String newCurrentLang, bool hasVoc]) {
     _log.info("$runtimeType()::defaultConstructor");
+
+    _log.info("$runtimeType()::defaultConstructor()::uid = ${newUid}");
+    _log.info("$runtimeType()::defaultConstructor()::name = ${newName}");
+    _log.info("$runtimeType()::defaultConstructor()::email = ${newEmail}");
+    _log.info("$runtimeType()::defaultConstructor()::myLanguages = ${langList}");
+    _log.info("$runtimeType()::defaultConstructor()::currentLanguage = ${newCurrentLang}");
+    _log.info("$runtimeType()::defaultConstructor()::hasVocabLists = ${hasVoc}");
     checkComplete();
   }
-//  // Default Constructor
-//  Learner(LoggerService this._log, [Map map]) {
-//    _log.info("$runtimeType()::defaultConstructor");
-//    checkComplete();
-//  }
+
 
   // Old .fromMap constructor.
-  Learner.fromMap(LoggerService _log, Map map) : this(_log, map["uid"], map["name"], map["email"], map["hasLanguages"], map["langList"], map["currentLang"], map["hasVocabLists"], map["vocabLists"]);
+  Learner.fromMap(LoggerService _log, Map map) : this(_log, map["uid"], map["name"], map["email"], map["myLanguages"], map["currentLanguage"], map["hasVocabLists"]);
 
 
-  Map toMap() {
-    _log.info("$runtimeType()::toMap()");
-    return {
-      "uid": _uid,
-      "name": _name,
-      "email": _email,
-      "hasLanguages": hasLanguages,
-      "myLanguages": myLanguages.asMap(),
-      "currentLanguage": currentLanguage,
-      "hasVocabLists": hasVocabLists,
-      "myVocabLists": _myVocabLists
-    };
-  }
+    Map toMap() {
+      _log.info("$runtimeType()::toMap()");
+      return {
+        "uid": _uid,
+        "name": _name,
+        "email": _email,
+        "myLanguages": myLanguages.asMap(),
+        "currentLanguage": currentLanguage,
+        "hasVocabLists": hasVocabLists,
+      };
+    }
 
-  bool checkComplete() {
-    if (myLanguages == null || myLanguages.isEmpty || _name.isEmpty || _uid.isEmpty) {
+    bool checkComplete() {
+      if (myLanguages == null || myLanguages.isEmpty || _name.isEmpty || _uid.isEmpty) {
 //      isComplete = true;
-      return false;
+        return false;
+      }
+      else {
+        return true;
+      }
     }
-    else {
-      return true;
-    }
-  }
 
-  void changeLang(String newLang) {
-    if (currentVocabList != null && currentVocabList.isNotEmpty) {
-      currentVocabList.forEach((String word, String def) {
-  //      vocabLists[currentLanguage].putIfAbsent(word, () => def);
-        _myVocabLists[currentLanguage][word] = def; // Same?
-      });
-    }
+    void changeLang(String newLang) {
+      if (currentVocabList != null && currentVocabList.isNotEmpty) {
+        currentVocabList.forEach((String word, String def) {
+          //      vocabLists[currentLanguage].putIfAbsent(word, () => def);
+          _myVocabLists[currentLanguage][word] = def; // Same?
+        });
+      }
 //    // Does this do the above?
 //    vocabLists[currentLanguage] = currentVocabList;
-    currentLanguage = newLang;
-    currentVocabList = _myVocabLists[newLang];
-  }
-
-  void addWord(String newWord, [String newDef = ""]) {
-    currentVocabList[newWord] = newDef;
-    hasVocabLists = true;
-  }
-
-  void removeWord(String oldWord) {
-    currentVocabList.remove(oldWord);
-  }
-
-  void addLanguage(String language) {
-    myLanguages.add(language);
-    currentLanguage = language;
-    hasLanguages = true;
-  }
-
-  void removeLanguage(String language) {
-    myLanguages.remove(language);
-    if (myLanguages.isEmpty) {
-      currentLanguage = "";
-      hasLanguages = false;
-      hasVocabLists = false;
+      currentLanguage = newLang;
+      currentVocabList = _myVocabLists[newLang];
     }
-  }
 
-  String get  name => _name;
-  String get email => _email;
-  String get uid => _uid;
+    void addWord(String newWord, [String newDef = ""]) {
+      currentVocabList[newWord] = newDef;
+      hasVocabLists = true;
+    }
+
+    void removeWord(String oldWord) {
+      currentVocabList.remove(oldWord);
+    }
+
+    void addLanguage(String language) {
+      myLanguages.add(language);
+      currentLanguage = language;
+      hasLanguages = true;
+    }
+
+    void removeLanguage(String language) {
+      myLanguages.remove(language);
+      if (myLanguages.isEmpty) {
+        currentLanguage = "";
+        hasLanguages = false;
+        hasVocabLists = false;
+      }
+    }
+
+    String get  name => _name;
+    String get email => _email;
+    String get uid => _uid;
 //  int get numLanguages => myLanguages.
-  Map<String, String> getVocabListForLang(String lang) {
-    return _myVocabLists[lang];
-  }
-  Map<String, Map<String, String>> get vocabLists => _myVocabLists;
+    Map<String, String> getVocabListForLang(String lang) {
+      return _myVocabLists[lang];
+    }
+    Map<String, Map<String, String>> get vocabLists => _myVocabLists;
+//  }
   void set vocabLists(Map<String, Map<String, String>> allVocabLists) {
     _myVocabLists = allVocabLists;
     if (_myVocabLists.isNotEmpty) {

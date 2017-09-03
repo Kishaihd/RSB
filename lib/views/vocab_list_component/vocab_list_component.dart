@@ -19,7 +19,7 @@ import 'package:RSB/services/logger_service.dart';
   directives: const [CORE_DIRECTIVES, materialDirectives],
   providers: const [materialProviders], //, LoggerService],
 )
-class VocabListComponent { //implements OnInit {
+class VocabListComponent {
   final LoggerService _log;
   final FirebaseService fbService;
 
@@ -38,32 +38,39 @@ class VocabListComponent { //implements OnInit {
 
 // There's gotta be a better way to do this.
   Map<String, String> _vocabList = {};
-
-  @Input()
-  void set vocabList(Map vl) {
-    _log.info("$runtimeType()::@Input(vocabList) ==> ${vl}");
-    if (_vocabList != vl) {
-      _vocabList = vl;
-      if (_vocabList != null && _vocabList.isNotEmpty) {
-        _vocabList.forEach((String word, String def) {
-          wordList.add(word);
-          defList.add(def);
-        });
-      }
-      else {
-        // Do nothing. Remove this else?
-      }
-      _initMe();
-    }
-  }
   Map<String, String> get vocabList => _vocabList;
-
-  void _initMe() {
-    if (_vocabList == null) {
-      return;
-    }
-    _log.info("$runtimeType()::vocabList: ${_vocabList.toString()}");
+  void set vocabList(Map vList) {
+    _vocabList = vList;
   }
+
+
+
+//  _vocabList = fbService.learner.currentVocabList;
+//  @Input()
+//  void set vocabList(Map vl) {
+//    _log.info("$runtimeType()::@Input(vocabList) ==> ${vl}");
+//    if (_vocabList != vl) {
+//      _vocabList = vl;
+//      if (_vocabList != null && _vocabList.isNotEmpty) {
+//        _vocabList.forEach((String word, String def) {
+//          wordList.add(word);
+//          defList.add(def);
+//        });
+//      }
+//      else {
+//        // Do nothing. Remove this else?
+//      }
+//      _initMe();
+//    }
+//  }
+
+
+//  void _initMe() {
+//    if (_vocabList == null) {
+//      return;
+//    }
+//    _log.info("$runtimeType()::vocabList: ${_vocabList.toString()}");
+//  }
 
 //  Map<String, Map<String, String>> tempVocabMap = {};
   List<String> wordList = [];
@@ -86,76 +93,46 @@ class VocabListComponent { //implements OnInit {
   String newWord = "";
   String newDef = "";
 
-//  @override
-//  Future<Null> ngOnInit() async {
-//    if (vocabList.isEmpty) {
-//      if (fbService.learner.checkComplete() == false) {
-//        await fbService.completeLearner();
-//        if (fbService.learner.currentLanguage != "") { // fbService.learner.currentLanguage != null && // Just the check for empty string should be sufficient.
-//          fbService.changeLang(fbService.learner.currentLanguage);
-//          tempVocabMap = await fbService.getVocabLists(fbService.learner.uid);
-//          vocabList = tempVocabMap[fbService.learner.currentLanguage];
-//        }
-//      }
-//    }
-//  }
-
   VocabListComponent(LoggerService this._log, this.fbService) {
-    _log.info("$runtimeType()");
+    _log.info("$runtimeType");
     currentView = views[0];
   }
 
-//  @override
-//  Future<Null> ngOnInit() async {
-//    if (fbService.learner.currentLanguage != "") { ///todo: Need more checks?
-//      hasLanguage = true;
-//    }
-//    // Should I just do this? Doesn't matter if it's empty,
-//    vocabList = fbService.learner.currentVocabList;
-//    //    if ()
-//    //newListWords = await vocabListService.getVocabList();
-////    newSetWords.addAll(newListWords);
-////    Map<String, String> otherMap = await vocabListService.getVocabMap();
-////    vocabMap.addAll(otherMap);
-//    currentView = views.elementAt(0); // 0th index should be first view.
-//
-//    if (vocabMap.isNotEmpty) {
-//      vocabMap.forEach((String word, String def) {
-//        wordList.add(word);
-//        defList.add(def);
-//      });
-//    }
-//  } // End ngOnInit()
-
-
 
   void changeEditMode() {
+    _log.info("$runtimeType()::changeEditMode()");
     editMode = !editMode;
   }
 
   void changeListView() {
+    _log.info("$runtimeType()::changeListView()");
     defVisible = !defVisible;
   }
 
   void changeListWordView() {
+    _log.info("$runtimeType()::changeListWordView()");
     listOrderWordFirst = !listOrderWordFirst;
   }
 
   void changeCardView() {
+    _log.info("$runtimeType()::changeCardView()");
     cardOrderWordFirst = !cardOrderWordFirst;
   }
 
   void cardClick() {
+    _log.info("$runtimeType()::cardClick()");
     showingWord = !showingWord;
   }
 
   void previousCard() {
+    _log.info("$runtimeType()::previousCard()");
     if (cardIndex > 0) { // Already on first card.
       showingWord = true;
       cardIndex--;
     }
   }
   void nextCard() {
+    _log.info("$runtimeType()::nextCard()");
     if (cardIndex < (_vocabList.length - 1)) { // Already on first card.
       showingWord = true;
       cardIndex++;
@@ -163,15 +140,18 @@ class VocabListComponent { //implements OnInit {
   }
 
   void toggleMenu() {
+    _log.info("$runtimeType()::toggleMenu())");
     menuVisible = !menuVisible;
   }
 
   void changeVocabView(int newIndex) {
+    _log.info("$runtimeType()::changeVocabView($newIndex)");
 //    currentView = views[newIndex];
     currentView = views.elementAt(newIndex);
   }
 
   void add(String word, [String definition = ""]) {
+    _log.info("$runtimeType()::add($word, $definition)");
   // I think this does the above two functions in one line.
     wordList.add(word);
     defList.add(definition);
@@ -180,6 +160,7 @@ class VocabListComponent { //implements OnInit {
   }
 //  String remove(int index) => newListWords.removeAt(index);
   void remove(String word) {
+    _log.info("$runtimeType()::remove($word)");
     int idx = wordList.indexOf(word);
     wordList.removeAt(idx);
     defList.removeAt(idx);

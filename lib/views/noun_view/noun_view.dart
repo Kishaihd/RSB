@@ -89,43 +89,12 @@ class NounView { //implements OnInit {
       if (_nounMetaMap['hasDeclensions'] == true) {
         _log.info("DECLENSIONS == TRUE!!!");
       }
-
-      _log.info("$runtimeType()::initMe()::_nounDataMap['masculine'] == ${_nounDataMap['masculine']}");
-      _log.info("$runtimeType()::initMe()::_nounDataMap['masculine'][0] == ${_nounDataMap['masculine'][0]}");
-//      _nounDataMap['masculine'][0].forEach((String decType, Map nvOtherMap) {
-//        if (decType != 'type' && decType != 'word') { // don't add the example shits
-//          declensionTypes.add(decType);
-//          _log.info("$runtimeType()::initMe():: found declension type: $decType!");
-//        }
-//        mascList = _nounDataMap['masculine'];
-//        femList = _nounDataMap['feminine'];
-//
-//        if (_nounDataMap.containsKey('neuter')) {
-//          neutList = _nounDataMap['neuter'];
-//          _log.info("$runtimeType()::initMe():: neutList = $neutList");
-//        }
-//      });
       _log.info("$runtimeType()::initMe()::mascList = $mascList");
       _log.info("$runtimeType()::initMe()::femList = $femList");
     }
     else {
       _log.info("$runtimeType()::initMe():: --No declensions for this language!");
     }
-    /*** TEST ***/
-//    mascList = _nounDataMap['masculine'];
-//    _log.info("$runtimeType()::initMe()::mascList = $mascList");
-////        _log.info("$runtimeType()::initMe()::mascMap = $mascMap");
-////        femMap = _nounDataMap['feminine'];
-//    femList = _nounDataMap['feminine'];
-//    _log.info("$runtimeType()::initMe()::femList = $femList");
-////        _log.info("$runtimeType()::initMe()::femMap = $femMap");
-//    if (_nounDataMap.containsKey('neuter')) {
-////          neutMap = _nounDataMap['neuter'];
-//      neutList = _nounDataMap['neuter'];
-//      _log.info("$runtimeType()::initMe():: neutList = $neutList");
-////          _log.info("$runtimeType()::initMe():: neutMap = $neutMap");
-//    }
-    /*** TEST ***/
     _log.info("$runtimeType()::initializeMe()::--success!");
   }
 
