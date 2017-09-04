@@ -163,6 +163,168 @@
           "word" : "синий"
         } ]
       },
+      "verbs" : {
+        "feminine" : [ {
+          "accusative" : {
+            "plural" : "*",
+            "singular" : "новую"
+          },
+          "dative" : {
+            "plural" : "новым",
+            "singular" : "новой"
+          },
+          "genetive" : {
+            "plural" : "новых",
+            "singular" : "новой"
+          },
+          "instrumental" : {
+            "plural" : "новыми",
+            "singular" : "новой"
+          },
+          "nominative" : {
+            "plural" : "новые",
+            "singular" : "новая"
+          },
+          "prepositional" : {
+            "plural" : "новых",
+            "singular" : "новой"
+          },
+          "word" : "новая"
+        },
+          {
+            "accusative" : {
+              "plural" : "*",
+              "singular" : "cинюю"
+            },
+            "dative" : {
+              "plural" : "синим",
+              "singular" : "синей"
+            },
+            "genetive" : {
+              "plural" : "синих",
+              "singular" : "синей"
+            },
+            "instrumental" : {
+              "plural" : "синими",
+              "singular" : "синей"
+            },
+            "nominative" : {
+              "plural" : "синие",
+              "singular" : "синяя"
+            },
+            "prepositional" : {
+              "plural" : "синих",
+              "singular" : "синей"
+            },
+            "word" : "синяя"
+          } ],
+        "masculine" : [ {
+          "accusative" : {
+            "plural" : "*",
+            "singular" : "*"
+          },
+          "dative" : {
+            "plural" : "новым",
+            "singular" : "новому"
+          },
+          "genetive" : {
+            "plural" : "новых",
+            "singular" : "нового"
+          },
+          "instrumental" : {
+            "plural" : "новыми",
+            "singular" : "новым"
+          },
+          "nominative" : {
+            "plural" : "новые",
+            "singular" : "новый"
+          },
+          "prepositional" : {
+            "plural" : "новых",
+            "singular" : "новом"
+          },
+          "word" : "новый"
+        }, {
+          "accusative" : {
+            "plural" : "*",
+            "singular" : "*"
+          },
+          "dative" : {
+            "plural" : "синим",
+            "singular" : "синому"
+          },
+          "genetive" : {
+            "plural" : "синих",
+            "singular" : "синего"
+          },
+          "instrumental" : {
+            "plural" : "синими",
+            "singular" : "синим"
+          },
+          "nominative" : {
+            "plural" : "синие",
+            "singular" : "синий"
+          },
+          "prepositional" : {
+            "plural" : "синих",
+            "singular" : "синем"
+          },
+          "word" : "синий"
+        } ],
+        "neuter" : [ {
+          "accusative" : {
+            "plural" : "*",
+            "singular" : "*"
+          },
+          "dative" : {
+            "plural" : "новым",
+            "singular" : "новому"
+          },
+          "genetive" : {
+            "plural" : "новых",
+            "singular" : "нового"
+          },
+          "instrumental" : {
+            "plural" : "новыми",
+            "singular" : "новым"
+          },
+          "nominative" : {
+            "plural" : "новые",
+            "singular" : "новый"
+          },
+          "prepositional" : {
+            "plural" : "новых",
+            "singular" : "новом"
+          },
+          "word" : "новый"
+        }, {
+          "accusative" : {
+            "plural" : "*",
+            "singular" : "синее"
+          },
+          "dative" : {
+            "plural" : "синим",
+            "singular" : "синому"
+          },
+          "genetive" : {
+            "plural" : "синих",
+            "singular" : "синего"
+          },
+          "instrumental" : {
+            "plural" : "синими",
+            "singular" : "синим"
+          },
+          "nominative" : {
+            "plural" : "синие",
+            "singular" : "синее"
+          },
+          "prepositional" : {
+            "plural" : "синих",
+            "singular" : "синем"
+          },
+          "word" : "синий"
+        } ]
+      },
       "nouns" : {
         "feminine" : [ {
           "accusative" : {

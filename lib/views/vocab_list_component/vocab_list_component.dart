@@ -36,12 +36,18 @@ class VocabListComponent {
 
 //  bool hasLanguage = false;
 
+
 // There's gotta be a better way to do this.
+  Map<String, Map<String, String>> allVocabLists;
+
   Map<String, String> _vocabList = {};
-  Map<String, String> get vocabList => _vocabList;
+//  @Input()
   void set vocabList(Map vList) {
     _vocabList = vList;
   }
+  Map<String, String> get vocabList => _vocabList;
+
+
 
 
 
@@ -95,9 +101,20 @@ class VocabListComponent {
 
   VocabListComponent(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType");
+    allVocabLists = fbService.learner.vocabLists;
+    _log.info("$runtimeType()::allVocabLists = ${fbService.learner.vocabLists}");
+    if (allVocabLists.containsKey(fbService.selectedLanguage) == false) {
+      allVocabLists[fbService.selectedLanguage] = {};
+    }
+    _vocabList = allVocabLists[fbService.selectedLanguage];
+    if (_vocabList != null && _vocabList.isNotEmpty) {
+      _vocabList.forEach((String word, String def) {
+        wordList.add(word);
+        defList.add(def);
+      });
+    }
     currentView = views[0];
   }
-
 
   void changeEditMode() {
     _log.info("$runtimeType()::changeEditMode()");
@@ -156,6 +173,7 @@ class VocabListComponent {
     wordList.add(word);
     defList.add(definition);
     _vocabList[word] = definition;
+    fbService.addWord(word, definition);
     //newSetWords.add(description);
   }
 //  String remove(int index) => newListWords.removeAt(index);

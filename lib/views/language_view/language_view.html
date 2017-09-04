@@ -19,8 +19,8 @@
     </material-tab>
     <material-tab class="mat-tab" label="Vocab">
         <!--<vocab-list [vocabList]="vocab" class="voc-view"></vocab-list>-->
-        <vocab-list
-                [vocabList]="fbService?.getVocabListForLang(fbService?.fbUser?.uid, fbService?.selectedLanguage)">
+        <vocab-list>
         </vocab-list>
+        <!--[vocabList]="fbService?.getVocabListForLang(fbService?.fbUser?.uid, fbService?.selectedLanguage)"-->
     </material-tab>
 </material-tab-panel>

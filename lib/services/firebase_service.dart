@@ -502,6 +502,12 @@ class FirebaseService {// implements OnInit {
     getSingleUserData(newUser.uid);
       _log.info("$runtimeType()::_authChanged()::new Learner.fromMap(getSingleUserData(${newUser.uid})");
       learner = new Learner.fromMap(_log, getSingleUserData(newUser.uid));
+      fbVocabListData = _fbDatabase.ref("$VOCAB_LISTS/${newUser.uid}");
+      fbVocabListData.onValue.listen((firebase.QueryEvent e) async {
+        learner.vocabLists = await e.snapshot.val();
+        _log.info("$runtimeType()::_authChanged():: e.snapshot.val.runtimeType == ${e.snapshot.val().runtimeType}");
+        _log.info("$runtimeType()::_authChanged():: e == ${e.snapshot.val()}");
+      });
     _log.info("$runtimeType()::_authChanged()::learner = ${learner}");
 //    if (_userDataMap.containsKey(newUser.uid)) {
       _log.info("$runtimeType()::_authChanged():: _userDataMap = ${_userDataMap}");
@@ -556,7 +562,13 @@ class FirebaseService {// implements OnInit {
     }
   }
 
+  void addWord(String newWord, [String def = ""]) {
+    learner.vocabLists[selectedLanguage][newWord] = def;
+    fbVocabListData.update(learner.vocabLists);
+  }
+
 } //end class FirebaseService
+
 
 
 //  void _newMessage(firebase.QueryEvent event) {
