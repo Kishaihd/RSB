@@ -1,7 +1,6 @@
 
 //import 'dart:html';
-//import 'dart:async';
-//import 'dart:async';
+import 'dart:async';
 import'package:angular2/angular2.dart';
 //import 'package:firebase/firebase.dart' as firebase;
 //import 'package:firebase/src/assets/assets.dart';
@@ -38,12 +37,13 @@ class MenuView { //implements OnInit {
 //  Map testFullLangMeta = {};
 //  Map testFullLangData = {};
 
-  void _initMe() {
+  Future<Null> _initMe() async {
+    _log.info("$runtimeType()::_initMe()");
     if (langList == null) {
-      _log.info("$runtimeType()::_initMe() -- Fail!");
-      return;
+      _langList = await fbService.getLangList();
     }
-    displayList.addAll(langList.reversed);
+    displayList = langList;
+//    displayList.addAll(langList.reversed);
     _log.info("$runtimeType()::initMe():: fbService.learner = ${fbService.learner}");
     _log.info("$runtimeType()::initMe():: fbService.learner.hasLanguages = ${fbService.learner.hasLanguages}");
     if (fbService?.learner != null && fbService.learner.hasLanguages == true) {
@@ -59,7 +59,7 @@ class MenuView { //implements OnInit {
 
   MenuView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");
-    _langList = fbService.getLangList();
+//    _langList = fbService.getLangList();
   }
 
   void addLanguage(String lang) {
