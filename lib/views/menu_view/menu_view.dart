@@ -1,15 +1,9 @@
 
-//import 'dart:html';
 import 'dart:async';
-import'package:angular2/angular2.dart';
-//import 'package:firebase/firebase.dart' as firebase;
-//import 'package:firebase/src/assets/assets.dart';
+import'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:RSB/services/firebase_service.dart';
 import 'package:RSB/services/logger_service.dart';
-//import '../../models/learner.dart';
-import 'package:angular2/core.dart';
-
 
 @Component(
   selector: 'menu-view',
@@ -22,43 +16,66 @@ class MenuView { //implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
-  List<String> _langList = [];
+  List<String> _availableLanguages = [];
   @Input()
-  void set langList(List lm) {
-    if (_langList != lm) {
-      _langList = lm;
+  void set availableLanguages(List lm) {
+    if (_availableLanguages != lm) {
+      _availableLanguages = lm;
       _initMe();
     }
   }
-  List get langList => _langList;
+  List get availableLanguages => _availableLanguages;
 
-  List<String> displayList = [];
+  List<String> _myLanguages = [];
+  @Input()
+  void set myLanguages(List mll) {
+    if (_myLanguages != mll) {
+      _myLanguages = mll;
+      _initMe();
+    }
+  }
+  List get myLanguages => _myLanguages;
+
+  List<String> unaddedLanguages = [];
+  List<String> myOtherLanguages = [];
 
 //  Map testFullLangMeta = {};
 //  Map testFullLangData = {};
 
   Future<Null> _initMe() async {
     _log.info("$runtimeType()::_initMe()");
-    if (langList == null) {
-      _langList = await fbService.getLangList();
-    }
-    displayList = langList;
+    unaddedLanguages = _availableLanguages;
+    myOtherLanguages = _myLanguages;
+    await fbService.getUserLangList();
+//    await fbService.getUserLangList(fbService.fbUser.uid);
+//    if (langList == null || langList.isEmpty) {
+//      _langList = await fbService.getLangList();
+//    }
+//    displayList = langList;
 //    displayList.addAll(langList.reversed);
     _log.info("$runtimeType()::initMe():: fbService.learner = ${fbService.learner}");
     _log.info("$runtimeType()::initMe():: fbService.learner.hasLanguages = ${fbService.learner.hasLanguages}");
-    if (fbService?.learner != null && fbService.learner.hasLanguages == true) {
-      displayList.forEach((String lang) {
-        if (fbService.learner.myLanguages.contains(lang)) {
-          displayList.remove(lang); // Only display languages that the user doesn't already have.
-          _log.info("$runtimeType()::initMe():: -- user list already contains $lang. --removing $lang from display list.");
+//    if (fbService?.learner != null && fbService.learner.myLanguages != null && fbService.learner.myLanguages.isNotEmpty) {
+//    myOtherLanguages = fbService.learner.myLanguages;
+//    myOtherLanguages = await fbService.getUserLangList();
+      _availableLanguages.forEach((String lang) {
+//        if (fbService.learner.myLanguages.contains(lang)) {
+        if (myOtherLanguages.contains(lang) == false) {
+          unaddedLanguages.add(lang); // Only display languages that the user doesn't already have.
+//          _log.info("$runtimeType()::initMe():: -- user list already contains $lang. --removing $lang from display list.");
         }
       });
-    }
-    _log.info("$runtimeType()::_initMe() -- Success!");
+      unaddedLanguages.forEach((String lang) {
+        if (myOtherLanguages.contains(lang)) {
+          unaddedLanguages.remove(lang);
+        }
+      });
+//    }
   }
 
   MenuView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");
+    _initMe();
 //    _langList = fbService.getLangList();
   }
 
@@ -66,8 +83,13 @@ class MenuView { //implements OnInit {
     _log.info("$runtimeType()::addLanguage($lang)");
     if (fbService.learner != null) {
       fbService.learner.addLanguage(lang);
-      displayList.remove(lang); // Remove added language from display list!
+      unaddedLanguages.remove(lang); // Remove added language from display list!
     }
+  }
+
+  void switchToLang(String lang) {
+    _log.info("$runtimeType()::switchToLang($lang)");
+    fbService.selectedLanguage = lang;
   }
 
   void joinGroup(String id) {

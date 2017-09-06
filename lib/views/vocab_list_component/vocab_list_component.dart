@@ -2,39 +2,29 @@
 //import 'dart:async';
 //import 'dart:collection'; // In case I use a SplayTreeMap
 //import 'dart:async';
-import 'package:angular2/angular2.dart';
+import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
-//import 'package:RSB/services/vocab_list_service.dart';
 import 'package:RSB/services/firebase_service.dart';
 import 'package:RSB/services/logger_service.dart';
-//import '../flashcard_component/flashcard.dart';
-
-//import 'package:angular_components/src/components/material_tab/material_tab_panel.dart';
-//import 'package:angular_components/src/components/material_tab/material_tab.dart';
 
 @Component(
   selector: 'vocab-list',
   styleUrls: const ['vocab_list_component.css'],
   templateUrl: 'vocab_list_component.html',
   directives: const [CORE_DIRECTIVES, materialDirectives],
-  providers: const [materialProviders], //, LoggerService],
+  providers: const [materialProviders],
 )
 class VocabListComponent {
   final LoggerService _log;
   final FirebaseService fbService;
 
   List<String> views = const [
-//    "addView",
-//    "listView",
-//    "flashcards"
       "add words",
       "list view",
       "flashcards"
   ];
 
   String currentView = "";
-
-//  bool hasLanguage = false;
 
 
 // There's gotta be a better way to do this.

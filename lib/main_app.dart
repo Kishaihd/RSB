@@ -3,7 +3,7 @@
 // Necessary?
 import 'package:firebase/firebase.dart' as firebase;
 
-import 'package:angular2/angular2.dart';
+import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:RSB/services/firebase_service.dart';
 import 'package:RSB/services/logger_service.dart';
@@ -107,12 +107,12 @@ class MainApp { // implements OnInit {
 
     _log.info("$runtimeType()::defaultContructor()::fbService.getAllLangMeta()");
     fbService.getAllLangMeta();
-    _log.info("$runtimeType()::defaultContructor()::langMeta = ${fbService.allLangMeta}");
+    _log.info("$runtimeType()::defaultContructor()::langMeta = ${fbService.allLanguageMeta}");
 
 
     _log.info("$runtimeType()::defaultContructor()::fbService.getAllLangData");
     fbService.getAllLangData();
-    _log.info("$runtimeType()::defaultContructor()::fullLanguagedata = ${fbService.fullLanguageData}");
+    _log.info("$runtimeType()::defaultContructor()::fullLanguagedata = ${fbService.allLanguageData}");
 
 //    _log.info("$runtimeType()::defaultConstructor()::fbService.getVocabLists(${fbService?.learner?.uid}");
 //    fbService.getVocabLists(fbService?.learner?.uid);

@@ -1,10 +1,9 @@
 //import 'dart:html';
 import 'dart:async';
 
-import 'package:angular2/core.dart';
+import 'package:angular/angular.dart';
+import 'package:angular/core.dart';
 import 'package:firebase/firebase.dart' as firebase;
-
-//import 'package:firebase/src/assets/assets.dart';
 import 'package:RSB/services/logger_service.dart';
 import 'package:RSB/models/learner.dart';
 
@@ -46,10 +45,11 @@ class FirebaseService {// implements OnInit {
   Map<String, Map<String, String>> singleUsersVocabLists = {};
 //  bool hasLanguage = false;
 //  Map tempData = {};
-  Map allLangMeta = {};
+  Map allLanguageMeta = {};
   Map singleLangMeta = {};
   List<String> languages = [];
-  Map<String,Map<String, Map<String, Map<String, dynamic>>>> fullLanguageData = {};
+  Map<String,Map<String, Map<String, Map<String, dynamic>>>> allLanguageData = {};
+
   Map<String, Map<String, Map<String, dynamic>>> singleLangData = {};
 
   FirebaseService(LoggerService this._log) {
@@ -81,10 +81,9 @@ class FirebaseService {// implements OnInit {
     });
 
 
-
     fbLangMeta.onChildAdded.listen((firebase.QueryEvent lMeta) async {
-      allLangMeta = await lMeta.snapshot.val();
-      _log.info("$runtimeType()::defaultConstructor()::allLangMeta: ${allLangMeta.toString()}");
+      allLanguageMeta = await lMeta.snapshot.val();
+      _log.info("$runtimeType()::defaultConstructor()::allLangMeta: ${allLanguageMeta.toString()}");
     });
 
     fbUserData.onValue.listen((firebase.QueryEvent uData) async {
@@ -93,15 +92,16 @@ class FirebaseService {// implements OnInit {
     });
 
     fbLangData.onChildAdded.listen((firebase.QueryEvent lData) async {
-      fullLanguageData = await lData.snapshot.val();
-      _log.info("$runtimeType()::defaultConstructor()::allLangData: ${fullLanguageData.toString()}");
+      allLanguageData = await lData.snapshot.val();
+      _log.info("$runtimeType()::defaultConstructor()::allLangData: ${allLanguageData.toString()}");
     });
 
     fbVocabListMeta.onValue.listen((firebase.QueryEvent vMeta) async {
       vocabMeta = await vMeta.snapshot.val();
       _log.info("$runtimeType()::defaultConstructor()::vocabMeta: ${vocabMeta.toString()}");
     });
-  }
+
+  } // end Firebase default constructor
 
 
   Future<bool>  isUserInDatabase(String userID) async {
@@ -161,29 +161,29 @@ class FirebaseService {// implements OnInit {
 
   Future<Map<String, Map<String, String>>> getAllLangMeta() async {
     _log.info("$runtimeType()::getAllLangMeta()");
-    if (allLangMeta == null || allLangMeta.isEmpty) {
+    if (allLanguageMeta == null || allLanguageMeta.isEmpty) {
       fbLangMeta.onValue.listen((firebase.QueryEvent e) async {
         _log.info("$runtimeType()::getAllLangMeta():: e.snapshot.val().runtimeType == ${e.snapshot.val().runtimeType}");
-        allLangMeta = await e.snapshot.val();
+        allLanguageMeta = await e.snapshot.val();
         _log.info("$runtimeType()::languageMeta.onChildAdded.listen::${e.snapshot.val()}");
       });
     }
-    return allLangMeta;
+    return allLanguageMeta;
   }
 
   Future<Map<String, dynamic>> getSingleLangMeta([String lang = ""]) async {
     // async {
     _log.info("$runtimeType()::getSingleLangMeta($lang)");
 //    if (lang != "") {
-    if (allLangMeta != null && allLangMeta.isNotEmpty) {
-      singleLangMeta = allLangMeta[lang];
+    if (allLanguageMeta != null && allLanguageMeta.isNotEmpty) {
+      singleLangMeta = allLanguageMeta[lang];
     }
     else {
       fbLangMeta.onValue.listen((firebase.QueryEvent e) async {
         _log.info("$runtimeType()::getSingleLangDMeta():: e.snapshot.val().runtimeType == ${e.snapshot.val().runtimeType}");
-        allLangMeta = await e.snapshot.val();
-        _log.info("$runtimeType()::getSingleLangMeta():: allLangMeta = ${allLangMeta}");
-        singleLangMeta = await allLangMeta[lang];
+        allLanguageMeta = await e.snapshot.val();
+        _log.info("$runtimeType()::getSingleLangMeta():: allLangMeta = ${allLanguageMeta}");
+        singleLangMeta = await allLanguageMeta[lang];
         _log.info("$runtimeType()::getSingleLangMeta()::singLangMeta = ${singleLangMeta}");
       });
     }
@@ -200,27 +200,27 @@ class FirebaseService {// implements OnInit {
 
   Future<Map<String,Map<String, Map<String, Map<String, dynamic>>>>> getAllLangData() async {
     _log.info("$runtimeType()::getAllLangData()");
-    if (fullLanguageData == null || fullLanguageData.isEmpty) {
+    if (allLanguageData == null || allLanguageData.isEmpty) {
       fbLangData.onValue.listen((firebase.QueryEvent e) async {
         _log.info("$runtimeType()::getAllLangData():: e.snapshot.val().runtimeType == ${e.snapshot.val().runtimeType}");
-        fullLanguageData = await e.snapshot.val();
-        _log.info("$runtimeType()::fullLanguageData::${fullLanguageData}");
+        allLanguageData = await e.snapshot.val();
+        _log.info("$runtimeType()::fullLanguageData::${allLanguageData}");
       });
     }
-    return fullLanguageData;
+    return allLanguageData;
   }
 
   Future<Map<String, Map<String, Map<String, dynamic>>>> getSingleLangData([String lang = ""]) async {
     _log.info("$runtimeType()::getSingleLangData($lang)");
     if (lang != "") {
-      if (fullLanguageData != null && fullLanguageData.isNotEmpty) {
-        singleLangData = fullLanguageData[lang];
+      if (allLanguageData != null && allLanguageData.isNotEmpty) {
+        singleLangData = allLanguageData[lang];
       }
       else {
         fbLangData.onValue.listen((firebase.QueryEvent e) async {
           _log.info("$runtimeType()::getSingleLangData():: e.snapshot.val().runtimeType == ${e.snapshot.val().runtimeType}");
-          fullLanguageData = await e.snapshot.val();
-          singleLangData = await fullLanguageData[lang];
+          allLanguageData = await e.snapshot.val();
+          singleLangData = await allLanguageData[lang];
           _log.info("$runtimeType()::getSingleLangData()::singleLangData = ${singleLangData}");
         });
       }
@@ -331,6 +331,42 @@ class FirebaseService {// implements OnInit {
     }
   }
 
+  Future<List<String>> getUserLangList([String userID]) async {
+    _log.info("$runtimeType()::getUserLangList()");
+    if (learner?.myLanguages == null || learner.myLanguages.isEmpty) {
+      if (_singleUserData == null || _singleUserData.isEmpty) {
+        if (learner.uid != null && learner.uid.isNotEmpty) {
+          await getSingleUserData(learner.uid);
+        }
+        else {
+          await getSingleUserData(userID);
+        }
+      }
+      else {
+        learner.myLanguages = _singleUserData['myLanguages'];
+      }
+    }
+    return learner.myLanguages;
+  }
+
+  Future<String> getSelectedLanguage() async {
+    _log.info("$runtimeType()::getSelectedLanguage()");
+    _log.info("$runtimeType()::getSelectedLanguage() --selectedLanguage = $selectedLanguage");
+    _log.info("$runtimeType()::getSelectedLanguage() --learner.currentLanguage = ${learner.currentLanguage}");
+    if (selectedLanguage == null || selectedLanguage.isEmpty) {
+      if (learner?.currentLanguage == null || learner.currentLanguage.isEmpty) {
+        if (languages == null || languages.isEmpty) {
+          await getLangList();
+        }
+        selectedLanguage = await languages[0];
+      }
+      else {
+        selectedLanguage = await learner.currentLanguage;
+      }
+    }
+    return selectedLanguage;
+  }
+
   Future<Null> completeLearner() async {
     _log.info("$runtimeType()::completeLearner()");
     if (learner == null) {
@@ -356,11 +392,19 @@ class FirebaseService {// implements OnInit {
 
   _authChanged(firebase.User newUser) async {
     _log.info("$runtimeType()::_authChanged()");
+    String userDataPath;
+    userDataPath = "$USER_DATA/${newUser.uid}";
     fbUser = newUser;
     _log.info("$runtimeType()::_authChanged()::fbUser = newUser: ${fbUser.toString()} = ${newUser.toString()}");
     if (newUser != null) { // newUser will be null on a logout()
       _log.info("$runtimeType()::_authChanged()::userData map: ${_userDataMap}");
-      await getSingleUserData(newUser.uid);
+//      await getSingleUserData(newUser.uid);
+//      fbSingUserData = _fbDatabase.ref("$USER_DATA/$userID");
+        fbSingUserData = _fbDatabase.ref(userDataPath);
+        fbSingUserData.onValue.listen((firebase.QueryEvent e) async {
+          _log.info("$runtimeType()::getting SingleUserData:: e.snapshot.val().runtimeType == ${e.snapshot.val().runtimeType}");
+          _singleUserData = await e.snapshot.val();
+        });
       _log.info("$runtimeType()::_authChanged()::new Learner.fromMap(getSingleUserData(${newUser.uid})");
       learner = new Learner.fromMap(_log, _singleUserData);
 //      learner = new Learner.fromMap(_log, getSingleUserData(newUser.uid));
@@ -372,9 +416,10 @@ class FirebaseService {// implements OnInit {
       });
       _log.info("$runtimeType()::_authChanged()::learner = ${learner}");
       _log.info("$runtimeType()::_authChanged():: _userDataMap = ${_userDataMap}");
-      _log.info("$runtimeType()::_authChanged():: _userDataMap.toString() = ${_userDataMap.toString()}");
+//      _log.info("$runtimeType()::_authChanged():: _userDataMap.toString() = ${_userDataMap.toString()}");
       _log.info("$runtimeType()::_authChanged():: _userDataMap.containsKey(${newUser.uid}) == ${_userDataMap.containsKey(newUser.uid)}");
     }
+    await getSelectedLanguage();
   } // end _authChanged
 
   Future signIn() async {

@@ -1,5 +1,5 @@
 //import 'dart:async';
-import 'package:angular2/angular2.dart';
+import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 //import '../../services/noun_service.dart';
 import 'package:RSB/services/logger_service.dart';

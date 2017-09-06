@@ -1,5 +1,5 @@
-//import 'dart:async';
-import 'package:angular2/angular2.dart';
+import 'dart:async';
+import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:RSB/services/firebase_service.dart';
 import 'package:RSB/services/logger_service.dart';
@@ -25,6 +25,11 @@ class LanguageView { //implements OnInit {
   String _lang = "";
   @Input()
   void set lang(String l) {
+    _log.info("$runtimeType()::set lang($l)");
+    if (l == null || l.isEmpty) {
+      l = fbService?.selectedLanguage;
+      _log.info("$runtimeType()::set lang($l) -- fbService.selectedLanguage = ${fbService.selectedLanguage}");
+    }
     if (_lang != l) {
       _lang = l;
       _initMe();
@@ -32,10 +37,13 @@ class LanguageView { //implements OnInit {
   }
   String get lang => _lang;
 
-  void _initMe() {
+  Future<Null> _initMe() async {
     _log.info("$runtimeType()::_initMe()");
-    if (_lang == null) {
-      _log.info("$runtimeType()::_initMe()::_lang is null!");
+    _log.info("$runtimeType()::initMe()::lang = $_lang");
+    if (_lang == null || _lang.isEmpty) {
+      _lang = await fbService.getSelectedLanguage();
+      await fbService?.getSingleLangMeta(lang);
+      await fbService?.getSingleLangData(lang);
       return;
     }
     _log.info("$runtimeType()::_initMe()::_lang is $_lang");
@@ -66,6 +74,7 @@ class LanguageView { //implements OnInit {
 
   LanguageView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");
+    _initMe();
 //    _lang = fbService.learner.currentLanguage ?? "nolang!";
 //    _langMeta = fbService?.getSingleLangMeta(lang);
 //    _langData = fbService?.getSingleLangData(lang);

@@ -1,7 +1,7 @@
 <login-view *ngIf="fbService.fbUser == null" class="fit layout vertical center-center"></login-view>
 
 
-<div *ngIf="fbService.fbUser != null" class="fit layout vertical">
+<div *ngIf="fbService.fbUser != null">
     <div class="topMenu">
         <span>
             <material-dropdown-select iconName="menu" slide="x">
@@ -12,14 +12,14 @@
                 </div>
             </material-dropdown-select>
         </span>
-        <lang-msg [language]="fbService?.selectedLanguage"></lang-msg>
-        <!--<span>{{langMsg}}</span>-->
-        <!--<span *ngIf="language == null || language == '' " class="nowViewingLang">No language selected.</span>-->
-        <!--<span *ngIf="language != null && language != '' " class="nowViewingLang">Now viewing: {{language}}</span>-->
+        <lang-msg></lang-msg>
     </div>
 
 
-    <menu-view *ngIf="currentView == 'menuView'" [langList]="fbService?.languages"></menu-view>
+    <menu-view *ngIf="currentView == 'menuView'"
+               [availableLanguages]="fbService?.languages"
+               [myLanguages]="fbService?.learner?.myLanguages">
+    </menu-view>
     <language-view *ngIf="currentView == 'languageView'" [lang]="fbService?.selectedLanguage"></language-view>
     <div>
         <hr>

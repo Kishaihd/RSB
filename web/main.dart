@@ -3,8 +3,7 @@
 
 //import 'package:firebase/firebase.dart' as firebase;
 //import 'package:firebase/src/assets/assets.dart';
-import 'package:angular2/angular2.dart';
-import 'package:angular2/platform/browser.dart';
+import 'package:angular/angular.dart';
 //import 'dart:html';
 //import 'dart:convert';
 //import 'package:angular_components/angular_components.dart';
