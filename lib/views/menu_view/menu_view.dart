@@ -1,6 +1,6 @@
 
 import 'dart:async';
-import'package:angular/angular.dart';
+import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:RSB/services/firebase_service.dart';
 import 'package:RSB/services/logger_service.dart';
@@ -44,8 +44,8 @@ class MenuView { //implements OnInit {
 
   Future<Null> _initMe() async {
     _log.info("$runtimeType()::_initMe()");
-    unaddedLanguages = _availableLanguages;
-    myOtherLanguages = _myLanguages;
+//    unaddedLanguages = _availableLanguages;
+//    myOtherLanguages = _myLanguages;
     await fbService.getUserLangList();
 //    await fbService.getUserLangList(fbService.fbUser.uid);
 //    if (langList == null || langList.isEmpty) {
@@ -60,9 +60,9 @@ class MenuView { //implements OnInit {
 //    myOtherLanguages = await fbService.getUserLangList();
       _availableLanguages.forEach((String lang) {
 //        if (fbService.learner.myLanguages.contains(lang)) {
-        if (myOtherLanguages.contains(lang) == false) {
-          unaddedLanguages.add(lang); // Only display languages that the user doesn't already have.
-//          _log.info("$runtimeType()::initMe():: -- user list already contains $lang. --removing $lang from display list.");
+        if (myOtherLanguages.contains(lang) == false && unaddedLanguages.contains(lang) == false) {
+            unaddedLanguages.add(lang); // Only display languages that the user doesn't already have.
+          //          _log.info("$runtimeType()::initMe():: -- user list already contains $lang. --removing $lang from display list.");
         }
       });
       unaddedLanguages.forEach((String lang) {
@@ -75,7 +75,9 @@ class MenuView { //implements OnInit {
 
   MenuView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");
-    _initMe();
+    unaddedLanguages = _availableLanguages;
+    myOtherLanguages = _myLanguages;
+//    _initMe();
 //    _langList = fbService.getLangList();
   }
 

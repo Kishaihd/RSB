@@ -22,7 +22,7 @@ import 'views/lang_msg/lang_msg.dart';
   styleUrls: const ['main_app.css'],
   templateUrl: 'main_app.html',
   directives: const [CORE_DIRECTIVES, materialDirectives, LoginView, MenuView, LanguageView, LangMsg],
-  providers: const [materialProviders], //, FirebaseService],
+  providers: const [materialProviders],
 )
 class MainApp { // implements OnInit {
   final LoggerService _log;
@@ -87,13 +87,13 @@ class MainApp { // implements OnInit {
     currentView = views[0];
 //    language = "russian"; ///todo: Manually setting language is for debug purposes only.
     _log.info("$runtimeType()::defaultContructor()::fbService.getLangList()");
-//    fbService.getLangList();
-    fbService.fbLangList.onValue.listen((firebase.QueryEvent e) async {
-      fbService.languages = await e.snapshot.val();
-      _log.info("$runtimeType()::defaultConstructor():: languages ${fbService.languages}");
-      _log.info("$runtimeType()::defaultConstructor()::fbLangList e.snapshot.val() ${e.snapshot.val()}");
-      _log.info("$runtimeType()::defaultConstructor()::fbLangList e.snapshot.val().runtimeType ${e.snapshot.val().runtimeType}");
-    });
+    fbService.getLangList();
+//    fbService.fbLangList.onValue.listen((firebase.QueryEvent e) async {
+//      fbService.languages = await e.snapshot.val();
+//      _log.info("$runtimeType()::defaultConstructor():: languages ${fbService.languages}");
+//      _log.info("$runtimeType()::defaultConstructor()::fbLangList e.snapshot.val() ${e.snapshot.val()}");
+//      _log.info("$runtimeType()::defaultConstructor()::fbLangList e.snapshot.val().runtimeType ${e.snapshot.val().runtimeType}");
+//    });
     _log.info("$runtimeType()::defaultContructor()::languages = ${fbService.languages}");
 
 

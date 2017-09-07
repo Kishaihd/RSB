@@ -232,7 +232,7 @@ class FirebaseService {// implements OnInit {
     }
   }
 
-  Future<List> getLangList() async {
+  Future<List<String>> getLangList() async {
     _log.info("$runtimeType()::getLangList()");
     if (languages != null && languages.isNotEmpty) {
       _log.info("$runtimeType()::getLangList()::language list is populated.");
@@ -352,16 +352,16 @@ class FirebaseService {// implements OnInit {
   Future<String> getSelectedLanguage() async {
     _log.info("$runtimeType()::getSelectedLanguage()");
     _log.info("$runtimeType()::getSelectedLanguage() --selectedLanguage = $selectedLanguage");
-    _log.info("$runtimeType()::getSelectedLanguage() --learner.currentLanguage = ${learner.currentLanguage}");
+    _log.info("$runtimeType()::getSelectedLanguage() --learner.currentLanguage = ${learner?.currentLanguage}");
     if (selectedLanguage == null || selectedLanguage.isEmpty) {
       if (learner?.currentLanguage == null || learner.currentLanguage.isEmpty) {
         if (languages == null || languages.isEmpty) {
-          await getLangList();
+          languages = await getLangList();
         }
-        selectedLanguage = await languages[0];
+        selectedLanguage = languages?.elementAt(0);
       }
       else {
-        selectedLanguage = await learner.currentLanguage;
+        selectedLanguage = learner.currentLanguage;
       }
     }
     return selectedLanguage;
@@ -392,11 +392,11 @@ class FirebaseService {// implements OnInit {
 
   _authChanged(firebase.User newUser) async {
     _log.info("$runtimeType()::_authChanged()");
-    String userDataPath;
-    userDataPath = "$USER_DATA/${newUser.uid}";
     fbUser = newUser;
     _log.info("$runtimeType()::_authChanged()::fbUser = newUser: ${fbUser.toString()} = ${newUser.toString()}");
     if (newUser != null) { // newUser will be null on a logout()
+      String userDataPath;
+      userDataPath = "$USER_DATA/${newUser.uid}";
       _log.info("$runtimeType()::_authChanged()::userData map: ${_userDataMap}");
 //      await getSingleUserData(newUser.uid);
 //      fbSingUserData = _fbDatabase.ref("$USER_DATA/$userID");
