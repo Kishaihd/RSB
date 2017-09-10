@@ -14,7 +14,7 @@ import 'package:RSB/services/logger_service.dart';
   directives: const [CORE_DIRECTIVES, materialDirectives],
   providers: const [materialProviders],
 )
-class VocabListComponent {
+class VocabListComponent implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
@@ -38,7 +38,20 @@ class VocabListComponent {
   Map<String, String> get vocabList => _vocabList;
 
 
-
+  void ngOnInit() {
+    allVocabLists = fbService?.learner?.vocabLists;
+    _log.info("$runtimeType()::allVocabLists = ${fbService.learner.vocabLists}");
+    if (allVocabLists.containsKey(fbService.selectedLanguage) == false) {
+      allVocabLists[fbService.selectedLanguage] = {};
+    }
+    _vocabList = allVocabLists[fbService.selectedLanguage];
+    if (_vocabList != null && _vocabList.isNotEmpty) {
+      _vocabList.forEach((String word, String def) {
+        wordList.add(word);
+        defList.add(def);
+      });
+    }
+  }
 
 
 //  _vocabList = fbService.learner.currentVocabList;
@@ -91,18 +104,18 @@ class VocabListComponent {
 
   VocabListComponent(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType");
-    allVocabLists = fbService.learner.vocabLists;
-    _log.info("$runtimeType()::allVocabLists = ${fbService.learner.vocabLists}");
-    if (allVocabLists.containsKey(fbService.selectedLanguage) == false) {
-      allVocabLists[fbService.selectedLanguage] = {};
-    }
-    _vocabList = allVocabLists[fbService.selectedLanguage];
-    if (_vocabList != null && _vocabList.isNotEmpty) {
-      _vocabList.forEach((String word, String def) {
-        wordList.add(word);
-        defList.add(def);
-      });
-    }
+//    allVocabLists = fbService.learner.vocabLists;
+//    _log.info("$runtimeType()::allVocabLists = ${fbService.learner.vocabLists}");
+//    if (allVocabLists.containsKey(fbService.selectedLanguage) == false) {
+//      allVocabLists[fbService.selectedLanguage] = {};
+//    }
+//    _vocabList = allVocabLists[fbService.selectedLanguage];
+//    if (_vocabList != null && _vocabList.isNotEmpty) {
+//      _vocabList.forEach((String word, String def) {
+//        wordList.add(word);
+//        defList.add(def);
+//      });
+//    }
     currentView = views[0];
   }
 

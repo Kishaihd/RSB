@@ -235,18 +235,17 @@ class FirebaseService {// implements OnInit {
   Future<List<String>> getLangList() async {
     _log.info("$runtimeType()::getLangList()");
     if (languages != null && languages.isNotEmpty) {
-      _log.info("$runtimeType()::getLangList()::language list is populated.");
+      _log.info("$runtimeType()::getLangList()::language list is populated!");
       _log.info("$runtimeType()::getLangList()::languages are: ${languages}");
       return languages;
     }
     else {
       _log.info("$runtimeType()::getLangList()::language list is being populated...");
       fbLangList.onValue.listen((firebase.QueryEvent e) async {
-        _log.info("$runtimeType()::getLangList()::e.snapshot.val().runtimeType == ${e.snapshot.val().runtimeType}");
         languages = await e.snapshot.val();
-        _log.info("$runtimeType()::getLangList()::languages.runtimeType == ${languages.runtimeType}");
-        _log.info("$runtimeType()::languages::${languages}");
-        selectedLanguage = languages[0];
+//        _log.info("$runtimeType()::getLangList()::e.snapshot.val().runtimeType == ${e.snapshot.val().runtimeType}");
+//        _log.info("$runtimeType()::getLangList()::languages.runtimeType == ${languages.runtimeType}");
+//        _log.info("$runtimeType()::languages::${languages}");
       });
       return languages;
     }
@@ -356,12 +355,17 @@ class FirebaseService {// implements OnInit {
     if (selectedLanguage == null || selectedLanguage.isEmpty) {
       if (learner?.currentLanguage == null || learner.currentLanguage.isEmpty) {
         if (languages == null || languages.isEmpty) {
-          languages = await getLangList();
+          getLangList().then((f) {
+            languages = f;
+            selectedLanguage = languages?.first;
+          });
         }
-        selectedLanguage = languages?.elementAt(0);
+        else {
+          selectedLanguage = languages?.first;
+        }
       }
       else {
-        selectedLanguage = learner.currentLanguage;
+        selectedLanguage = learner?.currentLanguage;
       }
     }
     return selectedLanguage;
@@ -390,7 +394,7 @@ class FirebaseService {// implements OnInit {
     }
   }
 
-  _authChanged(firebase.User newUser) async {
+  _authChanged(firebase.User newUser) { // async {
     _log.info("$runtimeType()::_authChanged()");
     fbUser = newUser;
     _log.info("$runtimeType()::_authChanged()::fbUser = newUser: ${fbUser.toString()} = ${newUser.toString()}");
@@ -419,7 +423,7 @@ class FirebaseService {// implements OnInit {
 //      _log.info("$runtimeType()::_authChanged():: _userDataMap.toString() = ${_userDataMap.toString()}");
       _log.info("$runtimeType()::_authChanged():: _userDataMap.containsKey(${newUser.uid}) == ${_userDataMap.containsKey(newUser.uid)}");
     }
-    await getSelectedLanguage();
+    getSelectedLanguage();
   } // end _authChanged
 
   Future signIn() async {

@@ -1,0 +1,6 @@
+
+
+.mat-tab {
+    display: flex;
+    flex-flow: column;
+}

@@ -57,7 +57,7 @@ class NounView { //implements OnInit {
       _log.info("$runtimeType()::set nounDataMap() --contains key 'nouns' ");
       if (_nounDataMap != singleLangData["nouns"]) {
         _nounDataMap = singleLangData["nouns"];
-        initializeMe();
+        initMe();
       }
     }
   }
@@ -69,12 +69,12 @@ class NounView { //implements OnInit {
   void set nounMetaMap(Map<String, dynamic> singleLangMeta) {
     if (_nounMetaMap != singleLangMeta) {
       _nounMetaMap = singleLangMeta;
-      initializeMe();
+      initMe();
     }
   }
   Map<String, dynamic> get nounMetaMap => _nounMetaMap;
 
-  void initializeMe() {
+  void initMe() {
     _log.info("$runtimeType()::initMe():: nounMetaMap = ${nounMetaMap}");
     if (_nounDataMap == null || _nounDataMap.isEmpty || _nounMetaMap == null || _nounMetaMap.isEmpty) {
       _log.info("$runtimeType()::initializeMe()::--data inputs are null or empty!");
