@@ -163,8 +163,8 @@ class FirebaseService {// implements OnInit {
     _log.info("$runtimeType()::getAllLangMeta()");
     if (allLanguageMeta == null || allLanguageMeta.isEmpty) {
       fbLangMeta.onValue.listen((firebase.QueryEvent e) async {
-        _log.info("$runtimeType()::getAllLangMeta():: e.snapshot.val().runtimeType == ${e.snapshot.val().runtimeType}");
         allLanguageMeta = await e.snapshot.val();
+        _log.info("$runtimeType()::getAllLangMeta():: e.snapshot.val().runtimeType == ${e.snapshot.val().runtimeType}");
         _log.info("$runtimeType()::languageMeta.onChildAdded.listen::${e.snapshot.val()}");
       });
     }
@@ -234,7 +234,7 @@ class FirebaseService {// implements OnInit {
 
   Future<List<String>> getLangList() async {
     _log.info("$runtimeType()::getLangList()");
-    if (languages != null && languages.isNotEmpty) {
+    if (languages.isNotEmpty) {
       _log.info("$runtimeType()::getLangList()::language list is populated!");
       _log.info("$runtimeType()::getLangList()::languages are: ${languages}");
       return languages;
