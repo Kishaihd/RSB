@@ -30,12 +30,12 @@ class VocabListComponent implements OnInit {
 // There's gotta be a better way to do this.
   Map<String, Map<String, String>> allVocabLists;
 
-  Map<String, String> _vocabList = {};
+  Map<String, String> vocabList = {};
 //  @Input()
-  void set vocabList(Map vList) {
-    _vocabList = vList;
-  }
-  Map<String, String> get vocabList => _vocabList;
+//  void set vocabList(Map vList) {
+//    _vocabList = vList;
+//  }
+//  Map<String, String> get vocabList => _vocabList;
 
 
   void ngOnInit() {
@@ -44,9 +44,9 @@ class VocabListComponent implements OnInit {
     if (allVocabLists.containsKey(fbService.selectedLanguage) == false) {
       allVocabLists[fbService.selectedLanguage] = {};
     }
-    _vocabList = allVocabLists[fbService.selectedLanguage];
-    if (_vocabList != null && _vocabList.isNotEmpty) {
-      _vocabList.forEach((String word, String def) {
+    vocabList = allVocabLists[fbService.selectedLanguage];
+    if (vocabList != null && vocabList.isNotEmpty) {
+      vocabList.forEach((String word, String def) {
         wordList.add(word);
         defList.add(def);
       });
@@ -153,7 +153,7 @@ class VocabListComponent implements OnInit {
   }
   void nextCard() {
     _log.info("$runtimeType()::nextCard()");
-    if (cardIndex < (_vocabList.length - 1)) { // Already on first card.
+    if (cardIndex < (vocabList.length - 1)) { // Already on first card.
       showingWord = true;
       cardIndex++;
     }
@@ -175,7 +175,7 @@ class VocabListComponent implements OnInit {
   // I think this does the above two functions in one line.
     wordList.add(word);
     defList.add(definition);
-    _vocabList[word] = definition;
+    vocabList[word] = definition;
     fbService.addWord(word, definition);
     //newSetWords.add(description);
   }
@@ -185,7 +185,7 @@ class VocabListComponent implements OnInit {
     int idx = wordList.indexOf(word);
     wordList.removeAt(idx);
     defList.removeAt(idx);
-    _vocabList.remove(word);
+    vocabList.remove(word);
   }
 //  void onReorder(ReorderEvent e) => vocabMap.insert(e.destIndex, newListWords.removeAt(e.sourceIndex));
 //      newListWords.insert(e.destIndex, newListWords.removeAt(e.sourceIndex));

@@ -16,31 +16,36 @@ class LangMsg { //implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
-//  String langMsg;
+  String langMsg = "";
 
-//  String language;
-//  @Input()
-//  void set language(String lang) {
-//    if (_language != lang) {
-//      _language = lang;
-//      _initMe();
-//    }
-//  }
-//  String get language => _language;
+  String _language = "";
+  @Input()
+  void set language(String lang) {
+    if (_language != lang) {
+      _language = lang;
+      initMe();
+    }
+  }
+  String get language => _language;
 
-//  void _initMe() {
-//    _log.info("$runtimeType()::_initMe()");
-//    if (_language == null || _language.isEmpty) {
+  initMe() async {
+    _log.info("$runtimeType()::_initMe()");
+    if (_language.isEmpty) {
+      fbService.getSelectedLanguage().then((lang) {
+        _language = lang;
+        langMsg = "Now viewing $_language";
+      });
 //      langMsg = "No language selected";
 //      return;
-//    }
-//    else {
-//      langMsg = "Now viewing $language";
-//    }
-//    _log.info("$runtimeType()::_initMe()::language: $_language");
-//  }
+    }
+    else {
+      langMsg = "Now viewing $_language";
+    }
+    _log.info("$runtimeType()::_initMe()::language: $_language");
+  }
 
   LangMsg(this._log, this.fbService) {
     _log.info("$runtimeType()");
+    initMe();
   }
 }

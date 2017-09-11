@@ -12,7 +12,7 @@ import 'package:RSB/services/firebase_service.dart';
   directives: const [CORE_DIRECTIVES, materialDirectives],
   providers: const [materialProviders],//, LoggerService],
 )
-class AdjectiveView { //implements OnInit {
+class AdjectiveView implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
@@ -26,7 +26,6 @@ class AdjectiveView { //implements OnInit {
 //Map<gender, Map<example index, Map<case, Map<sing_or_plurl, word>>>  OR
 //Map<gender, Map<index, Map<type/word, desc/example>>>
 
-//  Map<String, Map<String, Map<String, dynamic>>>
   Map _adjDataMap = {};
   List<Map> mascList = [];
   List<Map> femList = [];
@@ -36,12 +35,6 @@ class AdjectiveView { //implements OnInit {
   Map neutMap = {};
 
   List<String> decOrder = [];
-//  Map<String, Map<String, dynamic>> mascSingMap = {};
-//  Map<String, Map<String, dynamic>> mascPlMap = {};
-//  Map<String, Map<String, dynamic>> femSingMap = {};
-//  Map<String, Map<String, dynamic>> femPlMap = {};
-//  Map<String, Map<String, dynamic>> neutSingMap = {};
-//  Map<String, Map<String, dynamic>> neutPlMap = {};
   List<String> declensionTypes = [];
 
   AdjectiveView(LoggerService this._log, this.fbService) {
@@ -60,6 +53,9 @@ class AdjectiveView { //implements OnInit {
         initializeMe();
       }
     }
+    else {
+      _log.info("$runtimeType()::@Input() set adjDataMap():: -- key 'adjectives' not found!");
+    }
   }
 //  Map<String, Map<String, Map<String, dynamic>>>
   Map get adjDataMap => _adjDataMap;
@@ -74,12 +70,38 @@ class AdjectiveView { //implements OnInit {
   }
   Map<String, dynamic> get adjMetaMap => _adjMetaMap;
 
-  void initializeMe() {
+  ngOnInit() async {
+    if (_adjDataMap == null || _adjDataMap.isEmpty) {
+      fbService.getSingleLangData(await fbService.getSelectedLanguage()).then((lDat) {
+        _adjDataMap = lDat['adjectives'];
+        _log.info("$runtimeType()::ngOnInit():: adjDataMap = ${_adjDataMap}");
+        if (_adjDataMap.containsKey('masculine')) {
+          mascList = _adjDataMap['masculine'];
+          _log.info("$runtimeType()::initMe()::mascList = $mascList");
+        }
+        if (_adjDataMap.containsKey('feminine')) {
+          femList = _adjDataMap['feminine'];
+          _log.info("$runtimeType()::initMe()::femList = $femList");
+        }
+        if (_adjDataMap.containsKey('neuter')) {
+          neutList = _adjDataMap['neuter'];
+          _log.info("$runtimeType()::initMe():: neutList = $neutList");
+        }
+      });
+    }
+
+    if (_adjMetaMap == null || _adjMetaMap.isEmpty) {
+      fbService.getSingleLangMeta(await fbService.getSelectedLanguage()).then((lMet) {
+        _adjMetaMap = lMet;
+      });
+    }
+  }
+
+  initializeMe() async {
     _log.info("$runtimeType()::initMe():: _adjMetaMap = ${_adjMetaMap}");
     _log.info("$runtimeType()::initMe():: adjMetaMap = ${adjMetaMap}");
     if (_adjDataMap == null || _adjMetaMap == null) {
-      _log.info("$runtimeType()::initializeMe()::--data inputs are null!");
-      return;
+
     }
     _log.info("$runtimeType()::initMe()::hasDeclensions == ${_adjMetaMap['hasDeclensions']}");
     _log.info("$runtimeType()::initMe()::declensions order...");
@@ -126,19 +148,19 @@ class AdjectiveView { //implements OnInit {
       _log.info("$runtimeType()::initMe():: --No declensions for this language!");
     }
     /*** TEST ***/
-    mascList = _adjDataMap['masculine'];
-    _log.info("$runtimeType()::initMe()::mascList = $mascList");
-//        _log.info("$runtimeType()::initMe()::mascMap = $mascMap");
-//        femMap = _adjDataMap['feminine'];
-    femList = _adjDataMap['feminine'];
-    _log.info("$runtimeType()::initMe()::femList = $femList");
-//        _log.info("$runtimeType()::initMe()::femMap = $femMap");
-    if (_adjDataMap.containsKey('neuter')) {
-//          neutMap = _adjDataMap['neuter'];
-      neutList = _adjDataMap['neuter'];
-      _log.info("$runtimeType()::initMe():: neutList = $neutList");
-//          _log.info("$runtimeType()::initMe():: neutMap = $neutMap");
-    }
+//    mascList = _adjDataMap['masculine'];
+//    _log.info("$runtimeType()::initMe()::mascList = $mascList");
+////        _log.info("$runtimeType()::initMe()::mascMap = $mascMap");
+////        femMap = _adjDataMap['feminine'];
+//    femList = _adjDataMap['feminine'];
+//    _log.info("$runtimeType()::initMe()::femList = $femList");
+////        _log.info("$runtimeType()::initMe()::femMap = $femMap");
+//    if (_adjDataMap.containsKey('neuter')) {
+////          neutMap = _adjDataMap['neuter'];
+//      neutList = _adjDataMap['neuter'];
+//      _log.info("$runtimeType()::initMe():: neutList = $neutList");
+////          _log.info("$runtimeType()::initMe():: neutMap = $neutMap");
+//    }
     /*** TEST ***/
     _log.info("$runtimeType()::initializeMe()::--success!");
   }
