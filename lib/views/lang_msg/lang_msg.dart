@@ -19,13 +19,13 @@ class LangMsg implements OnInit {
   String langMsg = "";
 
   String _language = "";
-  @Input()
-  void set language(String lang) {
-    if (_language != lang) {
-      _language = lang;
-      initMe();
-    }
-  }
+//  @Input()
+//  void set language(String lang) {
+//    if (_language != lang) {
+//      _language = lang;
+//      initMe();
+//    }
+//  }
   String get language => _language;
 
   ngOnInit() async {

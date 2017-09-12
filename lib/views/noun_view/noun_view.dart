@@ -12,7 +12,7 @@ import 'package:RSB/services/firebase_service.dart';
   directives: const [CORE_DIRECTIVES, materialDirectives],
   providers: const [materialProviders],//, LoggerService],
 )
-class NounView { //implements OnInit {
+class NounView implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
   
@@ -50,52 +50,62 @@ class NounView { //implements OnInit {
   }
 
   //  void set nounDataMap(Map<String, Map<String, Map<String, dynamic>>> singleLangData) {
-  @Input()
-  void set nounDataMap(Map singleLangData) {
-    _log.info("$runtimeType()::@Input set nounDataMap()");
-    if (singleLangData.containsKey('nouns')) {
-      _log.info("$runtimeType()::set nounDataMap() --contains key 'nouns' ");
-      if (_nounDataMap != singleLangData["nouns"]) {
-        _nounDataMap = singleLangData["nouns"];
-        initMe();
-      }
-    }
-  }
+//  @Input()
+//  void set nounDataMap(Map singleLangData) {
+//    _log.info("$runtimeType()::@Input set nounDataMap()");
+//    if (singleLangData.containsKey('nouns')) {
+//      _log.info("$runtimeType()::set nounDataMap() --contains key 'nouns' ");
+//      if (_nounDataMap != singleLangData["nouns"]) {
+//        _nounDataMap = singleLangData["nouns"];
+//        initMe();
+//      }
+//    }
+//  }
 //  Map<String, Map<String, Map<String, dynamic>>>
   Map get nounDataMap => _nounDataMap;
 
   Map<String, dynamic> _nounMetaMap = {};
-  @Input()
-  void set nounMetaMap(Map<String, dynamic> singleLangMeta) {
-    if (_nounMetaMap != singleLangMeta) {
-      _nounMetaMap = singleLangMeta;
-      initMe();
-    }
-  }
+//  @Input()
+//  void set nounMetaMap(Map<String, dynamic> singleLangMeta) {
+//    if (_nounMetaMap != singleLangMeta) {
+//      _nounMetaMap = singleLangMeta;
+//      initMe();
+//    }
+//  }
   Map<String, dynamic> get nounMetaMap => _nounMetaMap;
 
-  void initMe() {
+  ngOnInit() async {
     _log.info("$runtimeType()::initMe():: nounMetaMap = ${nounMetaMap}");
-    if (_nounDataMap == null || _nounDataMap.isEmpty || _nounMetaMap == null || _nounMetaMap.isEmpty) {
+    if (_nounDataMap == null || _nounDataMap.isEmpty) {
       _log.info("$runtimeType()::initializeMe()::--data inputs are null or empty!");
-      return;
+      fbService.getAllLangData().then((allLangDat) async {
+//      if (fbService.selectedLanguage != null && fbService.selectedLanguage.isNotEmpty) {
+        _nounDataMap = allLangDat[await fbService.getSelectedLanguage()]['nouns'];
+//      }
+      ///todo: fill the different declension maps for each gender? Or is that done in HTML?
+     });
     }
-    _log.info("$runtimeType()::initMe()::hasDeclensions == ${_nounMetaMap['hasDeclensions']}");
-    _log.info("$runtimeType()::initMe()::declensions order...");
-    decOrder = _nounMetaMap['declensionsOrderPreference'];
-
-    if (_nounMetaMap.containsKey("hasDeclensions")) {
-      _log.info("$runtimeType()::initMe()::metaMap.containsKey(hasDeclensions) = ${_nounMetaMap.containsKey('hasDeclensions')}");
-      if (_nounMetaMap['hasDeclensions'] == true) {
-        _log.info("DECLENSIONS == TRUE!!!");
-      }
-      _log.info("$runtimeType()::initMe()::mascList = $mascList");
-      _log.info("$runtimeType()::initMe()::femList = $femList");
+    if (_nounMetaMap == null || _nounMetaMap.isEmpty) {
+      fbService.getAllLangMeta().then((allLangMet) async {
+        _nounMetaMap = allLangMet[await fbService.getSelectedLanguage()];
+        decOrder = _nounMetaMap['declensionsOrderPreference'];
+      });
     }
-    else {
-      _log.info("$runtimeType()::initMe():: --No declensions for this language!");
-    }
-    _log.info("$runtimeType()::initializeMe()::--success!");
+//    _log.info("$runtimeType()::initMe()::hasDeclensions == ${_nounMetaMap['hasDeclensions']}");
+//    _log.info("$runtimeType()::initMe()::declensions order...");
+//
+//    if (_nounMetaMap.containsKey("hasDeclensions")) {
+//      _log.info("$runtimeType()::initMe()::metaMap.containsKey(hasDeclensions) = ${_nounMetaMap.containsKey('hasDeclensions')}");
+//      if (_nounMetaMap['hasDeclensions'] == true) {
+//        _log.info("DECLENSIONS == TRUE!!!");
+//      }
+//      _log.info("$runtimeType()::initMe()::mascList = $mascList");
+//      _log.info("$runtimeType()::initMe()::femList = $femList");
+//    }
+//    else {
+//      _log.info("$runtimeType()::initMe():: --No declensions for this language!");
+//    }
+//    _log.info("$runtimeType()::initializeMe()::--success!");
   }
 
 

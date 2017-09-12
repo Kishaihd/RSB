@@ -396,7 +396,7 @@ class FirebaseService {// implements OnInit {
     }
   }
 
-  _authChanged(firebase.User newUser) { // async {
+  _authChanged(firebase.User newUser) async {
     _log.info("$runtimeType()::_authChanged()");
     fbUser = newUser;
     _log.info("$runtimeType()::_authChanged()::fbUser = newUser: ${fbUser.toString()} = ${newUser.toString()}");
