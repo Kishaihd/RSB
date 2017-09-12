@@ -38,13 +38,16 @@ class VocabListComponent implements OnInit {
 //  Map<String, String> get vocabList => _vocabList;
 
 
-  void ngOnInit() {
-    allVocabLists = fbService?.learner?.vocabLists;
+  ngOnInit() async {
+//    allVocabLists = await fbService?.learner?.vocabLists;
+    allVocabLists = await fbService.getVocabLists(fbService.fbUser.uid).then((allLists) async {
+      vocabList = allLists[await fbService.getSelectedLanguage()];
+    });
     _log.info("$runtimeType()::allVocabLists = ${fbService.learner.vocabLists}");
-    if (allVocabLists.containsKey(fbService.selectedLanguage) == false) {
-      allVocabLists[fbService.selectedLanguage] = {};
-    }
-    vocabList = allVocabLists[fbService.selectedLanguage];
+//    if (allVocabLists.containsKey(fbService.selectedLanguage) == false) {
+//      allVocabLists[fbService.selectedLanguage] = {};
+//    }
+
     if (vocabList != null && vocabList.isNotEmpty) {
       vocabList.forEach((String word, String def) {
         wordList.add(word);

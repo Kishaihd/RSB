@@ -12,7 +12,7 @@ import 'package:RSB/services/logger_service.dart';
   directives: const [CORE_DIRECTIVES, materialDirectives],
   providers: const [materialProviders],
 )
-class LangMsg { //implements OnInit {
+class LangMsg implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
@@ -27,6 +27,10 @@ class LangMsg { //implements OnInit {
     }
   }
   String get language => _language;
+
+  ngOnInit() async {
+    await initMe();
+  }
 
   initMe() async {
     _log.info("$runtimeType()::_initMe()");
@@ -46,6 +50,5 @@ class LangMsg { //implements OnInit {
 
   LangMsg(this._log, this.fbService) {
     _log.info("$runtimeType()");
-    initMe();
   }
 }

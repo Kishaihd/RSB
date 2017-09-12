@@ -1,13 +1,10 @@
 /* AngularDart info: https://webdev.dartlang.org/angular
    Components info: https://webdev.dartlang.org/components */
 // Necessary?
-import 'package:firebase/firebase.dart' as firebase;
-
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:RSB/services/firebase_service.dart';
 import 'package:RSB/services/logger_service.dart';
-//import 'models/learner.dart';
 import 'views/login_view/login_view.dart';
 import 'views/menu_view/menu_view.dart';
 //import 'views/vocab_list_component/vocab_list_component.dart';

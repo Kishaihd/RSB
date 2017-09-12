@@ -162,7 +162,7 @@ class AdjectiveView implements OnInit {
 ////          _log.info("$runtimeType()::initMe():: neutMap = $neutMap");
 //    }
     /*** TEST ***/
-    _log.info("$runtimeType()::initializeMe()::--success!");
+    _log.info("$runtimeType()::initializeMe()::--success?");
   }
 
 

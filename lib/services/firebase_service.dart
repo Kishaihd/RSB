@@ -97,6 +97,7 @@ class FirebaseService {// implements OnInit {
     });
 
     fbVocabListMeta.onValue.listen((firebase.QueryEvent vMeta) async {
+//      vocabMeta = await vMeta.snapshot.val();
       vocabMeta = await vMeta.snapshot.val();
       _log.info("$runtimeType()::defaultConstructor()::vocabMeta: ${vocabMeta.toString()}");
     });
