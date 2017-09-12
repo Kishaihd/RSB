@@ -52,22 +52,23 @@ class MainApp implements OnInit {
   String currentView;
 
 //  @override
-  void ngOnInit() { // async {
+  ngOnInit() async {
     _log.info("$runtimeType()::ngOnInit()");
 
 //    language = "russian"; ///todo: Manually setting language is for debug purposes only.
     _log.info("$runtimeType()::defaultContructor()::fbService.getLangList()");
-    fbService.getLangList();
+    await fbService.getLangList();
 //    _log.info("$runtimeType()::defaultContructor()::languages = ${fbService?.languages}");
     _log.info("$runtimeType()::defaultContructor()::fbService.getAllLangMeta()");
-    fbService.getAllLangMeta();
+    await fbService.getAllLangMeta();
 //    _log.info("$runtimeType()::defaultContructor()::langMeta = ${fbService?.allLanguageMeta}");
     _log.info("$runtimeType()::defaultContructor()::fbService.getAllLangData");
-    fbService.getAllLangData();
+    await fbService.getAllLangData();
 //    _log.info("$runtimeType()::defaultContructor()::fullLanguagedata = ${fbService?.allLanguageData}");
 
     ///todo: Nested ternary operators?
-    language = (fbService?.learner?.currentLanguage != null ? fbService.learner.currentLanguage : (fbService.selectedLanguage != null ? fbService.selectedLanguage : " "));
+    language = await fbService.getSelectedLanguage();
+//    language = (fbService?.learner?.currentLanguage != null ? fbService.learner.currentLanguage : (fbService.selectedLanguage != null ? fbService.selectedLanguage : " "));
     _log.info("Nested turnary:: language = (${fbService?.learner?.currentLanguage} != null ? ${fbService.learner.currentLanguage} : (${fbService.selectedLanguage} != null ? ${fbService.selectedLanguage} : " "))");
 //    if (fbService?.learner?.currentLanguage != null && fbService.learner.currentLanguage.isNotEmpty) {
 //      language = fbService.learner.currentLanguage;

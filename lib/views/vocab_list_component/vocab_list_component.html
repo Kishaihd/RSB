@@ -76,7 +76,7 @@
             No words yet!
         </p>
 
-        <div *ngIf="vocabList.isNotEmpty">
+        <div *ngIf="vocabList != null && vocabList.isNotEmpty">
             <ul>
                 <!--<li *ngFor="let word of newWords; let i=index">-->
                 <li *ngFor="let word of vocabList.keys"> <!--; let i=index"-->

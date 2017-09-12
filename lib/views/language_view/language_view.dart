@@ -17,37 +17,42 @@ import 'package:RSB/views/adjective_view/adjective_view.dart';
   directives: const [CORE_DIRECTIVES, materialDirectives, NounView, AdjectiveView, VerbView, VocabListComponent, VocabView],
   providers: const [materialProviders],
 )
-class LanguageView { //implements OnInit {
+class LanguageView implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
 
   String _lang = "";
-  @Input()
-  void set lang(String l) {
-    _log.info("$runtimeType()::set lang($l)");
-    if (l == null || l.isEmpty) {
-      l = fbService?.selectedLanguage;
-      _log.info("$runtimeType()::set lang($l) -- fbService.selectedLanguage = ${fbService.selectedLanguage}");
-    }
-    if (_lang != l) {
-      _lang = l;
-      _initMe();
-    }
-  }
+//  @Input()
+//  void set lang(String l) {
+//    _log.info("$runtimeType()::set lang($l)");
+//    if (l == null || l.isEmpty) {
+//      l = fbService?.selectedLanguage;
+//      _log.info("$runtimeType()::set lang($l) -- fbService.selectedLanguage = ${fbService.selectedLanguage}");
+//    }
+//    if (_lang != l) {
+//      _lang = l;
+//      _initMe();
+//    }
+//  }
   String get lang => _lang;
 
-  Future<Null> _initMe() async {
-    _log.info("$runtimeType()::_initMe()");
-    _log.info("$runtimeType()::initMe()::lang = $_lang");
-    if (_lang == null || _lang.isEmpty) {
-      _lang = await fbService.getSelectedLanguage();
-      await fbService?.getSingleLangMeta(lang);
-      await fbService?.getSingleLangData(lang);
-      return;
-    }
+
+
+  ngOnInit() async {
+    _log.info("$runtimeType()::ngOnInit()");
+    _log.info("$runtimeType()::ngOnInit()::lang = $_lang");
+//    if (_lang == null || _lang.isEmpty) {
+//      _lang = await fbService.getSelectedLanguage();
+      fbService.getSelectedLanguage().then((newLang) async {
+        _lang = newLang;
+        await fbService.getSingleLangMeta(lang);
+        await fbService.getSingleLangData(lang);
+      });
     _log.info("$runtimeType()::_initMe()::_lang is $_lang");
     _log.info("$runtimeType()::initMe()::--success!");
+      return;
+//    }
   }
 
 //  @override
@@ -74,7 +79,7 @@ class LanguageView { //implements OnInit {
 
   LanguageView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType()");
-    _initMe();
+//    _initMe();
 //    _lang = fbService.learner.currentLanguage ?? "nolang!";
 //    _langMeta = fbService?.getSingleLangMeta(lang);
 //    _langData = fbService?.getSingleLangData(lang);

@@ -352,7 +352,8 @@ class FirebaseService {// implements OnInit {
   Future<String> getSelectedLanguage() async {
     _log.info("$runtimeType()::getSelectedLanguage()");
     _log.info("$runtimeType()::getSelectedLanguage() --selectedLanguage = $selectedLanguage");
-    _log.info("$runtimeType()::getSelectedLanguage() --learner.currentLanguage = ${learner?.currentLanguage}");
+//    _log.info("$runtimeType()::getSelectedLanguage() --learner.currentLanguage = ${learner?.currentLanguage}");
+    _log.info("$runtimeType()::getSelectedLanguage() --languages = $languages");
     if (selectedLanguage == null || selectedLanguage.isEmpty) {
       if (learner?.currentLanguage == null || learner.currentLanguage.isEmpty) {
         if (languages == null || languages.isEmpty) {
@@ -461,9 +462,9 @@ class FirebaseService {// implements OnInit {
     await fbVocabListData.update(learner.vocabLists);
   }
 
-  void removeWord(String oldWord, [String oldDef]) {
+  Future<Null> removeWord(String oldWord) async {
     learner.vocabLists[selectedLanguage].remove(oldWord);
-    fbVocabListData.update(learner.vocabLists);
+    await fbVocabListData.update(learner.vocabLists);
   }
 
 } //end class FirebaseService

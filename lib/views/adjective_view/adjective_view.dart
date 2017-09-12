@@ -43,31 +43,31 @@ class AdjectiveView implements OnInit {
   }
 
   //  void set adjDataMap(Map<String, Map<String, Map<String, dynamic>>> singleLangData) {
-  @Input()
-  void set adjDataMap(Map singleLangData) {
-    _log.info("$runtimeType()::@Input set adjDataMap()");
-    if (singleLangData.containsKey('adjectives')) {
-      _log.info("$runtimeType()::set adjDataMap() --contains key 'adjectives' ");
-      if (_adjDataMap != singleLangData["adjectives"]) {
-        _adjDataMap = singleLangData["adjectives"];
-        initializeMe();
-      }
-    }
-    else {
-      _log.info("$runtimeType()::@Input() set adjDataMap():: -- key 'adjectives' not found!");
-    }
-  }
-//  Map<String, Map<String, Map<String, dynamic>>>
+//  @Input()
+//  void set adjDataMap(Map singleLangData) {
+//    _log.info("$runtimeType()::@Input set adjDataMap()");
+//    if (singleLangData.containsKey('adjectives')) {
+//      _log.info("$runtimeType()::set adjDataMap() --contains key 'adjectives' ");
+//      if (_adjDataMap != singleLangData["adjectives"]) {
+//        _adjDataMap = singleLangData["adjectives"];
+//        initializeMe();
+//      }
+//    }
+//    else {
+//      _log.info("$runtimeType()::@Input() set adjDataMap():: -- key 'adjectives' not found!");
+//    }
+//  }
+////  Map<String, Map<String, Map<String, dynamic>>>
   Map get adjDataMap => _adjDataMap;
 
   Map<String, dynamic> _adjMetaMap = {};
-  @Input()
-  void set adjMetaMap(Map<String, dynamic> singleLangMeta) {
-    if (_adjMetaMap != singleLangMeta) {
-      _adjMetaMap = singleLangMeta;
-      initializeMe();
-    }
-  }
+//  @Input()
+//  void set adjMetaMap(Map<String, dynamic> singleLangMeta) {
+//    if (_adjMetaMap != singleLangMeta) {
+//      _adjMetaMap = singleLangMeta;
+//      initializeMe();
+//    }
+//  }
   Map<String, dynamic> get adjMetaMap => _adjMetaMap;
 
   ngOnInit() async {
@@ -97,73 +97,73 @@ class AdjectiveView implements OnInit {
     }
   }
 
-  initializeMe() async {
-    _log.info("$runtimeType()::initMe():: _adjMetaMap = ${_adjMetaMap}");
-    _log.info("$runtimeType()::initMe():: adjMetaMap = ${adjMetaMap}");
-    if (_adjDataMap == null || _adjMetaMap == null) {
-
-    }
-    _log.info("$runtimeType()::initMe()::hasDeclensions == ${_adjMetaMap['hasDeclensions']}");
-    _log.info("$runtimeType()::initMe()::declensions order...");
-    decOrder = _adjMetaMap['declensionsOrderPreference'];
-//    if (_adjMetaMap['hasDeclensions'] == true) {
-    if (_adjMetaMap.containsKey("hasDeclensions")) {
-      _log.info("$runtimeType()::initMe()::metaMap.containsKey(hasDeclensions) = ${_adjMetaMap.containsKey('hasDeclensions')}");
-      if (_adjMetaMap['hasDeclensions'] == true) {
-        _log.info("DECLENSIONS == TRUE!!!");
-      }
-//      _log.info("$runtimeType()::initMe()::adjDataMap = ${_adjDataMap}");
-//      _log.info("$runtimeType()::initMe()::adjDataMap['masculine'] = ${_adjDataMap['masculine']}");
-//      _log.info("$runtimeType()::initMe()::adjDataMap['feminine'] = ${_adjDataMap['feminine']}");
-//      _log.info("$runtimeType()::initMe()::adjDataMap['neuter'] = ${_adjDataMap['neuter']}");
-//      _adjDataMap['masculine'][0].forEach((String decType, Map other) {
-//        if (decType != 'type' && decType != 'word') { // don't add the example shits
-//          declensionTypes.add(decType);
-//          _log.info("$runtimeType()::initMe():: found declension type: $decType!");
-//        }
-////        mascMap = _adjDataMap['masculine'];
-//        mascList = _adjDataMap['masculine'];
-//        _log.info("$runtimeType()::initMe()::mascList = $mascList");
-////        _log.info("$runtimeType()::initMe()::mascMap = $mascMap");
-////        femMap = _adjDataMap['feminine'];
-//        femList = _adjDataMap['feminine'];
-//        _log.info("$runtimeType()::initMe()::femList = $femList");
-////        _log.info("$runtimeType()::initMe()::femMap = $femMap");
-//        if (_adjDataMap.containsKey('neuter')) {
-////          neutMap = _adjDataMap['neuter'];
-//          neutList = _adjDataMap['neuter'];
-//          _log.info("$runtimeType()::initMe():: neutList = $neutList");
-////          _log.info("$runtimeType()::initMe():: neutMap = $neutMap");
-//        }
-//      });
-//      Map<String, Map<String, dynamic>> mascSingMap = {};
-//      Map<String, Map<String, dynamic>> mascPlMap = {};
-//      Map<String, Map<String, dynamic>> femSingMap = {};
-//      Map<String, Map<String, dynamic>> femPlMap = {};
-//      Map<String, Map<String, dynamic>> neutSingMap = {};
-//      Map<String, Map<String, dynamic>> neutPlMap = {};
-//      List<String> declensionTypes = [];
-    }
-    else {
-      _log.info("$runtimeType()::initMe():: --No declensions for this language!");
-    }
-    /*** TEST ***/
-//    mascList = _adjDataMap['masculine'];
-//    _log.info("$runtimeType()::initMe()::mascList = $mascList");
-////        _log.info("$runtimeType()::initMe()::mascMap = $mascMap");
-////        femMap = _adjDataMap['feminine'];
-//    femList = _adjDataMap['feminine'];
-//    _log.info("$runtimeType()::initMe()::femList = $femList");
-////        _log.info("$runtimeType()::initMe()::femMap = $femMap");
-//    if (_adjDataMap.containsKey('neuter')) {
-////          neutMap = _adjDataMap['neuter'];
-//      neutList = _adjDataMap['neuter'];
-//      _log.info("$runtimeType()::initMe():: neutList = $neutList");
-////          _log.info("$runtimeType()::initMe():: neutMap = $neutMap");
+//  initializeMe() async {
+//    _log.info("$runtimeType()::initMe():: _adjMetaMap = ${_adjMetaMap}");
+//    _log.info("$runtimeType()::initMe():: adjMetaMap = ${adjMetaMap}");
+//    if (_adjDataMap == null || _adjMetaMap == null) {
+//
 //    }
-    /*** TEST ***/
-    _log.info("$runtimeType()::initializeMe()::--success?");
-  }
+//    _log.info("$runtimeType()::initMe()::hasDeclensions == ${_adjMetaMap['hasDeclensions']}");
+//    _log.info("$runtimeType()::initMe()::declensions order...");
+//    decOrder = _adjMetaMap['declensionsOrderPreference'];
+////    if (_adjMetaMap['hasDeclensions'] == true) {
+//    if (_adjMetaMap.containsKey("hasDeclensions")) {
+//      _log.info("$runtimeType()::initMe()::metaMap.containsKey(hasDeclensions) = ${_adjMetaMap.containsKey('hasDeclensions')}");
+//      if (_adjMetaMap['hasDeclensions'] == true) {
+//        _log.info("DECLENSIONS == TRUE!!!");
+//      }
+////      _log.info("$runtimeType()::initMe()::adjDataMap = ${_adjDataMap}");
+////      _log.info("$runtimeType()::initMe()::adjDataMap['masculine'] = ${_adjDataMap['masculine']}");
+////      _log.info("$runtimeType()::initMe()::adjDataMap['feminine'] = ${_adjDataMap['feminine']}");
+////      _log.info("$runtimeType()::initMe()::adjDataMap['neuter'] = ${_adjDataMap['neuter']}");
+////      _adjDataMap['masculine'][0].forEach((String decType, Map other) {
+////        if (decType != 'type' && decType != 'word') { // don't add the example shits
+////          declensionTypes.add(decType);
+////          _log.info("$runtimeType()::initMe():: found declension type: $decType!");
+////        }
+//////        mascMap = _adjDataMap['masculine'];
+////        mascList = _adjDataMap['masculine'];
+////        _log.info("$runtimeType()::initMe()::mascList = $mascList");
+//////        _log.info("$runtimeType()::initMe()::mascMap = $mascMap");
+//////        femMap = _adjDataMap['feminine'];
+////        femList = _adjDataMap['feminine'];
+////        _log.info("$runtimeType()::initMe()::femList = $femList");
+//////        _log.info("$runtimeType()::initMe()::femMap = $femMap");
+////        if (_adjDataMap.containsKey('neuter')) {
+//////          neutMap = _adjDataMap['neuter'];
+////          neutList = _adjDataMap['neuter'];
+////          _log.info("$runtimeType()::initMe():: neutList = $neutList");
+//////          _log.info("$runtimeType()::initMe():: neutMap = $neutMap");
+////        }
+////      });
+////      Map<String, Map<String, dynamic>> mascSingMap = {};
+////      Map<String, Map<String, dynamic>> mascPlMap = {};
+////      Map<String, Map<String, dynamic>> femSingMap = {};
+////      Map<String, Map<String, dynamic>> femPlMap = {};
+////      Map<String, Map<String, dynamic>> neutSingMap = {};
+////      Map<String, Map<String, dynamic>> neutPlMap = {};
+////      List<String> declensionTypes = [];
+//    }
+//    else {
+//      _log.info("$runtimeType()::initMe():: --No declensions for this language!");
+//    }
+//    /*** TEST ***/
+////    mascList = _adjDataMap['masculine'];
+////    _log.info("$runtimeType()::initMe()::mascList = $mascList");
+//////        _log.info("$runtimeType()::initMe()::mascMap = $mascMap");
+//////        femMap = _adjDataMap['feminine'];
+////    femList = _adjDataMap['feminine'];
+////    _log.info("$runtimeType()::initMe()::femList = $femList");
+//////        _log.info("$runtimeType()::initMe()::femMap = $femMap");
+////    if (_adjDataMap.containsKey('neuter')) {
+//////          neutMap = _adjDataMap['neuter'];
+////      neutList = _adjDataMap['neuter'];
+////      _log.info("$runtimeType()::initMe():: neutList = $neutList");
+//////          _log.info("$runtimeType()::initMe():: neutMap = $neutMap");
+////    }
+//    /*** TEST ***/
+//    _log.info("$runtimeType()::initializeMe()::--success?");
+//  }
 
 
 } // end class NounView

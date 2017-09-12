@@ -20,7 +20,8 @@
                [availableLanguages]="fbService?.languages"
                [myLanguages]="fbService?.learner?.myLanguages">
     </menu-view>
-    <language-view *ngIf="currentView == 'languageView'" [lang]="fbService?.selectedLanguage"></language-view>
+    <language-view *ngIf="currentView == 'languageView'"></language-view>
+    <!--[lang]="fbService?.selectedLanguage"-->
     <div>
         <hr>
     </div>

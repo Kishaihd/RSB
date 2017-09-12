@@ -43,7 +43,7 @@ class VocabListComponent implements OnInit {
     allVocabLists = await fbService.getVocabLists(fbService.fbUser.uid).then((allLists) async {
       vocabList = allLists[await fbService.getSelectedLanguage()];
     });
-    _log.info("$runtimeType()::allVocabLists = ${fbService.learner.vocabLists}");
+//    _log.info("$runtimeType()::allVocabLists = ${fbService.learner.vocabLists}");
 //    if (allVocabLists.containsKey(fbService.selectedLanguage) == false) {
 //      allVocabLists[fbService.selectedLanguage] = {};
 //    }
@@ -124,27 +124,27 @@ class VocabListComponent implements OnInit {
 
   void changeEditMode() {
     _log.info("$runtimeType()::changeEditMode()");
-    editMode = !editMode;
+    editMode = (!editMode);
   }
 
   void changeListView() {
     _log.info("$runtimeType()::changeListView()");
-    defVisible = !defVisible;
+    defVisible = (!defVisible);
   }
 
   void changeListWordView() {
     _log.info("$runtimeType()::changeListWordView()");
-    listOrderWordFirst = !listOrderWordFirst;
+    listOrderWordFirst = (!listOrderWordFirst);
   }
 
   void changeCardView() {
     _log.info("$runtimeType()::changeCardView()");
-    cardOrderWordFirst = !cardOrderWordFirst;
+    cardOrderWordFirst = (!cardOrderWordFirst);
   }
 
   void cardClick() {
     _log.info("$runtimeType()::cardClick()");
-    showingWord = !showingWord;
+    showingWord = (!showingWord);
   }
 
   void previousCard() {
@@ -164,7 +164,7 @@ class VocabListComponent implements OnInit {
 
   void toggleMenu() {
     _log.info("$runtimeType()::toggleMenu())");
-    menuVisible = !menuVisible;
+    menuVisible = (!menuVisible);
   }
 
   void changeVocabView(int newIndex) {
@@ -189,6 +189,7 @@ class VocabListComponent implements OnInit {
     wordList.removeAt(idx);
     defList.removeAt(idx);
     vocabList.remove(word);
+    fbService.removeWord(word);
   }
 //  void onReorder(ReorderEvent e) => vocabMap.insert(e.destIndex, newListWords.removeAt(e.sourceIndex));
 //      newListWords.insert(e.destIndex, newListWords.removeAt(e.sourceIndex));
