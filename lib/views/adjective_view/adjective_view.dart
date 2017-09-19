@@ -2,8 +2,8 @@
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 //import '../../services/noun_service.dart';
-import 'package:RSB/services/logger_service.dart';
-import 'package:RSB/services/firebase_service.dart';
+import 'package:newRSB/services/logger_service.dart';
+import 'package:newRSB/services/firebase_service.dart';
 
 @Component(
   selector: 'adj-view',
@@ -12,9 +12,9 @@ import 'package:RSB/services/firebase_service.dart';
   directives: const [CORE_DIRECTIVES, materialDirectives],
   providers: const [materialProviders],//, LoggerService],
 )
-class AdjectiveView implements OnInit {
+class AdjectiveView { //implements OnInit {
   final LoggerService _log;
-  final FirebaseService fbService;
+//  final FirebaseService fbService;
 
   List<String> views = const [
     "referenceView",
@@ -26,18 +26,51 @@ class AdjectiveView implements OnInit {
 //Map<gender, Map<example index, Map<case, Map<sing_or_plurl, word>>>  OR
 //Map<gender, Map<index, Map<type/word, desc/example>>>
 
-  Map _adjDataMap = {};
-  List<Map> mascList = [];
-  List<Map> femList = [];
-  List<Map> neutList = [];
-  Map mascMap = {};
-  Map femMap = {};
-  Map neutMap = {};
+//  List<Map> mascList = [];
 
   List<String> decOrder = [];
-  List<String> declensionTypes = [];
+  List<String> genders = [];
+  Map adjMap = {};
 
-  AdjectiveView(LoggerService this._log, this.fbService) {
+  Map _langDataMap = {};
+  @Input()
+  void set langDataMap(Map ldm) {
+    _log.info("$runtimeType::set langDataMap()::ldm = $ldm");
+    if (_langDataMap != ldm) {
+      _langDataMap = ldm;
+      _initMe();
+    }
+  }
+
+  Map _langMetaMap = {};
+  @Input()
+  void set langMetaMap(Map lmm) {
+    _log.info("$runtimeType::set langMetaMap()::lmm = $lmm");
+    if (_langMetaMap != lmm) {
+      _langMetaMap = lmm;
+      _initMe();
+    }
+  }
+  Map get langMetaMap => _langMetaMap;
+
+  void _initMe() {
+    _log.info("$runtimeType::_initMe()");
+//    _log.info("$runtimeType::_initMe()::_langDataMap = $_langDataMap");
+//    _log.info("$runtimeType::_initMe()::_langMetaMap['hasDeclensions'] = ${_langMetaMap['hasDeclensions']}");
+//    _log.info("$runtimeType::_initMe()::_langMetaMap['hasDeclensions'].runtimeType = ${_langMetaMap['hasDeclensions'].runtimeType}");
+    if (_langDataMap != null) {
+      if (_langMetaMap != null) {
+        adjMap = _langDataMap['adjectives'];
+        if (_langMetaMap['hasDeclensions'] == 'true') {
+          decOrder = _langMetaMap['declensionsOrderPreference'];
+        }
+        if (_langMetaMap['hasGender'] == 'true') {
+          genders = _langMetaMap['genders'];
+        }
+      }
+    }
+  }
+  AdjectiveView(LoggerService this._log) {
     _log.info("$runtimeType");
     currentView = views.elementAt(0); // 0th index should be first view.
   }
@@ -58,9 +91,9 @@ class AdjectiveView implements OnInit {
 //    }
 //  }
 ////  Map<String, Map<String, Map<String, dynamic>>>
-  Map get adjDataMap => _adjDataMap;
+//  Map get adjDataMap => adjMap;
 
-  Map<String, dynamic> _adjMetaMap = {};
+//  Map<String, dynamic> _adjMetaMap = {};
 //  @Input()
 //  void set adjMetaMap(Map<String, dynamic> singleLangMeta) {
 //    if (_adjMetaMap != singleLangMeta) {
@@ -68,34 +101,35 @@ class AdjectiveView implements OnInit {
 //      initializeMe();
 //    }
 //  }
-  Map<String, dynamic> get adjMetaMap => _adjMetaMap;
+//  Map<String, dynamic> get adjMetaMap => _adjMetaMap;
 
-  ngOnInit() async {
-    if (_adjDataMap == null || _adjDataMap.isEmpty) {
-      fbService.getSingleLangData(await fbService.getSelectedLanguage()).then((lDat) {
-        _adjDataMap = lDat['adjectives'];
-        _log.info("$runtimeType()::ngOnInit():: adjDataMap = ${_adjDataMap}");
-        if (_adjDataMap.containsKey('masculine')) {
-          mascList = _adjDataMap['masculine'];
-          _log.info("$runtimeType()::initMe()::mascList = $mascList");
-        }
-        if (_adjDataMap.containsKey('feminine')) {
-          femList = _adjDataMap['feminine'];
-          _log.info("$runtimeType()::initMe()::femList = $femList");
-        }
-        if (_adjDataMap.containsKey('neuter')) {
-          neutList = _adjDataMap['neuter'];
-          _log.info("$runtimeType()::initMe():: neutList = $neutList");
-        }
-      });
-    }
-
-    if (_adjMetaMap == null || _adjMetaMap.isEmpty) {
-      fbService.getSingleLangMeta(await fbService.getSelectedLanguage()).then((lMet) {
-        _adjMetaMap = lMet;
-      });
-    }
-  }
+//  @override
+//  ngOnInit() async {
+//    if (_adjDataMap == null || _adjDataMap.isEmpty) {
+//      fbService.getSingleLangData(await fbService.getSelectedLanguage()).then((lDat) {
+//        _adjDataMap = lDat['adjectives'];
+//        _log.info("$runtimeType()::ngOnInit():: adjDataMap = ${_adjDataMap}");
+//        if (_adjDataMap.containsKey('masculine')) {
+//          mascList = _adjDataMap['masculine'];
+//          _log.info("$runtimeType()::initMe()::mascList = $mascList");
+//        }
+//        if (_adjDataMap.containsKey('feminine')) {
+//          femList = _adjDataMap['feminine'];
+//          _log.info("$runtimeType()::initMe()::femList = $femList");
+//        }
+//        if (_adjDataMap.containsKey('neuter')) {
+//          neutList = _adjDataMap['neuter'];
+//          _log.info("$runtimeType()::initMe():: neutList = $neutList");
+//        }
+//      });
+//    }
+//
+//    if (_adjMetaMap == null || _adjMetaMap.isEmpty) {
+//      fbService.getSingleLangMeta(await fbService.getSelectedLanguage()).then((lMet) {
+//        _adjMetaMap = lMet;
+//      });
+//    }
+//  }
 
 //  initializeMe() async {
 //    _log.info("$runtimeType()::initMe():: _adjMetaMap = ${_adjMetaMap}");
@@ -167,3 +201,4 @@ class AdjectiveView implements OnInit {
 
 
 } // end class NounView
+

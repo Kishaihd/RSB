@@ -1,9 +1,7 @@
-
-import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
-import 'package:RSB/services/firebase_service.dart';
-import 'package:RSB/services/logger_service.dart';
+import 'package:newRSB/services/firebase_service.dart';
+import 'package:newRSB/services/logger_service.dart';
 
 @Component(
   selector: 'menu-view',
@@ -12,13 +10,14 @@ import 'package:RSB/services/logger_service.dart';
   directives: const [CORE_DIRECTIVES, materialDirectives],
   providers: const [materialProviders],
 )
-class MenuView implements OnInit {
+class MenuView {
   final LoggerService _log;
   final FirebaseService fbService;
 
   List<String> _availableLanguages = [];
   @Input()
   void set availableLanguages(List lm) {
+    _log.info("$runtimeType::set availableLanguages($lm)");
     if (_availableLanguages != lm) {
       _availableLanguages = lm;
       initMe();
@@ -29,6 +28,7 @@ class MenuView implements OnInit {
   List<String> _myLanguages = [];
   @Input()
   void set myLanguages(List mll) {
+    _log.info("$runtimeType::set myLanguages($mll)");
     if (_myLanguages != mll) {
       _myLanguages = mll;
       initMe();
@@ -37,78 +37,35 @@ class MenuView implements OnInit {
   List get myLanguages => _myLanguages;
 
   List<String> unaddedLanguages = [];
-  List<String> myOtherLanguages = [];
+//  List<String> myLanguages = [];
 
-//  Map testFullLangMeta = {};
-//  Map testFullLangData = {};
 
-  void ngOnInit() {
-//    unaddedLanguages = _availableLanguages;
-//    myOtherLanguages = _myLanguages;
-    initMe();
+  initMe() {
+    _log.info("$runtimeType::initMe()");
+    if (_availableLanguages == null || _availableLanguages.isEmpty) {
+      _log.info("$runtimeType::initMe()::available languages = null or empty!");
+      return;
+    }
+    unaddedLanguages = _availableLanguages;
+    if (_myLanguages == null || _myLanguages.isEmpty) {
+      _log.info("$runtimeType::initMe() --_myLanguages = ${_myLanguages}");
+      return;
+    }
+    _myLanguages.forEach((String language) {
+      _log.info("$runtimeType::initMe()::found $language...");
+      if (unaddedLanguages.contains(language)) {
+        _log.info("$runtimeType::initMe()::removing $language from list of unadded languages...");
+        unaddedLanguages.remove(language);
+      }
+    });
   }
 
-  void initMe() { // async {
-    _log.info("$runtimeType()::_initMe()");
-//    unaddedLanguages = _availableLanguages;
-//    myOtherLanguages = _myLanguages;
-//    unaddedLanguages = _availableLanguages;
-//    myOtherLanguages = _myLanguages;
-//    await fbService.getUserLangList();
-//    await fbService.getUserLangList(fbService.fbUser.uid);
-//    if (langList == null || langList.isEmpty) {
-//      _langList = await fbService.getLangList();
-//    }
-//    displayList = langList;
-//    displayList.addAll(langList.reversed);
-    _log.info("$runtimeType()::initMe():: fbService.learner = ${fbService.learner}");
-    _log.info("$runtimeType()::initMe():: fbService.learner.hasLanguages = ${fbService.learner.hasLanguages}");
-//    if (fbService?.learner != null && fbService.learner.myLanguages != null && fbService.learner.myLanguages.isNotEmpty) {
-//    myOtherLanguages = fbService.learner.myLanguages;
-//    myOtherLanguages = await fbService.getUserLangList();
-      _availableLanguages.forEach((String lang) {
-//        if (fbService.learner.myLanguages.contains(lang)) {
-//        if (myOtherLanguages.contains(lang) == false && unaddedLanguages.contains(lang) == false) {
-//            unaddedLanguages.add(lang); // Only display languages that the user doesn't already have.
-//          //          _log.info("$runtimeType()::initMe():: -- user list already contains $lang. --removing $lang from display list.");
-//        }
-        if (_myLanguages.contains(lang) == false && unaddedLanguages.contains(lang) == false) {
-          unaddedLanguages.add(lang); // Only display languages that the user doesn't already have.
-          //          _log.info("$runtimeType()::initMe():: -- user list already contains $lang. --removing $lang from display list.");
-        }
-      });
-      unaddedLanguages.forEach((String lang) {
-        if (_myLanguages.contains(lang)) {
-          unaddedLanguages.remove(lang);
-        }
-      });
-//    }
+  void switchToLanguage(String lang) {
+    fbService.currentLanguage = lang;
   }
 
   MenuView(LoggerService this._log, this.fbService) {
-    _log.info("$runtimeType()");
-//    unaddedLanguages = _availableLanguages;
-//    myOtherLanguages = _myLanguages;
-//    _initMe();
-//    _langList = fbService.getLangList();
-  }
-
-  void addLanguage(String lang) {
-    _log.info("$runtimeType()::addLanguage($lang)");
-    if (fbService.learner != null) {
-      fbService.learner.addLanguage(lang);
-      unaddedLanguages.remove(lang); // Remove added language from display list!
-    }
-  }
-
-  void switchToLang(String lang) {
-    _log.info("$runtimeType()::switchToLang($lang)");
-    fbService.selectedLanguage = lang;
-    fbService.learner.currentLanguage = lang;
-  }
-
-  void joinGroup(String id) {
-    _log.info("$runtimeType()joinGroup($id)");
+    _log.info("$runtimeType");
   }
 
 }

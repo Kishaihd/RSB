@@ -1,9 +1,13 @@
-.mat-tab {
-    /*flex: 1;*/
+/*:host {*/
+    /*display: flex;*/
+    /*flex-flow: column;*/
+/*}*/
+
+.mat-tab-panel {
+    display: flex;
+    flex-flow: column;
 }
 
-.voc-view {
-    flex: 1;
-    /*justify-self: center;*/
-    max-width: 700px;
+.mat-tab {
+    display: flex;
 }

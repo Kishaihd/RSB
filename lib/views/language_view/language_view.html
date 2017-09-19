@@ -1,33 +1,20 @@
-<div>
-    Language view
-</div>
-
-<material-tab-panel>
+<material-tab-panel class="mat-tab-panel">
     <material-tab class="mat-tab" label="Nouns">
-        <noun-view>
-                <!--[nounDataMap]="fbService?.allLanguageData[fbService?.selectedLanguage]"-->
-                <!--[nounMetaMap]="fbService?.allLanguageMeta[fbService?.selectedLanguage]">-->
-            <!--[nounDataMap]="fbService?.getSingleLangData( fbService?.selectedLanguage)"-->
-            <!--[nounMetaMap]="fbService?.getSingleLangMeta(fbService?.selectedLanguage)"-->
+        <noun-view [langDataMap]="currentLangData"
+                   [langMetaMap]="currentLangMeta">
         </noun-view>
     </material-tab>
     <material-tab class="mat-tab" label="Adjectives">
-        <!--<adj-view-->
-                <!--[adjDataMap]="fbService?.allLanguageData[fbService?.selectedLanguage]"-->
-                <!--[adjMetaMap]="fbService?.allLanguageMeta[fbService?.selectedLanguage]">-->
-        <adj-view>
+        <adj-view [langDataMap]="currentLangData"
+                  [langMetaMap]="currentLangMeta">
         </adj-view>
     </material-tab>
     <material-tab class="mat-tab" label="Verbs">
         <!--<verb-view-->
-                <!--[verbDataMap]="fbService?.getSingleLangData(fbService?.selectedLanguage)"-->
-                <!--[verbMetaMap]="fbService?.getSingleLangMeta(fbService?.selectedLanguage)">-->
         <!--</verb-view>-->
     </material-tab>
     <material-tab class="mat-tab" label="Vocab">
-        <!--<vocab-list [vocabList]="vocab" class="voc-view"></vocab-list>-->
-        <vocab-list>
-        </vocab-list>
-        <!--[vocabList]="fbService?.getVocabListForLang(fbService?.fbUser?.uid, fbService?.selectedLanguage)"-->
+        <vocab-view>
+        </vocab-view>
     </material-tab>
 </material-tab-panel>

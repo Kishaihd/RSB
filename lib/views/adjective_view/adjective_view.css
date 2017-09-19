@@ -1,30 +1,78 @@
-
-.declensions {
-
+.declension-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
 }
 
-.span-by-gender {
+.declension-container {
     display: flex;
     flex-flow: row wrap;
 }
 
-.declension-table {
-    border: solid black 1px;
-}
-
-.dec-tab-header {
+.div-by-gender {
     display: flex;
-    border: 1px solid black;
-    justify-content: space-between;
+    flex-flow: row wrap;
+    justify-content: space-around;
 }
 
-.dec-tab-header td {
-    border: 1px solid blue;
+.declension-table {
+    border: solid 2px black;
+    margin: 2px;
+}
+
+.declension-header {
+    background-color: lightblue;
+}
+
+.declension-body {
+    padding: 1%;
+}
+
+.declension-row {
+    background-color: lightblue;
+}
+
+.case-name {
+    background-color: lightgray;
+}
+
+.declension-item {
+    border: solid 1px black;
+}
+
+.declension-spacer {
+    /*border: solid 1px black;*/
 }
 
 
+/*.declensions {*/
 
-/*class NounView*/
+/*}*/
+
+/*.span-by-gender {*/
+    /*display: flex;*/
+    /*flex-flow: row wrap;*/
+/*}*/
+
+/*.declension-table {*/
+    /*border: solid black 1px;*/
+/*}*/
+
+/*.dec-tab-header {*/
+    /*display: flex;*/
+    /*border: 1px solid black;*/
+    /*justify-content: space-between;*/
+/*}*/
+
+/*.dec-tab-header td {*/
+    /*border: 1px solid blue;*/
+/*}*/
+
+
+
+/*!*class NounView*!*/
+
 
 
 

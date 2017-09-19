@@ -3,36 +3,33 @@
 </div>
 
 <material-tab-panel>
-    <material-tab *ngIf="unaddedLanguages.isNotEmpty" class="mat-tab" label="Available Languages">
-        <div *ngFor="let newLang of unaddedLanguages">
+    <material-tab label="Change Language">
+        <div *ngFor="let lang of myLanguages">
+            <div *ngIf="lang == fbService.currentLanguage">
+                <material-button class="lang-btn" icon>
+                    <glyph icon="menu"></glyph>
+                    <strong>{{lang}}</strong>
+                </material-button>
+            </div>
+            <div *ngIf="lang != fbService.currentLanguage">
+                <material-button class="lang-btn" icon (trigger)="switchToLanguage(lang)">
+                    <glyph icon="menu"></glyph>
+                    {{lang}}
+                </material-button>
+            </div>
+        </div>
+    </material-tab>
+    <material-tab label="Available Languages">
+        <div *ngFor="let language of unaddedLanguages">
             <div>
-                <material-button class="lang-btn" icon (trigger)="addLanguage(newLang)">
+                <material-button class="lang-btn" icon>
                     <glyph icon="add"></glyph>
-                    {{newLang}}
+                    {{language}}
                 </material-button>
             </div>
         </div>
     </material-tab>
-    <material-tab class="mat-tab" label="Change Language">
-        <!--<div *ngFor="let test of myOtherLanguages">-->
-            <!--test1-->
-            <!--{{test1}}-->
-        <!--</div>-->
-        <div *ngFor="let test2 of myLanguages">
-            <!--<div *ngIf="test2 == fbService?.selectedLanguage"></div>-->
-            <div *ngIf="test2 != fbService?.selectedLanguage">
-                <material-button class="lang-btn" icon (trigger)="switchToLang(test2)">
-                    <glyph icon="add"></glyph>
-                    {{test2}}
-                </material-button>
-            </div>
-        </div>
-        <!--<div *ngFor="let test3 of unaddedLanguages">-->
-            <!--test3-->
-            <!--{{test3}}-->
-        <!--</div>-->
-    </material-tab>
-    <material-tab class="mat-tab" label="Settings?">
-        Settings!
+    <material-tab label="Settings">
+        Settings --coming soon!
     </material-tab>
 </material-tab-panel>

@@ -1,17 +1,156 @@
 /*:host {*/
-    /*display: flex;*/
-    /*!*align-items: stretch;*!*/
-    /*!*width: 100%;*!*/
-    /*flex-flow: column;*/
-    /*align-items: stretch;*/
+/*display: flex;*/
+/*flex-flow: column nowrap;*/
+/*justify-content: space-around;*/
+/*!*flex-direction: column;*!*/
+/*}*/
+/*.wrapper {*/
+/*flex: 1;*/
+/*!*display: flex;*!*/
+/*!*justify-content: center;*!*/
 /*}*/
 
-.wrapper {
-    display: flex;
-    flex-flow: row;
+ul {
+    list-style: none;
+    padding-left: 0;
 }
 
-/*#listComponent {*/
+li {
     /*display: flex;*/
+    align-items: center;
+    /*justify-content: space-between;*/
+    line-height: 3em;
+}
 
+li:hover {
+    background-color: #EEEEEE;
+}
+
+li material-checkbox {
+    vertical-align: middle;
+}
+
+li span material-fab {
+    /*display: flex;*/
+    align-self: flex-end;
+    float: right;
+    vertical-align: middle;
+}
+
+.wordDelete {
+    color: dimgrey;
+}
+
+.li-remove {
+    /*display: flex;*/
+    align-self: center;
+    justify-self: flex-end;
+    /*justify-content: flex-end;*/
+}
+
+.delete-icon {
+    color: red;
+}
+
+.done {
+    /*text-decoration: dimgrey;*/
+    color: lightgrey;
+}
+
+.menuButtons {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    /*border: 1px solid black;*/
+}
+.menu-left {
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-self: flex-start;*/
+}
+
+.menu-left material-dropdown-select {
+    /*align-self: flex-start;*/
+}
+
+.menu-right {
+    /*justify-self: flex-end;*/
+}
+
+.wordAndDef {
+    /*flex-flow: row nowrap;*/
+    /*justify-self: ;*/
+    justify-content: space-between;
+}
+
+.word {
+    /*display: flex;*/
+    justify-self: flex-start;
+}
+
+.def {
+    /*display: flex;*/
+    justify-self: flex-end;
+}
+
+#arrow-glyph {
+    display: flex;
+    justify-self: flex-end;
+    padding-left: 8px;
+    /*align-self: flex-end;*/
+}
+
+.card-flow {
+    display: flex;
+    flex-flow: row nowrap;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.card {
+    /*display: flex;*/
+    border: black double;
+    /*width: 80%;*/
+    width: 100%;
+    /*min-width: 80%;*/
+    /*padding-top: 40%;*/
+    /*padding-bottom: 40%;*/
+    padding-top: 50%;
+    padding-bottom: 50%;
+    justify-content: center;
+    /*align-content: center;*/
+
+}
+
+.front {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.back {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.card-change-btn {
+    display: flex;
+    align-self: center;
+}
+
+.mbtn {
+    display: flex;
+    height: 500px;
+}
+
+/*.card-button material-button {*/
+/*height: 100%;*/
+/*width: 100%;*/
 /*}*/
+
+/*.card-flow material-button {*/
+/*!*align-self: center;*!*/
+/*}*/
+

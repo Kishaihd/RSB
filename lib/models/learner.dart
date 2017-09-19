@@ -1,6 +1,6 @@
-//import 'package:RSB/services/firebase_service.dart' as firebase;
-//import 'dart:async';
-import 'package:RSB/services/logger_service.dart';
+
+import 'package:newRSB/services/logger_service.dart';
+
 
 class Learner {
   final LoggerService _log;
@@ -9,134 +9,119 @@ class Learner {
   String _name = "";
   String _email = "";
   String _uid = "";
-//  bool _exists = false; // Exists in database
-  bool hasLanguages = false;
-//  bool isComplete = false; // Has at least one language added to their ref sheet.
-  bool hasVocabLists = false; // May just be using app for reference!
+  bool _hasVocab = false;
+  bool _hasLanguages = false;
 
-  // Language info
-//  int _numLanguages = 0; // Does this matter? Probably not.
-  Map tempLangList = {};
-  Map<String, Map<String, String>> allLanguagesMeta = {};
-  Map<String, String> singleLanguageMeta = {};
-  List<String> myLanguages = [];
+  String get name => _name;
+  String get email => _email;
+  String get uid => _uid;
+
   String currentLanguage = "";
-  Map<String, String> currentVocabList = {}; // Local.
-
-  // Custom vocabulary list creatable by the user.
-  // Map<LanguageName, Map<word, definition>>
-  Map<String, Map<String, String>> _myVocabLists = {};
-
-  // Default Constructor
-  Learner(LoggerService this._log, String newUid, String newName, String newEmail, [List<String> langList, String newCurrentLang, bool hasVoc]) {
-    _log.info("$runtimeType()::defaultConstructor");
-
-    _log.info("$runtimeType()::defaultConstructor()::uid = ${newUid}");
-    _log.info("$runtimeType()::defaultConstructor()::name = ${newName}");
-    _log.info("$runtimeType()::defaultConstructor()::email = ${newEmail}");
-    _log.info("$runtimeType()::defaultConstructor()::myLanguages = ${langList}");
-    _log.info("$runtimeType()::defaultConstructor()::currentLanguage = ${newCurrentLang}");
-    _log.info("$runtimeType()::defaultConstructor()::hasVocabLists = ${hasVoc}");
-    checkComplete();
+  List<String> myLanguages = [];
+  Map<String, Map<String, String>> vocabLists = {};
+  Map<String, String> getVocabForLang(String lang) {
+    if (vocabLists.containsKey(lang) == false) {
+      vocabLists[lang] = {};
+    }
+    return vocabLists[lang];
   }
 
 
-  // Old .fromMap constructor.
-  Learner.fromMap(LoggerService _log, Map map) : this(_log, map["uid"], map["name"], map["email"], map["myLanguages"], map["currentLanguage"], map["hasVocabLists"]);
-
-
-    Map toMap() {
-      _log.info("$runtimeType()::toMap()");
-      return {
-        "uid": _uid,
-        "name": _name,
-        "email": _email,
-        "myLanguages": myLanguages.asMap(),
-        "currentLanguage": currentLanguage,
-        "hasVocabLists": hasVocabLists,
-      };
-    }
-
-    bool checkComplete() {
-      if (myLanguages == null || myLanguages.isEmpty || _name.isEmpty || _uid.isEmpty) {
-//      isComplete = true;
-        return false;
+  Learner(LoggerService this._log, String newUID, String newName, String newEmail, [List<String> newLangList, String newCurrentLang]) {
+    _uid = newUID;
+    _name = newName;
+    _email = newEmail;
+    if (newLangList != null) {
+      myLanguages = newLangList;
+      if (newCurrentLang == null || newCurrentLang.isEmpty) {
+        currentLanguage = myLanguages[0];
       }
       else {
-        return true;
+        currentLanguage = newCurrentLang;
       }
     }
 
-    void changeLang(String newLang) {
-      if (currentVocabList != null && currentVocabList.isNotEmpty) {
-        currentVocabList.forEach((String word, String def) {
-          //      vocabLists[currentLanguage].putIfAbsent(word, () => def);
-          _myVocabLists[currentLanguage][word] = def; // Same?
-        });
-      }
-//    // Does this do the above?
-//    vocabLists[currentLanguage] = currentVocabList;
-      currentLanguage = newLang;
-      currentVocabList = _myVocabLists[newLang];
-    }
+    _log.info("$runtimeType");
+    _log.info("$runtimeType::uid: $newUID");
+    _log.info("$runtimeType::name: $newName");
+    _log.info("$runtimeType::email: $newEmail");
+    _log.info("$runtimeType::myLanguages: $newLangList");
+    _log.info("$runtimeType::currentLanguage: $newCurrentLang");
+//    _log.info("$runtimeType()::hasLanguages: $hasLangs");
+//    _log.info("$runtimeType()::hasVocabLists: $hasVoc");
+  }
 
-    void addWord(String newWord, [String newDef = ""]) {
-      currentVocabList[newWord] = newDef;
-      hasVocabLists = true;
-    }
+  Learner.fromMap(LoggerService _log, Map map) :
+      this(
+        _log,
+        map["uid"],
+        map["name"],
+        map["email"],
+        map["myLanguages"],
+        map["currentLanguage"]
+//        map["hasLanguages"],
+//        map["hasVocabLists"]
+      );
 
-    void removeWord(String oldWord) {
-      currentVocabList.remove(oldWord);
-    }
+  Map toMap() {
+    _log.info("$runtimeType");
+    return {
+      "uid": _uid,
+      "name": _name,
+      "email": _email,
+      "myLanguages": myLanguages,
+      "currentLanguage": currentLanguage,
+      "hasVocabLists": _hasVocab,
+      "hasLanguages": _hasLanguages
+    };
+  }
 
-    void addLanguage(String language) {
-      myLanguages.add(language);
-      currentLanguage = language;
-      hasLanguages = true;
-    }
-
-    void removeLanguage(String language) {
-      myLanguages.remove(language);
-      if (myLanguages.isEmpty) {
-        currentLanguage = "";
-        hasLanguages = false;
-        hasVocabLists = false;
-      }
-    }
-
-    String get  name => _name;
-    String get email => _email;
-    String get uid => _uid;
-//  int get numLanguages => myLanguages.
-    Map<String, String> getVocabListForLang(String lang) {
-      return _myVocabLists[lang];
-    }
-    Map<String, Map<String, String>> get vocabLists => _myVocabLists;
+//  @override
+//  String toString() {
+//    String userInfo;
+//    userInfo = "\n${_uid}\n${_name}";
+//    _log.info("$runtimeType::toString()::userInfo: $userInfo");
+//    return userInfo;
 //  }
-  void set vocabLists(Map<String, Map<String, String>> allVocabLists) {
-    _myVocabLists = allVocabLists;
-    if (_myVocabLists.isNotEmpty) {
-      hasVocabLists = true;
+
+  void addWord(String newWord, [String newDef = ""]) {
+    vocabLists[currentLanguage][newWord] = newDef;
+    _hasVocab = true;
+  }
+
+  void removeWord(String oldWord) {
+    _log.info("$runtimeType::removeWord($oldWord)");
+    vocabLists[currentLanguage].remove(oldWord);
+    if (vocabLists.isEmpty) {
+      _hasVocab = false;
     }
   }
 
-  void addVocabListForLang(Map newVocabList, String lang) {
-    if (_myVocabLists.containsKey(lang)) {
-      _myVocabLists[lang].addAll(newVocabList);
+  void addLanguage(String newLang) {
+    _log.info("$runtimeType::addLanguage($newLang)");
+    if (myLanguages.contains(newLang)) {
+      _log.info("$runtimeType::addLanguage() --myLanguages already contains $newLang!");
+      // Do nothing
     }
     else {
-      _myVocabLists[lang] = newVocabList;
+      _log.info("$runtimeType::addLanguage() --adding $newLang to list!");
+      myLanguages.add(newLang);
     }
-    hasVocabLists = true;
+    _hasLanguages = true;
   }
-//
-//  // Custom vocabulary list creatable by the user.
-//  // Map<LanguageName, Map<word, definition>>
-//  Map<String, Map<String, String>> _myVocabLists = {};
-//
-//  Map tempLangList = {};
-//  List<String> myLanguages = [];
-//  String currentLanguage = "";
-//  Map<String, String> currentVocabList = {};
 
-}
+  void switchLanguage(String newLang) {
+    _log.info("$runtimeType::switchLanguage($newLang)");
+    currentLanguage = newLang;
+    _hasLanguages = true; // Just an assertion.
+  }
+
+  void removeLanguage(String oldLang) {
+    _log.info("$runtimeType::removeLanguage($oldLang)");
+    myLanguages.remove(oldLang);
+    if (myLanguages.isEmpty) {
+      _hasLanguages = false;
+    }
+  }
+
+} // end Learner class

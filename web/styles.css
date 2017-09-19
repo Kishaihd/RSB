@@ -1,12 +1,14 @@
-/* Copyright (c) 2017, MrPin. All rights reserved. Use of this source code
+/* Copyright (c) 2017, kad. All rights reserved. Use of this source code
    is governed by a BSD-style license that can be found in the LICENSE file. */
 
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 @import url(https://fonts.googleapis.com/css?family=Material+Icons);
 
 body {
-  background-color: #6F7D83;
-  color: white;
+  /*max-width: 600px;*/
+  max-width: 95%;
+  margin: 0 auto;
+  padding: 5vw;
 }
 
 * {

@@ -1,0 +1,25 @@
+.main-container {
+    background-color: white;
+    height: 30%;
+    min-height: 15rem;
+    width: 30%;
+    min-width: 25rem;
+    -webkit-border-radius: .25rem;
+    -moz-border-radius: .25rem;
+    border-radius: .25rem;
+    color: #110914;
+    padding: 2rem;
+}
+
+h1 {
+    margin: 0;
+}
+
+.prompt-text {
+    margin-bottom: 2rem;
+}
+
+material-button {
+    background-color: #110914;
+    color: #ffffff;
+}
