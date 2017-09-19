@@ -1,5 +1,5 @@
 
-import 'package:newRSB/services/logger_service.dart';
+import 'package:RSB/services/logger_service.dart';
 
 
 class Learner {

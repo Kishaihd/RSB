@@ -1,7 +1,7 @@
 
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
-import 'package:newRSB/services/logger_service.dart';
+import 'package:RSB/services/logger_service.dart';
 
 @Component(
   selector: 'noun-view',

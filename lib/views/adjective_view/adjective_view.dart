@@ -2,8 +2,8 @@
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 //import '../../services/noun_service.dart';
-import 'package:newRSB/services/logger_service.dart';
-import 'package:newRSB/services/firebase_service.dart';
+import 'package:RSB/services/logger_service.dart';
+import 'package:RSB/services/firebase_service.dart';
 
 @Component(
   selector: 'adj-view',

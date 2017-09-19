@@ -1,7 +1,7 @@
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
-import 'package:newRSB/services/logger_service.dart';
-import 'package:newRSB/services/firebase_service.dart';
+import 'package:RSB/services/logger_service.dart';
+import 'package:RSB/services/firebase_service.dart';
 
 @Component(
   selector: 'vocab-view',
@@ -43,9 +43,19 @@ class VocabView implements OnInit {
 
   @override
   ngOnInit() async {
-    allVocabLists = await fbService.getVocabLists(fbService.fbUser.uid).then((allLists) async {
+    _log.info("$runtimeType::ngonInit()");
+    await fbService.getVocabLists(fbService.fbUser.uid).then((allLists) async {
+      allVocabLists = allLists;
+      _log.info("$runtimeType::ngonInit()::allVocabLists = $allVocabLists");
+      _log.info("$runtimeType::ngonInit()::allLists = $allLists");
       vocabList = allLists[fbService.currentLanguage];
+      _log.info("$runtimeType::ngonInit()::vocabList = $vocabList");
+      vocabList.forEach((String word, String def) {
+        wordList.add(word);
+        defList.add(def);
+      });
     });
+    _log.info("$runtimeType::ngOnInit()::learner.vocabLists = ${fbService.learner.vocabLists}");
   }
 
   VocabView(LoggerService this._log, this.fbService) {

@@ -1,10 +1,10 @@
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
-import 'package:newRSB/services/firebase_service.dart';
-import 'package:newRSB/services/logger_service.dart';
-import 'package:newRSB/views/noun_view/noun_view.dart';
-import 'package:newRSB/views/adjective_view/adjective_view.dart';
-import 'package:newRSB/views/vocab_view/vocab_view.dart';
+import 'package:RSB/services/firebase_service.dart';
+import 'package:RSB/services/logger_service.dart';
+import 'package:RSB/views/noun_view/noun_view.dart';
+import 'package:RSB/views/adjective_view/adjective_view.dart';
+import 'package:RSB/views/vocab_view/vocab_view.dart';
 
 @Component(
   selector: 'language-view',

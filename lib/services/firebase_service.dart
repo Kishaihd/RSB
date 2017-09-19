@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:angular/angular.dart';
-import 'package:newRSB/services/logger_service.dart';
-import 'package:newRSB/models/learner.dart';
+import 'package:RSB/services/logger_service.dart';
+import 'package:RSB/models/learner.dart';
 import 'package:firebase/firebase.dart' as firebase;
 
 @Injectable()
@@ -141,11 +141,15 @@ class FirebaseService {
 
   Future getVocabLists(String userID) async {
     _log.info("$runtimeType::getVocabLists($VOCAB_LISTS/$userID)");
+    if (learner?.vocabLists != null && learner.vocabLists.isNotEmpty) {
+      return learner.vocabLists;
+    }
     if (vocabLists == null || vocabLists.isEmpty) {
       fbVocabLists = _fbDatabase.ref("$VOCAB_LISTS/$userID");
       fbVocabLists.onValue.listen((firebase.QueryEvent e) async {
         vocabLists = await e.snapshot.val();
-        _log.info("$runtimeType::getVocabLists()::vocabLists = $vocabLists");
+        learner.vocabLists = vocabLists;
+        _log.info("$runtimeType::getVocabLists()::vocabLists = ${e.snapshot.val()}");
       });
     }
     return vocabLists;
@@ -176,17 +180,17 @@ class FirebaseService {
       _log.info("$runtimeType::_authChanged($newUser)");
       fbUser = newUser;
 //      await getUserMeta(newUser.uid);
-      getUserData(newUser.uid).then((newLearner) {
+      getUserData(newUser.uid).then((newLearner) async {
         learner = new Learner.fromMap(_log, newLearner);
         _log.info("$runtimeType::_authChanged()::newLearner = $newLearner");
         _log.info("$runtimeType::_authChanged()::learner = $learner");
         currentLanguage = getCurrentLanguage();
-        getVocabLists(newUser.uid).then((vlists) {
-          _log.info("$runtimeType::_authChanged()::vocabLists = $vlists");
-          learner.vocabLists = vlists;
+        await getVocabLists(fbUser.uid); //.then((allLists) async {
+//          _log.info("$runtimeType::_authChanged()::allLists = $allLists");
+//          learner.vocabLists = allLists;
+//          _log.info("$runtimeType::_authChanged()::learner.vocabLists = ${learner.vocabLists}");
+//          });
         });
-      });
-
 //      learner = new Learner.fromMap(_log, userData);
 //      learner.vocabLists = vocabLists;
     }
@@ -209,11 +213,17 @@ class FirebaseService {
 
 
   Future<Null> addWord(String newWord, [String def = ""]) async {
+    _log.info("$runtimeType::addWord($newWord, $def)");
+    _log.info("$runtimeType::addWord() -- learner.vocabLists = ${learner.vocabLists}");
+    _log.info("$runtimeType::addWord() -- learner.vocabLists[$currentLanguage] = ${learner.vocabLists[currentLanguage]}");
     learner.vocabLists[currentLanguage][newWord] = def;
     await fbVocabLists.update(learner.vocabLists);
   }
 
   Future<Null> removeWord(String oldWord) async {
+    _log.info("$runtimeType::removeWord($oldWord)");
+    _log.info("$runtimeType::addWord() -- learner.vocabLists = ${learner.vocabLists}");
+    _log.info("$runtimeType::addWord() -- learner.vocabLists[$currentLanguage] = ${learner.vocabLists[currentLanguage]}");
     learner.vocabLists[currentLanguage].remove(oldWord);
     await fbVocabLists.update(learner.vocabLists);
   }
