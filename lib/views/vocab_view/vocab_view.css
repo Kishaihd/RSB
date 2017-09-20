@@ -1,16 +1,21 @@
 /*:host {*/
-/*display: flex;*/
-/*flex-flow: column nowrap;*/
-/*justify-content: space-around;*/
-/*!*flex-direction: column;*!*/
-/*}*/
-/*.wrapper {*/
-/*flex: 1;*/
-/*!*display: flex;*!*/
-/*!*justify-content: center;*!*/
+    /*display: flex;*/
+/*!*flex-flow: column nowrap;*!*/
+/*!*justify-content: space-around;*!*/
+/*!*!*flex-direction: column;*!*!*/
+/*!*}*!*/
+/*!*.wrapper {*!*/
+/*!*flex: 1;*!*/
+/*!*!*display: flex;*!*!*/
+/*!*!*justify-content: center;*!*!*/
 /*}*/
 
 ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+ol {
     list-style: none;
     padding-left: 0;
 }
@@ -26,23 +31,23 @@ li:hover {
     background-color: #EEEEEE;
 }
 
-li material-checkbox {
-    vertical-align: middle;
-}
+/*li material-checkbox {*/
+    /*vertical-align: middle;*/
+/*}*/
 
-li span material-fab {
-    /*display: flex;*/
-    align-self: flex-end;
-    float: right;
-    vertical-align: middle;
-}
+/*li span material-fab {*/
+    /*!*display: flex;*!*/
+    /*align-self: flex-end;*/
+    /*float: right;*/
+    /*vertical-align: middle;*/
+/*}*/
 
 .wordDelete {
     color: dimgrey;
 }
 
 .li-remove {
-    /*display: flex;*/
+    display: flex;
     align-self: center;
     justify-self: flex-end;
     /*justify-content: flex-end;*/
@@ -57,14 +62,20 @@ li span material-fab {
     color: lightgrey;
 }
 
+.menu-vocab-drop {
+    margin: 2px;
+}
+
 .menuButtons {
     display: flex;
+    /*flex: 1;*/
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
     /*border: 1px solid black;*/
 }
 .menu-left {
+    justify-self: flex-start;
     /*display: flex;*/
     /*align-items: center;*/
     /*justify-self: flex-start;*/
@@ -75,13 +86,29 @@ li span material-fab {
 }
 
 .menu-right {
-    /*justify-self: flex-end;*/
+    justify-self: flex-end;
 }
 
 .wordAndDef {
+    display: flex;
+    flex: 1;
     /*flex-flow: row nowrap;*/
-    /*justify-self: ;*/
+    justify-self: flex-start;
     justify-content: space-between;
+}
+
+.odd-row {
+    background-color: #eef7fa;
+}
+
+.list-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.vocab-row {
+    display: flex;
+    flex-flow: row;
 }
 
 .word {
@@ -141,8 +168,8 @@ li span material-fab {
 }
 
 .mbtn {
-    display: flex;
-    height: 500px;
+    /*display: flex;*/
+    /*height: 500px;*/
 }
 
 /*.card-button material-button {*/

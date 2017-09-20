@@ -9,12 +9,14 @@ class Learner {
   String _name = "";
   String _email = "";
   String _uid = "";
+  bool existsInDB = false;
   bool _hasVocab = false;
   bool _hasLanguages = false;
 
   String get name => _name;
   String get email => _email;
   String get uid => _uid;
+//  bool get existsInDB => _existsInDB;
 
   String currentLanguage = "";
   List<String> myLanguages = [];
@@ -27,10 +29,16 @@ class Learner {
   }
 
 
-  Learner(LoggerService this._log, String newUID, String newName, String newEmail, [List<String> newLangList, String newCurrentLang]) {
+  Learner(LoggerService this._log, String newUID, String newName, String newEmail, [bool existance, List<String> newLangList, String newCurrentLang]) {
     _uid = newUID;
     _name = newName;
     _email = newEmail;
+    if (existance != null) {
+      existsInDB = existance;
+    }
+    else {
+      existsInDB = false;
+    }
     if (newLangList != null) {
       myLanguages = newLangList;
       if (newCurrentLang == null || newCurrentLang.isEmpty) {
@@ -40,11 +48,16 @@ class Learner {
         currentLanguage = newCurrentLang;
       }
     }
+    else {
+      myLanguages = [];
+      currentLanguage = "";
+    }
 
     _log.info("$runtimeType");
     _log.info("$runtimeType::uid: $newUID");
     _log.info("$runtimeType::name: $newName");
     _log.info("$runtimeType::email: $newEmail");
+    _log.info("$runtimeType::exists in database: $existance");
     _log.info("$runtimeType::myLanguages: $newLangList");
     _log.info("$runtimeType::currentLanguage: $newCurrentLang");
 //    _log.info("$runtimeType()::hasLanguages: $hasLangs");
@@ -57,6 +70,7 @@ class Learner {
         map["uid"],
         map["name"],
         map["email"],
+        map["existsInDB"],
         map["myLanguages"],
         map["currentLanguage"]
 //        map["hasLanguages"],
@@ -69,10 +83,11 @@ class Learner {
       "uid": _uid,
       "name": _name,
       "email": _email,
+      "existsInDB": existsInDB,
       "myLanguages": myLanguages,
       "currentLanguage": currentLanguage,
-      "hasVocabLists": _hasVocab,
-      "hasLanguages": _hasLanguages
+//      "hasVocabLists": _hasVocab,
+//      "hasLanguages": _hasLanguages
     };
   }
 

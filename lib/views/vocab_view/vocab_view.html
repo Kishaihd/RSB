@@ -1,48 +1,39 @@
 <!--<h2>Add new words below!</h2>-->
-<!--<div class="wrapper">-->
+<div class="wrapper">
 <div class="menuButtons">
-        <span class="menu-left">
-        <material-dropdown-select iconName="more_vert" slide="x">
-            <div *ngFor="let view of views; let i=index" >
+    <span class="menu-left">
+        <material-dropdown-select iconName="more_horiz" slide="x" class="menu-vocab-drop">
+            <div *ngFor="let view of views; let i=index">
                 <material-select-item (trigger)="changeVocabView(i)">
                     {{view}}
                 </material-select-item>
             </div>
-            <!--<material-select-item (trigger)="changeVocabView(0)">-->
-            <!--Add Words-->
-            <!--</material-select-item>-->
-            <!--<material-select-item (trigger)="changeVocabView(1)">-->
-            <!--List View-->
-            <!--</material-select-item>-->
-            <!--<material-select-item (trigger)="changeVocabView(2)">-->
-            <!--Flashcards-->
-            <!--</material-select-item>-->
         </material-dropdown-select>
-        </span>
+    </span>
     <span  class="menu-right">
-            <material-toggle *ngIf="currentView == 'add words'"
-                             label="edit mode -"
-                             (click)="changeEditMode()">
-            </material-toggle>
-            <material-toggle *ngIf="currentView == 'list view'"
-                             label="word first order -"
-                             (click)="changeListWordView()">
-            </material-toggle>
-            <material-toggle *ngIf="currentView == 'list view' && defVisible == false"
-                             label="definitions off -"
-                             checked="true"
-                             (click)="changeListView()">
-            </material-toggle>
-            <material-toggle *ngIf="currentView == 'list view' && defVisible == true"
-                             label="definitions on  -"
-                             checked="false"
-                             (click)="changeListView()">
-            </material-toggle>
-            <material-toggle *ngIf="currentView == 'flashcards'"
-                             label="toggle view order -"
-                             (click)="changeCardView()">
-            </material-toggle>
-        </span>
+        <material-button *ngIf="currentView == 'add words'" raised icon (click)="changeEditMode()">
+            <material-icon *ngIf="editMode == true" icon="edit"></material-icon>
+            <material-icon *ngIf="editMode == false" icon="perm_data_setting"></material-icon>
+        </material-button>
+        <material-toggle *ngIf="currentView == 'list view'"
+                         label="word first order -"
+                         (click)="changeListWordView()">
+        </material-toggle>
+        <material-toggle *ngIf="currentView == 'list view' && defVisible == false"
+                         label="definitions off -"
+                         checked="true"
+                         (click)="changeListView()">
+        </material-toggle>
+        <material-toggle *ngIf="currentView == 'list view' && defVisible == true"
+                         label="definitions on  -"
+                         checked="false"
+                         (click)="changeListView()">
+        </material-toggle>
+        <material-toggle *ngIf="currentView == 'flashcards'"
+                         label="toggle view order -"
+                         (click)="changeCardView()">
+        </material-toggle>
+    </span>
 </div>
 
 
@@ -51,10 +42,12 @@
     <div>
         <!--<span>-->
         <material-input label="Add new vocab word!"
+                        [disabled]="editMode == true"
                         autoFocus floatingLabel style="width:40%"
                         [(ngModel)]="newWord">
         </material-input>
         <material-input label="Optional definition"
+                        [disabled]="editMode == true"
                         autoFocus floatingLabel style="width:40%"
                         [(ngModel)]="newDef">
         </material-input>
@@ -68,33 +61,30 @@
     </div>
 
     <!--<hr>-->
-    <p *ngIf="vocabList != null && vocabList.isNotEmpty">
-        New Words
-        <glyph id="arrow-glyph" icon="keyboard_arrow_down"></glyph>
-    </p>
+    <span *ngIf="vocabList != null && vocabList.isNotEmpty">
+        <hr>
+        <!--<glyph id="arrow-glyph" icon="keyboard_arrow_down"></glyph>-->
+    </span>
     <p *ngIf="vocabList == null || vocabList.isEmpty">
-        No words yet!
+        Vocabulary words will show up here. :)
     </p>
 
     <div *ngIf="vocabList != null && vocabList.isNotEmpty">
-        <ul>
+        <ul *ngFor="let word of vocabList.keys; let i=index">
             <!--<li *ngFor="let word of newWords; let i=index">-->
-            <li *ngFor="let word of vocabList.keys"> <!--; let i=index"-->
-                <material-checkbox #done materialTooltip="Mark word as memorized"></material-checkbox>
-                <span class="wordAndDef">
-                    <span [class.done]="done.checked" class="word"> {{word}} </span>
-                        <span></span>
-                    <span [class.done]="done.checked" class="def"> {{vocabList[word]}} </span>
-                    <!--<material-fab mini (trigger)="remove(i)">-->
+            <li> <!--; let i=index"-->
+                <span class="vocab-row">
+                    <material-checkbox [disabled]="editMode == true" #done materialTooltip="Mark word as memorized"></material-checkbox>
+                    <span [class.odd-row]="i % 2 == 1" class="wordAndDef">
+                        <span [class.done]="done.checked" class="word"> {{word}} </span>
+                        <span [class.done]="done.checked" class="def"> {{vocabList[word]}} </span>
                     </span>
-                <span *ngIf="editMode == false" class="li-remove">
-                        <span></span>
-                    </span>
-                <span *ngIf="editMode == true"  class="li-remove">
-                        <material-fab mini (trigger)="remove(word)">
-                            <glyph class="delete-icon" icon="delete"></glyph>
-                        </material-fab>
-                    </span>
+                    <material-button *ngIf="editMode == true"  class="li-remove" (trigger)="remove(word)">
+                        <!--<material-fab mini>-->
+                            <material-icon class="delete-icon" icon="delete"></material-icon>
+                        <!--</material-fab>-->
+                    </material-button>
+                </span>
             </li>
         </ul>
     </div>
@@ -103,21 +93,23 @@
 
 <div *ngIf="currentView == 'list view'">
     <div *ngIf="listOrderWordFirst == true">
-        <ol>
-            <li *ngFor="let word of vocabList.keys">
-                <span class="word">
-                    {{word}}
-                </span>
-                <span *ngIf="defVisible == true" class="def">
-                    {{vocabList[word]}}
-                </span>
-            </li>
+        <ol *ngFor="let word of vocabList.keys; let i=index">
+            <!--<span>-->
+                <li [class.odd-row]="i % 2 == 1" class="list-div">
+                    <span class="word">
+                        {{word}}
+                    </span>
+                    <span *ngIf="defVisible == true" class="def">
+                        {{vocabList[word]}}
+                    </span>
+                </li>
+            <!--</span>-->
         </ol>
     </div>
 
     <div *ngIf="listOrderWordFirst == false">
-        <ol>
-            <li *ngFor="let word of vocabList.keys">
+        <ol *ngFor="let word of vocabList.keys; let i=index">
+            <li [class.odd-row]="i % 2 == 1" class="list-div">
                     <span class="word">
                         {{vocabList[word]}}
                     </span>
@@ -130,13 +122,13 @@
 
 </div>
 
-<div *ngIf="currentView == 'flashcards'">
+<div *ngIf="currentView == 'flashcards'" class="fit layout vertical center-center">
     <hr>
     <div>
         <div class="card-flow">
             <div class="card-change-btn">
                 <material-button class="mbtn" icon (trigger)="previousCard()">
-                    <glyph icon="keyboard_arrow_left"></glyph>
+                    <material-icon icon="keyboard_arrow_left"></material-icon>
                     <!--Previous Card-->
                 </material-button>
 
@@ -171,7 +163,7 @@
             <div class="card-change-btn">
                 <material-button class="mbtn" icon (trigger)="nextCard()">
                     <!--Next Card-->
-                    <glyph icon="keyboard_arrow_right"></glyph>
+                    <material-icon icon="keyboard_arrow_right"></material-icon>
                 </material-button>
             </div>
         </div>
@@ -190,4 +182,4 @@
 <!--</section>-->
 <!--</label>-->
 <!--</article>-->
-<!--</div>-->
+</div>

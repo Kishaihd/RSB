@@ -109,9 +109,15 @@ class FirebaseService {
       fbUserData.onValue.listen((firebase.QueryEvent e) async {
         userData = await e.snapshot.val();
         learner = new Learner.fromMap(_log, userData);
-        _log.info("$runtimeType::getUserData()::userData.runtimeType = ${userData?.runtimeType}");
-        _log.info("$runtimeType::getUserData()::userData snapshot = $userData");
-        _log.info("$runtimeType::getUserData()::learner = ${learner}");
+        _log.info("$runtimeType::getUserData()::learner info = ${learner}");
+        _log.info("$runtimeType::getUserData()::fbUser info = ${fbUser}");
+        if (learner.existsInDB == false) {
+          _log.info("$runtimeType::getUserData() --User does not already exist in database!");
+          _log.info("$runtimeType::getUserData() --Updating user... learner.existsInDB = ${learner.existsInDB}");
+          learner.existsInDB = true;
+          _log.info("$runtimeType::getUserData() --Updating user... learner.existsInDB = ${learner.existsInDB}");
+          _log.info("$runtimeType::getUserData() --Adding to database--->${learner.toMap()}");
+        }
         if (userData.containsKey('currentLanguage') && userData['currentLanguage'].isNotEmpty) {
           _log.info("$runtimeType::getUserData()::userData.containsKey('currentLanguage') == ${userData.containsKey('currentLanguage')}");
           currentLanguage = userData['currentLanguage'];
@@ -211,6 +217,15 @@ class FirebaseService {
     _fbAuth.signOut();
   }
 
+  Future<Null> updateLearnerInDB() async {
+    _log.info("$runtimeType::updateLearnerInDB() -- learner = ${learner.toMap()}");
+    _log.info("$runtimeType::updateLearnerInDB() --fbUserData = $fbUserData");
+    _log.info("$runtimeType::updateLearnerInDB() --fbUserData.toString() = ${fbUserData.toString()}");
+//    await fbUserData.update(learner.toMap());
+
+    _log.info("$runtimeType::updateLearnerInDB -- vocab lists = ${learner.vocabLists}");
+//    await fbVocabLists.update(learner.vocabLists);
+  }
 
   Future<Null> addWord(String newWord, [String def = ""]) async {
     _log.info("$runtimeType::addWord($newWord, $def)");

@@ -26,7 +26,7 @@ class LanguageMessage {
 
   initMe() {
     if (_language != null && _language.isNotEmpty) {
-      langMsg = "Now viewing $_language";
+      langMsg = "$_language";
     }
     else {
       langMsg = "No languages available!";

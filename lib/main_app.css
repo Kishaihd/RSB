@@ -25,5 +25,18 @@
 
 .top-menu {
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    background-color: lightblue;
+}
+
+
+.view-selector {
+    width: 3em;
+    height: 3em;
+    padding: 1em;
+}
+
+.view-item {
+    padding: 1em;
 }

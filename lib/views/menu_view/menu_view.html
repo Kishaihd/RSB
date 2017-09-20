@@ -1,30 +1,45 @@
-<div>
-    Menu View
-</div>
+<!--<div>-->
+    <!--Menu View-->
+<!--</div>-->
 
 <material-tab-panel>
     <material-tab label="Change Language">
-        <div *ngFor="let lang of myLanguages">
-            <div *ngIf="lang == fbService.currentLanguage">
-                <material-button class="lang-btn" icon>
-                    <glyph icon="menu"></glyph>
-                    <strong>{{lang}}</strong>
-                </material-button>
-            </div>
-            <div *ngIf="lang != fbService.currentLanguage">
-                <material-button class="lang-btn" icon (trigger)="switchToLanguage(lang)">
-                    <glyph icon="menu"></glyph>
-                    {{lang}}
-                </material-button>
+        <div *ngIf="myLanguages != null">
+            <div *ngFor="let lang of myLanguages">
+                <div *ngIf="lang == fbService.currentLanguage">
+                    <material-button class="lang-btn" icon>
+                        <material-icon icon="turned_in"></material-icon>
+                        <strong>{{lang}}</strong>
+                    </material-button>
+                </div>
+                <div *ngIf="lang != fbService.currentLanguage">
+                    <material-button class="lang-btn" icon (trigger)="switchToLanguage(lang)">
+                        <material-icon icon="turned_in_not"></material-icon>
+                        {{lang}}
+                    </material-button>
+                </div>
             </div>
         </div>
+        <div *ngIf="myLanguages == null">
+            You have not added any languages yet!
+        </div>
     </material-tab>
-    <material-tab label="Available Languages">
-        <div *ngFor="let language of unaddedLanguages">
-            <div>
+    <material-tab label="Add Language">
+        <div *ngIf="unaddedLanguages != null">
+            <div *ngFor="let language of unaddedLanguages">
+                <div>
+                    <material-button class="lang-btn" (trigger)="addLanguage(language)" icon>
+                        <material-icon icon="add_circle_outline"></material-icon>
+                        {{language}}
+                    </material-button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="unaddedLanguages == null" class="loading-langs">
+            <div *ngFor="let idx of numLanguages">
                 <material-button class="lang-btn" icon>
-                    <glyph icon="add"></glyph>
-                    {{language}}
+                    <material-icon icon="add"></material-icon>
+                    ---------
                 </material-button>
             </div>
         </div>

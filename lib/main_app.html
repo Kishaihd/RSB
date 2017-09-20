@@ -2,15 +2,15 @@
 
 <div *ngIf="fbService?.fbUser != null" class="fit layout vertical center-center">
     <div class="top-menu">
-        <span>
-            <material-dropdown-select iconName="menu" slide="x">
+        <div>
+            <material-dropdown-select iconName="menu" slide="x" class="view-selector">
                 <div *ngFor="let view of views; let i = index">
-                    <material-select-item (trigger)="changeMenu(i)">
+                    <material-select-item (trigger)="changeMenu(i)" class="view-item">
                         {{view}}
                     </material-select-item>
                 </div>
             </material-dropdown-select>
-        </span>
+        </div>
         <!--<div>lang-msg component</div>-->
         <lang-msg [language]="fbService.currentLanguage"></lang-msg>
     </div>
