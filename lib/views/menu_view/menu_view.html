@@ -29,7 +29,7 @@
             <div *ngFor="let language of unaddedLanguages">
                 <div>
                     <material-button class="lang-btn" (trigger)="addLanguage(language)" icon>
-                        <material-icon icon="add_circle_outline"></material-icon>
+                        <material-icon icon="add_box"></material-icon>
                         {{language}}
                     </material-button>
                 </div>
@@ -38,7 +38,7 @@
         <div *ngIf="unaddedLanguages == null" class="loading-langs">
             <div *ngFor="let idx of numLanguages">
                 <material-button class="lang-btn" icon>
-                    <material-icon icon="add"></material-icon>
+                    <material-icon icon="add_box"></material-icon>
                     ---------
                 </material-button>
             </div>

@@ -1,174 +1,161 @@
 <!--<h2>Add new words below!</h2>-->
 <div class="wrapper">
-<div class="menuButtons">
-    <span class="menu-left">
-        <material-dropdown-select iconName="more_horiz" slide="x" class="menu-vocab-drop">
-            <div *ngFor="let view of views; let i=index">
-                <material-select-item (trigger)="changeVocabView(i)">
-                    {{view}}
-                </material-select-item>
-            </div>
-        </material-dropdown-select>
-    </span>
-    <span  class="menu-right">
-        <material-button *ngIf="currentView == 'add words'" raised icon (click)="changeEditMode()">
-            <material-icon *ngIf="editMode == true" icon="edit"></material-icon>
-            <material-icon *ngIf="editMode == false" icon="perm_data_setting"></material-icon>
-        </material-button>
-        <material-toggle *ngIf="currentView == 'list view'"
-                         label="word first order -"
-                         (click)="changeListWordView()">
-        </material-toggle>
-        <material-toggle *ngIf="currentView == 'list view' && defVisible == false"
-                         label="definitions off -"
-                         checked="true"
-                         (click)="changeListView()">
-        </material-toggle>
-        <material-toggle *ngIf="currentView == 'list view' && defVisible == true"
-                         label="definitions on  -"
-                         checked="false"
-                         (click)="changeListView()">
-        </material-toggle>
-        <material-toggle *ngIf="currentView == 'flashcards'"
-                         label="toggle view order -"
-                         (click)="changeCardView()">
-        </material-toggle>
-    </span>
-</div>
-
-
-
-<div *ngIf="currentView == 'add words'">
-    <div>
-        <!--<span>-->
-        <material-input label="Add new vocab word!"
-                        [disabled]="editMode == true"
-                        autoFocus floatingLabel style="width:40%"
-                        [(ngModel)]="newWord">
-        </material-input>
-        <material-input label="Optional definition"
-                        [disabled]="editMode == true"
-                        autoFocus floatingLabel style="width:40%"
-                        [(ngModel)]="newDef">
-        </material-input>
-        <!--</span>-->
-        <material-fab mini raised
-                      (trigger)="add(newWord, newDef); newWord = newDef = '';"
-                      [disabled]="newWord == null || newWord.isEmpty">
-            <!--|| newDef.isEmpty">-->
-            <glyph icon="add"></glyph>
-        </material-fab>
+    <div class="menuButtons">
+        <span class="menu-left">
+            <material-dropdown-select iconName="more_horiz" slide="x" class="menu-vocab-drop">
+                <div *ngFor="let view of views; let i=index">
+                    <material-select-item (trigger)="changeVocabView(i)">
+                        {{view}}
+                    </material-select-item>
+                </div>
+            </material-dropdown-select>
+        </span>
+        <span  class="menu-right">
+            <material-button *ngIf="currentView == 'add words'" icon (click)="changeEditMode()">
+                <material-icon *ngIf="editMode == true" icon="lock_open"></material-icon>
+                <material-icon *ngIf="editMode == false" icon="lock_outline"></material-icon>
+            </material-button>
+            <material-button *ngIf="currentView == 'list view'" icon (click)="changeListWordView()">
+                <material-icon icon="swap_horiz"></material-icon>
+            </material-button>
+            <material-button *ngIf="currentView == 'list view' && defVisible == false" checked="true" icon (click)="changeListView()">
+                <material-icon icon="visibility_off"></material-icon>
+            </material-button>
+            <material-button *ngIf="currentView == 'list view' && defVisible == true" checked="false" icon (click)="changeListView()">
+                <material-icon icon="visibility"></material-icon>
+            </material-button>
+            <material-button *ngIf="currentView == 'flashcards'" icon (click)="changeCardView()">
+                <material-icon icon="view_carousel"></material-icon>
+            </material-button>
+        </span>
     </div>
 
-    <!--<hr>-->
-    <span *ngIf="vocabList != null && vocabList.isNotEmpty">
-        <hr>
-        <!--<glyph id="arrow-glyph" icon="keyboard_arrow_down"></glyph>-->
-    </span>
-    <p *ngIf="vocabList == null || vocabList.isEmpty">
-        Vocabulary words will show up here. :)
-    </p>
 
-    <div *ngIf="vocabList != null && vocabList.isNotEmpty">
-        <ul *ngFor="let word of vocabList.keys; let i=index">
-            <!--<li *ngFor="let word of newWords; let i=index">-->
-            <li> <!--; let i=index"-->
-                <span class="vocab-row">
-                    <material-checkbox [disabled]="editMode == true" #done materialTooltip="Mark word as memorized"></material-checkbox>
-                    <span [class.odd-row]="i % 2 == 1" class="wordAndDef">
-                        <span [class.done]="done.checked" class="word"> {{word}} </span>
-                        <span [class.done]="done.checked" class="def"> {{vocabList[word]}} </span>
-                    </span>
-                    <material-button *ngIf="editMode == true"  class="li-remove" (trigger)="remove(word)">
-                        <!--<material-fab mini>-->
-                            <material-icon class="delete-icon" icon="delete"></material-icon>
-                        <!--</material-fab>-->
-                    </material-button>
-                </span>
-            </li>
-        </ul>
-    </div>
 
-</div>
+    <div *ngIf="currentView == 'add words'">
+        <span id="word-input">
+            <material-input label="Add new vocab word!"
+                            [disabled]="editMode == true"
+                            autoFocus floatingLabel style="width:40%"
+                            [(ngModel)]="newWord">
+            </material-input>
+            <material-input label="Optional definition"
+                            [disabled]="editMode == true"
+                            autoFocus floatingLabel style="width:40%"
+                            [(ngModel)]="newDef">
+            </material-input>
+            <material-button
+                          (trigger)="add(newWord, newDef); newWord = newDef = '';"
+                          [disabled]="newWord == null || newWord.isEmpty">
+                <material-icon icon="add_box"></material-icon>
+            </material-button>
+        </span>
 
-<div *ngIf="currentView == 'list view'">
-    <div *ngIf="listOrderWordFirst == true">
-        <ol *ngFor="let word of vocabList.keys; let i=index">
-            <!--<span>-->
-                <li [class.odd-row]="i % 2 == 1" class="list-div">
-                    <span class="word">
-                        {{word}}
-                    </span>
-                    <span *ngIf="defVisible == true" class="def">
-                        {{vocabList[word]}}
+        <!--<hr>-->
+        <span *ngIf="vocabList != null && vocabList.isNotEmpty">
+            <hr>
+            <!--<glyph id="arrow-glyph" icon="keyboard_arrow_down"></glyph>-->
+        </span>
+        <p *ngIf="vocabList == null || vocabList.isEmpty">
+            Vocabulary words will show up here. :)
+        </p>
+
+        <div *ngIf="vocabList != null && vocabList.isNotEmpty">
+            <ul *ngFor="let word of vocabList.keys; let i=index">
+                <!--<li *ngFor="let word of newWords; let i=index">-->
+                <li> <!--; let i=index"-->
+                    <span class="vocab-row">
+                        <material-checkbox [disabled]="editMode == true" #done materialTooltip="Mark word as memorized"></material-checkbox>
+                        <span [class.odd-row]="i % 2 == 1" class="wordAndDef">
+                            <span [class.done]="done.checked" class="word"> {{word}} </span>
+                            <span [class.done]="done.checked" class="def"> {{vocabList[word]}} </span>
+                        </span>
+                        <material-button *ngIf="editMode == true"  class="li-remove" (trigger)="remove(word)">
+                                <material-icon class="delete-icon" icon="delete"></material-icon>
+                        </material-button>
                     </span>
                 </li>
-            <!--</span>-->
-        </ol>
+            </ul>
+        </div>
+
     </div>
 
-    <div *ngIf="listOrderWordFirst == false">
-        <ol *ngFor="let word of vocabList.keys; let i=index">
-            <li [class.odd-row]="i % 2 == 1" class="list-div">
-                    <span class="word">
-                        {{vocabList[word]}}
-                    </span>
-                <span *ngIf="defVisible == true" class="def">
-                        {{word}}
-                    </span>
-            </li>
-        </ol>
+    <div *ngIf="currentView == 'list view'">
+        <div *ngIf="listOrderWordFirst == true">
+            <ol *ngFor="let word of vocabList.keys; let i=index">
+                <!--<span>-->
+                    <li [class.odd-row]="i % 2 == 1" class="list-div">
+                        <span class="word">
+                            {{word}}
+                        </span>
+                        <span *ngIf="defVisible == true" class="def">
+                            {{vocabList[word]}}
+                        </span>
+                    </li>
+                <!--</span>-->
+            </ol>
+        </div>
+
+        <div *ngIf="listOrderWordFirst == false">
+            <ol *ngFor="let word of vocabList.keys; let i=index">
+                <li [class.odd-row]="i % 2 == 1" class="list-div">
+                        <span class="word">
+                            {{vocabList[word]}}
+                        </span>
+                    <span *ngIf="defVisible == true" class="def">
+                            {{word}}
+                        </span>
+                </li>
+            </ol>
+        </div>
+
     </div>
 
-</div>
+    <div *ngIf="currentView == 'flashcards'" class="fit layout vertical center-center">
+        <hr>
+        <div>
+            <div class="card-flow">
+                <div class="card-change-btn">
+                    <material-button class="mbtn" icon (trigger)="previousCard()">
+                        <material-icon icon="keyboard_arrow_left"></material-icon>
+                    </material-button>
 
-<div *ngIf="currentView == 'flashcards'" class="fit layout vertical center-center">
-    <hr>
-    <div>
-        <div class="card-flow">
-            <div class="card-change-btn">
-                <material-button class="mbtn" icon (trigger)="previousCard()">
-                    <material-icon icon="keyboard_arrow_left"></material-icon>
-                    <!--Previous Card-->
-                </material-button>
+                </div>
+                <div class="card">
+                    <div *ngIf="showingWord == true && cardOrderWordFirst == true">
+                        <material-button class="front"
+                                         (trigger)="cardClick()">
+                            {{wordList[cardIndex]}}
+                        </material-button>
+                    </div>
+                    <div *ngIf="showingWord == false && cardOrderWordFirst == true">
+                        <material-button class="back"
+                                         (trigger)="cardClick()">
+                            {{defList[cardIndex]}}
+                        </material-button>
+                    </div>
 
-            </div>
-            <div class="card">
-                <div *ngIf="showingWord == true && cardOrderWordFirst == true">
-                    <material-button class="front"
-                                     (trigger)="cardClick()">
-                        {{wordList[cardIndex]}}
+                    <div *ngIf="showingWord == true && cardOrderWordFirst == false">
+                        <material-button class="front"
+                                         (trigger)="cardClick()">
+                            {{defList[cardIndex]}}
+                        </material-button>
+                    </div>
+                    <div *ngIf="showingWord == false && cardOrderWordFirst == false">
+                        <material-button class="back"
+                                         (trigger)="cardClick()">
+                            {{wordList[cardIndex]}}
+                        </material-button>
+                    </div>
+                </div>
+                <div class="card-change-btn">
+                    <material-button class="mbtn" icon (trigger)="nextCard()">
+                        <material-icon icon="keyboard_arrow_right"></material-icon>
                     </material-button>
                 </div>
-                <div *ngIf="showingWord == false && cardOrderWordFirst == true">
-                    <material-button class="back"
-                                     (trigger)="cardClick()">
-                        {{defList[cardIndex]}}
-                    </material-button>
-                </div>
-
-                <div *ngIf="showingWord == true && cardOrderWordFirst == false">
-                    <material-button class="front"
-                                     (trigger)="cardClick()">
-                        {{defList[cardIndex]}}
-                    </material-button>
-                </div>
-                <div *ngIf="showingWord == false && cardOrderWordFirst == false">
-                    <material-button class="back"
-                                     (trigger)="cardClick()">
-                        {{wordList[cardIndex]}}
-                    </material-button>
-                </div>
-            </div>
-            <div class="card-change-btn">
-                <material-button class="mbtn" icon (trigger)="nextCard()">
-                    <!--Next Card-->
-                    <material-icon icon="keyboard_arrow_right"></material-icon>
-                </material-button>
             </div>
         </div>
     </div>
-</div>
 
 <!--<article class="flashcard">-->
 <!--<label *ngIf="showingWord == true">-->

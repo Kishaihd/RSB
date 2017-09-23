@@ -4,11 +4,12 @@
 /*!*justify-content: space-around;*!*/
 /*!*!*flex-direction: column;*!*!*/
 /*!*}*!*/
-/*!*.wrapper {*!*/
-/*!*flex: 1;*!*/
-/*!*!*display: flex;*!*!*/
-/*!*!*justify-content: center;*!*!*/
-/*}*/
+.wrapper {
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    /*justify-content: center;*/
+}
 
 ul {
     list-style: none;
@@ -47,9 +48,9 @@ li:hover {
 }
 
 .li-remove {
-    display: flex;
-    align-self: center;
-    justify-self: flex-end;
+    /*display: flex;*/
+    /*align-self: center;*/
+    /*justify-self: flex-end;*/
     /*justify-content: flex-end;*/
 }
 
@@ -67,8 +68,8 @@ li:hover {
 }
 
 .menuButtons {
+    flex-grow: 1;
     display: flex;
-    /*flex: 1;*/
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
@@ -76,12 +77,14 @@ li:hover {
 }
 .menu-left {
     justify-self: flex-start;
+    flex-grow: 2;
     /*display: flex;*/
     /*align-items: center;*/
     /*justify-self: flex-start;*/
 }
 
 .menu-left material-dropdown-select {
+    flex-grow: 2;
     /*align-self: flex-start;*/
 }
 
@@ -95,6 +98,11 @@ li:hover {
     /*flex-flow: row nowrap;*/
     justify-self: flex-start;
     justify-content: space-between;
+}
+
+#word-input {
+    display: flex;
+    flex-flow: row nowrap;
 }
 
 .odd-row {
@@ -133,6 +141,7 @@ li:hover {
     flex-flow: row nowrap;
     align-content: center;
     justify-content: space-between;
+    font-size: 2em;
 }
 
 .card {

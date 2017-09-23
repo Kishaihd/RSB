@@ -9,5 +9,5 @@
 }
 
 .mat-tab {
-    display: flex;
+    flex-grow: 1;
 }
