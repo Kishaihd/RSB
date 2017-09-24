@@ -21,8 +21,8 @@ class MainApp implements OnInit {
   final FirebaseService fbService;
 
   List<String> views = const [
-    "menuView",
-    "languageView"
+    "Main Menu",
+    "Explore Language"
   ];
   String currentView;
 

@@ -5,6 +5,8 @@ import 'package:angular_components/angular_components.dart';
 import 'package:RSB/services/logger_service.dart';
 import 'package:RSB/services/firebase_service.dart';
 
+///todo: restructure tables as adjectives rather than like nouns.
+
 @Component(
   selector: 'adj-view',
   styleUrls: const ['adjective_view.css'],

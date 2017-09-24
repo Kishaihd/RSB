@@ -67,6 +67,10 @@ li:hover {
     margin: 2px;
 }
 
+.menu-vocab-item {
+    padding: 1em;
+}
+
 .menuButtons {
     flex-grow: 1;
     display: flex;

@@ -2,6 +2,7 @@ import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:RSB/services/logger_service.dart';
 import 'package:RSB/services/firebase_service.dart';
+import 'package:RSB/models/word.dart';
 
 @Component(
   selector: 'vocab-view',
@@ -15,9 +16,9 @@ class VocabView implements OnInit {
   final FirebaseService fbService;
 
   List<String> views = const [
-    "add words",
-    "list view",
-    "flashcards"
+    "Add Words",
+    "List View",
+    "Flashcards"
   ];
   String currentView = "";
 
@@ -26,7 +27,6 @@ class VocabView implements OnInit {
 
   List<String> wordList = [];
   List<String> defList = [];
-
   bool editMode = false;
   bool menuVisible = false;
   bool defVisible = true;
@@ -117,10 +117,10 @@ class VocabView implements OnInit {
   void add(String word, [String definition = ""]) {
     _log.info("$runtimeType()::add($word, $definition)");
     // I think this does the above two functions in one line.
-    wordList.add(word);
-    defList.add(definition);
-    vocabList[word] = definition;
-    fbService.addWord(word, definition);
+    wordList.add(word.toLowerCase());
+    defList.add(definition.toLowerCase());
+    vocabList[word.toLowerCase()] = definition.toLowerCase();
+    fbService.addWord(word.toLowerCase(), definition.toLowerCase());
     //newSetWords.add(description);
   }
 //  String remove(int index) => newListWords.removeAt(index);

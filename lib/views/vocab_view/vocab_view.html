@@ -4,27 +4,27 @@
         <span class="menu-left">
             <material-dropdown-select iconName="more_horiz" slide="x" class="menu-vocab-drop">
                 <div *ngFor="let view of views; let i=index">
-                    <material-select-item (trigger)="changeVocabView(i)">
+                    <material-select-item (trigger)="changeVocabView(i)" class="menu-vocab-item">
                         {{view}}
                     </material-select-item>
                 </div>
             </material-dropdown-select>
         </span>
         <span  class="menu-right">
-            <material-button *ngIf="currentView == 'add words'" icon (click)="changeEditMode()">
+            <material-button *ngIf="currentView == views[0]" icon (click)="changeEditMode()">
                 <material-icon *ngIf="editMode == true" icon="lock_open"></material-icon>
                 <material-icon *ngIf="editMode == false" icon="lock_outline"></material-icon>
             </material-button>
-            <material-button *ngIf="currentView == 'list view'" icon (click)="changeListWordView()">
+            <material-button *ngIf="currentView == views[1]" icon (click)="changeListWordView()">
                 <material-icon icon="swap_horiz"></material-icon>
             </material-button>
-            <material-button *ngIf="currentView == 'list view' && defVisible == false" checked="true" icon (click)="changeListView()">
+            <material-button *ngIf="currentView == views[1] && defVisible == false" checked="true" icon (click)="changeListView()">
                 <material-icon icon="visibility_off"></material-icon>
             </material-button>
-            <material-button *ngIf="currentView == 'list view' && defVisible == true" checked="false" icon (click)="changeListView()">
+            <material-button *ngIf="currentView == views[1] && defVisible == true" checked="false" icon (click)="changeListView()">
                 <material-icon icon="visibility"></material-icon>
             </material-button>
-            <material-button *ngIf="currentView == 'flashcards'" icon (click)="changeCardView()">
+            <material-button *ngIf="currentView == views[2]" icon (click)="changeCardView()">
                 <material-icon icon="view_carousel"></material-icon>
             </material-button>
         </span>
@@ -32,7 +32,7 @@
 
 
 
-    <div *ngIf="currentView == 'add words'">
+    <div *ngIf="currentView == views[0]">
         <span id="word-input">
             <material-input label="Add new vocab word!"
                             [disabled]="editMode == true"
@@ -80,7 +80,7 @@
 
     </div>
 
-    <div *ngIf="currentView == 'list view'">
+    <div *ngIf="currentView == views[1]">
         <div *ngIf="listOrderWordFirst == true">
             <ol *ngFor="let word of vocabList.keys; let i=index">
                 <!--<span>-->
@@ -111,7 +111,7 @@
 
     </div>
 
-    <div *ngIf="currentView == 'flashcards'" class="fit layout vertical center-center">
+    <div *ngIf="currentView == views[2]" class="fit layout vertical center-center">
         <hr>
         <div>
             <div class="card-flow">

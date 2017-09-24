@@ -2,6 +2,17 @@ import 'package:RSB/services/logger_service.dart';
 
 class Word {
 //  final LoggerService _log;
+  static String capitalizeMe(String oldstr) {
+    if (oldstr == null || oldstr.isEmpty) {
+      return "";
+    }
+
+    String newString = oldstr;
+
+    newString[0].toUpperCase();
+    return newString;
+  }
+
   String language;
 
   String wordName;

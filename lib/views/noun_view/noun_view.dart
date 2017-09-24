@@ -20,6 +20,7 @@ class NounView { //implements OnInit {
   String currentView = "";
 
   List<String> decOrder = [];
+  List<String> declensionGroups = [];
   List<String> genders = [];
   Map nounMap = {};
   Map _langMetaMap = {};
@@ -55,6 +56,7 @@ class NounView { //implements OnInit {
         nounMap = _langDataMap['nouns'];
         if (_langMetaMap['hasDeclensions'] == 'true') {
           decOrder = _langMetaMap['declensionsOrderPreference'];
+          declensionGroups =  _langMetaMap['declensionGroups'];
         }
         if (_langMetaMap['hasGender'] == 'true') {
           genders = _langMetaMap['genders'];

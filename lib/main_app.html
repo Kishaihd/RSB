@@ -2,7 +2,6 @@
 
 <div *ngIf="fbService?.fbUser != null" class="fit layout vertical center-center">
     <div class="top-menu">
-        <div>
             <material-dropdown-select iconName="menu" slide="x" class="view-selector">
                 <div *ngFor="let view of views; let i = index">
                     <material-select-item (trigger)="changeMenu(i)" class="view-item">
@@ -10,39 +9,19 @@
                     </material-select-item>
                 </div>
             </material-dropdown-select>
-        </div>
-        <!--<div>lang-msg component</div>-->
         <lang-msg [language]="fbService.currentLanguage"></lang-msg>
     </div>
 
-    <menu-view *ngIf="currentView == 'menuView'"
+    <menu-view *ngIf="currentView == 'Main Menu'"
                 [availableLanguages]="fbService.languageList"
                 [myLanguages]="fbService?.learner?.myLanguages">
     </menu-view>
 
-    <language-view *ngIf="currentView == 'languageView'"
+    <language-view *ngIf="currentView == 'Explore Language'"
                     [currentLang]="fbService?.currentLanguage"
                     [langDataMap]="fbService?.languagesData"
                     [langMetaMap]="fbService?.languagesMeta">
     </language-view>
-
-    <!-- TEST -->
-    <!--<div *ngIf="fbService?.languageList == null || fbService?.languageList?.isEmpty">No languages!</div>-->
-    <!--<div *ngIf="fbService?.languageList != null && fbService?.languageList?.isNotEmpty">Languages: {{fbService.languageList}}</div>-->
-
-    <!--<div *ngIf="fbService.learner == null">No learner established.</div>-->
-    <!--<div *ngIf="fbService.learner.name != null && fbService.learner.name.isNotEmpty">Learner is: {{fbService.learner.name}}</div>-->
-
-    <!--<div *ngIf="fbService.languagesData == null || fbService.languagesData.isEmpty">Language Data is null or empty!</div>-->
-    <!--<div *ngIf="fbService.languagesData != null && fbService.languagesData.isNotEmpty">Language Data found!</div>-->
-
-    <!--<div *ngIf="fbService.languagesMeta == null || fbService.languagesMeta.isEmpty">Language Meta is null or empty!</div>-->
-    <!--<div *ngIf="fbService.languagesMeta != null && fbService.languagesMeta.isNotEmpty">Language Meta found!</div>-->
-
-    <!--<div *ngIf="fbService.currentLanguage == null || fbService.currentLanguage.isEmpty">No current language found!</div>-->
-    <!--<div *ngIf="fbService.currentLanguage != null && fbService.currentLanguage.isNotEmpty">Current language is {{fbService.currentLanguage}}</div>-->
-
-    <!-- TEST -->
 
     <div>
         <hr>
