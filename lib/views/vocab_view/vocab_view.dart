@@ -22,11 +22,12 @@ class VocabView implements OnInit {
   ];
   String currentView = "";
 
-  Map<String, Map<String, String>> allVocabLists = {};
-  Map<String, String> vocabList = {};
-
-  List<String> wordList = [];
-  List<String> defList = [];
+//  Map<String, Map<String, String>> allVocabLists = {};
+//  Map<String, String> vocabList = {};
+  VocabularyList masterVocabList;
+  List<Word> vocabList;
+//  List<String> wordList = [];
+//  List<String> defList = [];
   bool editMode = false;
   bool menuVisible = false;
   bool defVisible = true;
@@ -44,18 +45,13 @@ class VocabView implements OnInit {
   @override
   ngOnInit() async {
     _log.info("$runtimeType::ngonInit()");
-    await fbService.getVocabLists(fbService.fbUser.uid).then((allLists) async {
-      allVocabLists = allLists;
-      _log.info("$runtimeType::ngonInit()::allVocabLists = $allVocabLists");
-      _log.info("$runtimeType::ngonInit()::allLists = $allLists");
-      vocabList = allLists[fbService.currentLanguage];
-      _log.info("$runtimeType::ngonInit()::vocabList = $vocabList");
-      vocabList.forEach((String word, String def) {
-        wordList.add(word);
-        defList.add(def);
-      });
+    // THIS ONLY RUNS ONE TIME TO FORMAT THE FIREBASE!
+//    await fbService.getVocabLists(fbService.fbUser.uid).then((Map<String, Map<String, String>> allLists) async {
+    await fbService.getVocabLists(fbService.fbUser.uid).then((VocabularyList allLists) async {
+      masterVocabList = allLists;
+      vocabList = masterVocabList[fbService.currentLanguage];
     });
-    _log.info("$runtimeType::ngOnInit()::learner.vocabLists = ${fbService.learner.vocabLists}");
+//    _log.info("$runtimeType::ngOnInit()::learner.vocabLists = ${fbService.learner.vocabLists}");
   }
 
   VocabView(LoggerService this._log, this.fbService) {
@@ -97,7 +93,8 @@ class VocabView implements OnInit {
   }
   void nextCard() {
     _log.info("$runtimeType()::nextCard()");
-    if (cardIndex < (vocabList.length - 1)) { // Already on first card.
+//    if (cardIndex < (vocabList.length - 1)) { // Already on first card.
+    if (cardIndex < (masterVocabList.listLengthForLang(fbService.currentLanguage) - 1)) { // Already on first card.
       showingWord = true;
       cardIndex++;
     }
@@ -114,22 +111,40 @@ class VocabView implements OnInit {
     currentView = views.elementAt(newIndex);
   }
 
-  void add(String word, [String definition = ""]) {
+  void addFull(String newName, [String newDef = "", bool setNoun = false, bool setPronoun = false, bool setAdj = false, bool setVerb = false, bool setAdverb = false, bool setPrep = false, bool setConjunc = false, bool setInterject = false, String cat = "", String subcat = "", bool isMem = false, bool tempMem = false]) {
+    _log.info("$runtimeType::addFull() adding word: ${fbService.currentLanguage}, $newName, $newDef, $setNoun, $setPronoun, $setAdj,$setVerb, $setAdverb, $setPrep, $setConjunc, $setInterject, $cat, $subcat, false, false)");
+    Word newWord = new Word(fbService.currentLanguage, newName, newDef, setNoun, setPronoun, setAdj,setVerb, setAdverb, setPrep, setConjunc, setInterject, cat, subcat, false, false);
+    masterVocabList.addWord(newWord);
+    vocabList.add(newWord);
+    fbService.addWord(newWord);
+  }
+
+  void addQuick(String word, [String definition = ""]) {
     _log.info("$runtimeType()::add($word, $definition)");
     // I think this does the above two functions in one line.
-    wordList.add(word.toLowerCase());
-    defList.add(definition.toLowerCase());
-    vocabList[word.toLowerCase()] = definition.toLowerCase();
-    fbService.addWord(word.toLowerCase(), definition.toLowerCase());
+//    wordList.add(word.toLowerCase());
+//    defList.add(definition.toLowerCase());
+//    vocabList[word.toLowerCase()] = definition.toLowerCase();
+//    Word nw = new Word.quickAdd(fbService.currentLanguage, word, definition);
+    masterVocabList.addWord(new Word.quickAdd(fbService.currentLanguage, word, definition));
+    vocabList.add(new Word.quickAdd(fbService.currentLanguage, word, definition));
+    fbService.addWordQuick(word.toLowerCase(), definition.toLowerCase());
     //newSetWords.add(description);
   }
 //  String remove(int index) => newListWords.removeAt(index);
-  void remove(String word) {
-    _log.info("$runtimeType()::remove($word)");
-    int idx = wordList.indexOf(word);
-    wordList.removeAt(idx);
-    defList.removeAt(idx);
-    vocabList.remove(word);
-    fbService.removeWord(word);
+  void remove(Word oldWord) {
+    _log.info("$runtimeType()::remove(${oldWord.wordName})");
+//    int idx = wordList.indexOf(word);
+//    wordList.removeWhere((String wrd) => wrd == word.wordName);
+//    defList.removeWhere((String df) => df == word.definition);
+//    wordList.removeAt(idx);
+//    defList.removeAt(idx);
+//    vocabList.remove(word);
+    masterVocabList.removeWord(oldWord);
+    vocabList.remove(oldWord);
+    fbService.removeWord(oldWord);
+//    fbService.learner.vocabLists.removeWord(oldWord);
+
+//    fbService.removeWord(word);
   }
 }

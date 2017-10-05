@@ -29,10 +29,13 @@ class AdjectiveView { //implements OnInit {
 //Map<gender, Map<index, Map<type/word, desc/example>>>
 
 //  List<Map> mascList = [];
-
   List<String> decOrder = [];
   List<String> genders = [];
   Map adjMap = {};
+
+  // Each idx is another example.
+  //List<ExampleMap<
+//  List<Map<>>
 
   Map _langDataMap = {};
   @Input()

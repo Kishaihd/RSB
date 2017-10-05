@@ -1,6 +1,3 @@
-<!--<div>-->
-    <!--Adjective View-->
-<!--</div>-->
 <div *ngIf="adjMap == null || adjMap.isEmpty" class="declensions">
     No Declensions! [empty?]
 </div>
@@ -12,33 +9,57 @@
 <!--<div *ngIf="adjMap != null && adjMap.isNotEmpty">-->
     <!--AdjMap: {{adjMap}}-->
     <!--<div *ngIf="adjMap['hasDeclensions'] == 'true' " class="declensions">-->
-<div *ngFor="let gender of genders" class="div-by-gender">
+<!--<div *ngFor="let gender of genders" class="div-by-gender">-->
     <div class="declension-wrapper">
         <div>{{gender}}</div>
         <div class="declension-container">
-            <div *ngFor="let decMap of adjMap[gender]">
+            <!--<div *ngFor="let decMap of adjMap[gender]">-->
+            <div *ngFor="let decMap of adjMap; let i=index">
                 <!--{{decMap}}-->
                 <table class="declension-table" >
                     <tbody class="declension-body">
                         <tr>
-                            <td  rowspan="1" class="declension-row"></td>
-                            <td  rowspan="8" colspan="5" class="declension-spacer"></td>
-                            <td  colspan="1" class="declension-header"><b>Singular</b></td>
-                            <td  rowspan="8" colspan="5" class="declension-spacer"></td>
-                            <td  colspan="1" class="declension-header"><b>Plural</b></td>
+                            <td  rowspan="2"></td>
                             <td  rowspan="8"></td>
+                            <td  colspan="3" align="center">
+                                <b>Singular</b>
+                            </td>
+                            <td  rowspan="8"></td>
+                            <td  rowspan="2" align="center" valign="center">
+                                <b>Plural</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>{{genders[0]}}</b></td>
+                            <td><b>{{genders[1]}}</b></td>
+                            <td><b>{{genders[2]}}</b></td>
                         </tr>
                         <tr *ngFor="let declension of decOrder">
-                            <td class="case-name">{{declension}}</td>
-                            <td>{{decMap[declension]['singular']}}</td>
-                            <td>{{decMap[declension]['plural']}}</td>
+                            <td>{{declension}}</td>
+                            <td>decMap[genders][i]</td>
+                            <td>decMap[i]</td>
+                            <td>decMap[i]</td>
+                            <td>plural word</td>
                         </tr>
+                        <!--<tr>-->
+                            <!--<td  rowspan="2" class="declension-row"></td>-->
+                            <!--<td  rowspan="8" colspan="5" class="declension-spacer"></td>-->
+                            <!--<td  colspan="1" class="declension-header"><b>Singular</b></td>-->
+                            <!--<td  rowspan="8" colspan="5" class="declension-spacer"></td>-->
+                            <!--<td  colspan="1" class="declension-header"><b>Plural</b></td>-->
+                            <!--<td  rowspan="8"></td>-->
+                        <!--</tr>-->
+                        <!--<tr *ngFor="let declension of decOrder">-->
+                            <!--<td class="case-name">{{declension}}</td>-->
+                            <!--<td>{{decMap[declension]['singular']}}</td>-->
+                            <!--<td>{{decMap[declension]['plural']}}</td>-->
+                        <!--</tr>-->
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-</div>
+<!--</div>-->
         <!--<span *ngFor="let gender of adjMap.keys" class="span-by-gender">-->
           <!--<caption>-->
               <!--<span><b>{{gender}}</b></span>-->

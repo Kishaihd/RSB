@@ -21,21 +21,43 @@ class Word {
   String category;
   String subcategory;
 
+  // Part of speech
+  bool isNoun = false;
+  bool isPronoun = false;
+  bool isAdjective = false;
+  bool isVerb = false;
+  bool isAdverb = false;
+  bool isPreposition = false;
+  bool isConjunction = false;
+  bool isInterjection = false;
+//  bool isGerund = false;
+
   bool isMemorized;
   bool tempMemorizedFlag;
 
-  Word(String fromLang, String newName, [String newDef = "", String cat = "", String subcat = "", bool isMem = false, bool tempMem = false]) {
+  Word(String fromLang, String newName, [String newDef = "", bool setNoun = false, bool setPronoun = false, bool setAdj = false, bool setVerb = false, bool setAdverb = false, bool setPrep = false, bool setConjunc = false, bool setInterject = false, String cat = "", String subcat = "", bool isMem = false, bool tempMem = false]) {
     language = fromLang;
     wordName = newName;
     definition = newDef;
+    isNoun = setNoun;
+    isPronoun = setPronoun;
+    isAdjective = setAdj;
+    isVerb = setVerb;
+    isAdverb = setAdverb;
+    isPreposition = setPrep;
+    isConjunction = setConjunc;
+    isInterjection = setInterject;
     category = cat;
     subcategory = subcat;
     isMemorized = isMem;
     tempMemorizedFlag = tempMem;
   }
 
-  Word.fromMap(Map map) : this(map["language"], map["wordName"], map["definition"], map["category"], map["subcategory"], map["isMemorized"], map["isTempMemorized"]);
+  Word.quickAdd(String fromLang, String newWord, [String newDef = ""]) : this (fromLang, newWord, newDef);
 
+  Word.fromMap(Map map) : this(map["language"], map["wordName"], map["definition"], map["isNoun"], map["isPronoun"], map["isAdjective"], map["isVerb"], map["isAdverb"], map["isPreposition"], map["isConjunction"], map["isInterjection"], map["category"], map["subcategory"], map["isMemorized"], map["isTempMemorized"]);
+
+  Word.RUN_ONLY_ONCE(String lang, String name, String def) : this(lang, name, def);
   // For == compare just wordName.
 //  operator==() {
 //
@@ -49,6 +71,13 @@ class Word {
       "language": language,
       "wordName": wordName,
       "definition": definition,
+      "isNoun": isNoun,
+      "isPronoun": isPronoun,
+      "isAdjective": isAdjective,
+      "isVerb": isVerb,
+      "isAdverb": isAdverb,
+      "isPreposition": isPreposition,
+      "isConjunction": isConjunction,
       "category": category,
       "subcategory": subcategory,
       "isMemorized": isMemorized,
@@ -86,10 +115,37 @@ class VocabularyList {
     masterList = mList;
   }
 
+  Map toMap() {
+    _log.info("$runtimeType::toMap()");
+    ///todo: finish this.
+    Map<String, Map<int, Map<String, String>>> mm = {};
+    masterList.forEach((String lang, List<Word> lw) {
+      _log.info("$runtimeType::toMap() -- found $lang");
+      mm[lang] = {};
+      lw.forEach((Word w) {
+        mm[lang][lw.indexOf(w)] = w.toMap();
+        _log.info("$runtimeType::toMap() mm[$lang][${lw.indexOf(w)}] = ${w.toMap()}");
+//        mm[lang].addAll(w.toMap());  //[w.wordName] = w.toMap();
+      });
+    });
+    _log.info("$runtimeType::toMap():: returning $mm");
+    return mm;
+  }
+
   List<Word> getListForLang(String lang) {
     _log.info("$runtimeType::getListForLang($lang)");
-    return masterList[lang];
+    if (masterList.containsKey(lang)) {
+      return masterList[lang];
+    }
+    else {
+      return [];
+    }
   }
+
+  operator[](String lang) => masterList[lang];
+  operator[]=(String lang, Word newWord) => masterList[lang].add(newWord);
+
+  int listLengthForLang(String lang) => masterList[lang].length;
 
   void addWord(Word newWord) {
     _log.info("$runtimeType::addWord($newWord)");
@@ -102,13 +158,22 @@ class VocabularyList {
     }
   }
 
+  bool get isEmpty {
+    return masterList.isEmpty;
+  }
+
+  bool get isNotEmpty {
+    return masterList.isNotEmpty;
+  }
+
   void removeWord(Word oldWord) {
     _log.info("$runtimeType::removeWord($oldWord)");
-    if (masterList.containsKey(oldWord.language) == false) {
-      // How and where did this fuck up?
+    if (masterList[oldWord.language].contains(oldWord)) {
+      masterList[oldWord.language].remove(oldWord);
+    }
+    else {
       return;
     }
-
   }
 }
 

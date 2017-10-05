@@ -1,6 +1,6 @@
 
 import 'package:RSB/services/logger_service.dart';
-
+import 'package:RSB/models/word.dart';
 
 class Learner {
   final LoggerService _log;
@@ -20,13 +20,14 @@ class Learner {
 
   String currentLanguage = "";
   List<String> myLanguages = [];
-  Map<String, Map<String, String>> vocabLists = {};
-  Map<String, String> getVocabForLang(String lang) {
-    if (vocabLists.containsKey(lang) == false) {
-      vocabLists[lang] = {};
-    }
-    return vocabLists[lang];
-  }
+//  Map<String, Map<String, String>> vocabLists = {};
+  VocabularyList vocabLists;
+//  Map<String, String> getVocabForLang(String lang) {
+//    if (vocabLists.containsKey(lang) == false) {
+//      vocabLists[lang] = {};
+//    }
+//    return vocabLists[lang];
+//  }
 
 
   Learner(LoggerService this._log, String newUID, String newName, String newEmail, [bool existance, List<String> newLangList, String newCurrentLang]) {
@@ -52,6 +53,8 @@ class Learner {
       myLanguages = [];
       currentLanguage = "";
     }
+
+    vocabLists = new VocabularyList(_log, {});
 
     _log.info("$runtimeType");
     _log.info("$runtimeType::uid: $newUID");
@@ -99,17 +102,31 @@ class Learner {
 //    return userInfo;
 //  }
 
-  void addWord(String newWord, [String newDef = ""]) {
+  void addVocabList(Map<String, List<Word>> mList) {
+    vocabLists = new VocabularyList(_log, mList);
+  }
+
+  void addQuickWord(String newWord, [String newDef = ""]) {
     vocabLists[currentLanguage][newWord] = newDef;
     _hasVocab = true;
   }
 
-  void removeWord(String oldWord) {
+  void removeQuickWord(String oldWord) {
     _log.info("$runtimeType::removeWord($oldWord)");
     vocabLists[currentLanguage].remove(oldWord);
     if (vocabLists.isEmpty) {
       _hasVocab = false;
     }
+  }
+
+  // Are these even necessary? Could just call vocabLists directly...
+  void addWord(Word newWord) {
+    vocabLists.addWord(newWord);
+  }
+
+  // Are these even necessary? Could just call vocabLists directly...
+  void removeWord(Word oldWord) {
+    vocabLists.removeWord(oldWord);
   }
 
   void addLanguage(String newLang) {

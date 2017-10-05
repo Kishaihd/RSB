@@ -3,6 +3,7 @@ import 'package:angular/angular.dart';
 import 'package:RSB/services/logger_service.dart';
 import 'package:RSB/models/learner.dart';
 import 'package:firebase/firebase.dart' as firebase;
+import 'package:RSB/models/word.dart';
 
 @Injectable()
 class FirebaseService {
@@ -35,7 +36,8 @@ class FirebaseService {
   // User info
   Map<String, dynamic> userData = {};
 //  Map userMeta = {};
-  Map<String, Map<String, String>> vocabLists = {};
+//  Map<String, Map<String, String>> vocabLists = {};
+  VocabularyList vocabLists;
 
   FirebaseService(LoggerService this._log) {
     _log.info("$runtimeType");
@@ -53,6 +55,8 @@ class FirebaseService {
     fbLanguagesList = _fbDatabase.ref("languagesList");
     fbLangMeta = _fbDatabase.ref("languagesMeta");
     fbLangData = _fbDatabase.ref("languagesData");
+
+    vocabLists = new VocabularyList(_log, {});
   }
 
   Future getLanguagesData() async {
@@ -153,12 +157,34 @@ class FirebaseService {
     if (vocabLists == null || vocabLists.isEmpty) {
       fbVocabLists = _fbDatabase.ref("$VOCAB_LISTS/$userID");
       fbVocabLists.onValue.listen((firebase.QueryEvent e) async {
-        vocabLists = await e.snapshot.val();
-        learner.vocabLists = vocabLists;
+        Map<String, List<Map<String, String>>> tempyMap;
+        tempyMap = await e.snapshot.val();
+        tempyMap.forEach((String l, List<Map<String, String>> lw) {
+          learner.vocabLists.masterList[l] = [];
+          lw.forEach((Map<String, String> wm) {
+//            learner.vocabLists.masterList[l].add(new Word.RUN_ONLY_ONCE(l, w, d));
+          learner.vocabLists.masterList[l].add(new Word.fromMap(wm));
+//            vocabLists.addWord(new Word.RUN_ONLY_ONCE(l, w, d));
+//            learner.vocabLists.addWord(new Word.RUN_ONLY_ONCE(l, w, d));
+            _log.info("$runtimeType::getVocabLists() vocabLists.masterList[$l].add(new Word($wm)");
+          });
+        });
+//        fbVocabLists.update(learner.vocabLists.toMap());
+//        vocabLists = await e.snapshot.val();
+//        learner.vocabLists = vocabLists;
         _log.info("$runtimeType::getVocabLists()::vocabLists = ${e.snapshot.val()}");
       });
+      return learner.vocabLists;
     }
-    return vocabLists;
+//    if (vocabLists == null || vocabLists.isEmpty) {
+//      fbVocabLists = _fbDatabase.ref("$VOCAB_LISTS/$userID");
+//      fbVocabLists.onValue.listen((firebase.QueryEvent e) async {
+//        vocabLists = await e.snapshot.val();
+//        learner.vocabLists = vocabLists;
+//        _log.info("$runtimeType::getVocabLists()::vocabLists = ${e.snapshot.val()}");
+//      });
+//    }
+//    return vocabLists;
   }
 
   String getCurrentLanguage() {
@@ -227,19 +253,29 @@ class FirebaseService {
 //    await fbVocabLists.update(learner.vocabLists);
   }
 
-  Future<Null> addWord(String newWord, [String def = ""]) async {
-    _log.info("$runtimeType::addWord($newWord, $def)");
-    _log.info("$runtimeType::addWord() -- learner.vocabLists = ${learner.vocabLists}");
-    _log.info("$runtimeType::addWord() -- learner.vocabLists[$currentLanguage] = ${learner.vocabLists[currentLanguage]}");
-    learner.vocabLists[currentLanguage][newWord] = def;
-    await fbVocabLists.update(learner.vocabLists);
+  Future<Null> addWord(Word newWord) async {
+    _log.info("$runtimeType::addWord() -- adding ${newWord.wordName}");
+    learner.vocabLists.addWord(newWord);
+    await fbVocabLists.update(learner.vocabLists.toMap());
   }
 
-  Future<Null> removeWord(String oldWord) async {
-    _log.info("$runtimeType::removeWord($oldWord)");
-    _log.info("$runtimeType::addWord() -- learner.vocabLists = ${learner.vocabLists}");
-    _log.info("$runtimeType::addWord() -- learner.vocabLists[$currentLanguage] = ${learner.vocabLists[currentLanguage]}");
-    learner.vocabLists[currentLanguage].remove(oldWord);
-    await fbVocabLists.update(learner.vocabLists);
+  Future<Null> addWordQuick(String newWord, [String def = ""]) async {
+    _log.info("$runtimeType::addQuickWord($newWord, $def)");
+    _log.info("$runtimeType::addQuickWord() -- learner.vocabLists = ${learner.vocabLists}");
+    _log.info("$runtimeType::addQuickWord() -- learner.vocabLists[$currentLanguage] = ${learner.vocabLists[currentLanguage]}");
+//    learner.vocabLists[currentLanguage][newWord] = def;
+//    Word nw = new Word.quickAdd(currentLanguage, newWord, def);
+    learner.vocabLists.masterList[currentLanguage].add(new Word.quickAdd(currentLanguage, newWord, def)); //= nw; //new Word.quickAdd(currentLanguage, newWord, def);
+    await fbVocabLists.update(learner.vocabLists.toMap()); ///todo: make this function.
+  }
+
+  // Don't try to remove words until we're done... D:
+  Future<Null> removeWord(Word oldWord) async {
+    _log.info("$runtimeType::removeQuickWord($oldWord)");
+    _log.info("$runtimeType::removeQuickWord() -- learner.vocabLists = ${learner.vocabLists}");
+    _log.info("$runtimeType::removeQuickWord() -- learner.vocabLists[$currentLanguage] = ${learner.vocabLists[currentLanguage]}");
+//    learner.vocabLists.masterList[currentLanguage].remove(oldWord);
+    learner.vocabLists.removeWord(oldWord);
+    await fbVocabLists.update(learner.vocabLists.toMap());
   }
 } // end class FirebaseService

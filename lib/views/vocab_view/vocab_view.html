@@ -34,41 +34,42 @@
 
     <div *ngIf="currentView == views[0]">
         <span id="word-input">
-            <material-input label="Add new vocab word!"
+            <material-input label="Add word!"
                             [disabled]="editMode == true"
                             autoFocus floatingLabel style="width:40%"
                             [(ngModel)]="newWord">
             </material-input>
-            <material-input label="Optional definition"
+            <material-input label="Add definition"
                             [disabled]="editMode == true"
                             autoFocus floatingLabel style="width:40%"
                             [(ngModel)]="newDef">
             </material-input>
             <material-button
-                          (trigger)="add(newWord, newDef); newWord = newDef = '';"
+                          (trigger)="addQuick(newWord, newDef); newWord = newDef = '';"
                           [disabled]="newWord == null || newWord.isEmpty">
                 <material-icon icon="add_box"></material-icon>
             </material-button>
         </span>
 
         <!--<hr>-->
-        <span *ngIf="vocabList != null && vocabList.isNotEmpty">
-            <hr>
-            <!--<glyph id="arrow-glyph" icon="keyboard_arrow_down"></glyph>-->
-        </span>
-        <p *ngIf="vocabList == null || vocabList.isEmpty">
+        <!--<span *ngIf="masterVocabList[fbService.currentLanguage] != null && masterVocabList[fbService.currentLanguage].isNotEmpty">-->
+            <!--<hr>-->
+            <!--&lt;!&ndash;<glyph id="arrow-glyph" icon="keyboard_arrow_down"></glyph>&ndash;&gt;-->
+        <!--</span>-->
+        <p *ngIf="masterVocabList[fbService.currentLanguage] == null || masterVocabList[fbService.currentLanguage].isEmpty">
             Vocabulary words will show up here. :)
         </p>
 
-        <div *ngIf="vocabList != null && vocabList.isNotEmpty">
-            <ul *ngFor="let word of vocabList.keys; let i=index">
+        <div *ngIf="masterVocabList[fbService.currentLanguage] != null && masterVocabList[fbService.currentLanguage].isNotEmpty">
+            <hr>
+            <ul *ngFor="let word of masterVocabList[fbService.currentLanguage]; let i=index">
                 <!--<li *ngFor="let word of newWords; let i=index">-->
                 <li> <!--; let i=index"-->
                     <span class="vocab-row">
                         <material-checkbox [disabled]="editMode == true" #done materialTooltip="Mark word as memorized"></material-checkbox>
                         <span [class.odd-row]="i % 2 == 1" class="wordAndDef">
-                            <span [class.done]="done.checked" class="word"> {{word}} </span>
-                            <span [class.done]="done.checked" class="def"> {{vocabList[word]}} </span>
+                            <span [class.done]="done.checked" class="word"> {{word.wordName}} </span>
+                            <span [class.done]="done.checked" class="def"> {{word.definition}} </span>
                         </span>
                         <material-button *ngIf="editMode == true"  class="li-remove" (trigger)="remove(word)">
                                 <material-icon class="delete-icon" icon="delete"></material-icon>
@@ -82,14 +83,14 @@
 
     <div *ngIf="currentView == views[1]">
         <div *ngIf="listOrderWordFirst == true">
-            <ol *ngFor="let word of vocabList.keys; let i=index">
+            <ol *ngFor="let word of masterVocabList[fbService.currentLanguage]; let i=index">
                 <!--<span>-->
                     <li [class.odd-row]="i % 2 == 1" class="list-div">
                         <span class="word">
-                            {{word}}
+                            {{word.wordName}}
                         </span>
                         <span *ngIf="defVisible == true" class="def">
-                            {{vocabList[word]}}
+                            {{word.definition}}
                         </span>
                     </li>
                 <!--</span>-->
@@ -97,13 +98,13 @@
         </div>
 
         <div *ngIf="listOrderWordFirst == false">
-            <ol *ngFor="let word of vocabList.keys; let i=index">
+            <ol *ngFor="let word of masterVocabList[fbService.currentLanguage]; let i=index">
                 <li [class.odd-row]="i % 2 == 1" class="list-div">
                         <span class="word">
-                            {{vocabList[word]}}
+                            {{word.definition}}
                         </span>
                     <span *ngIf="defVisible == true" class="def">
-                            {{word}}
+                            {{word.wordName}}
                         </span>
                 </li>
             </ol>
@@ -125,26 +126,26 @@
                     <div *ngIf="showingWord == true && cardOrderWordFirst == true">
                         <material-button class="front"
                                          (trigger)="cardClick()">
-                            {{wordList[cardIndex]}}
+                            {{vocabList[cardIndex].wordName}}
                         </material-button>
                     </div>
                     <div *ngIf="showingWord == false && cardOrderWordFirst == true">
                         <material-button class="back"
                                          (trigger)="cardClick()">
-                            {{defList[cardIndex]}}
+                            {{vocabList[cardIndex].definition}}
                         </material-button>
                     </div>
 
                     <div *ngIf="showingWord == true && cardOrderWordFirst == false">
                         <material-button class="front"
                                          (trigger)="cardClick()">
-                            {{defList[cardIndex]}}
+                            {{vocabList[cardIndex].definition}}
                         </material-button>
                     </div>
                     <div *ngIf="showingWord == false && cardOrderWordFirst == false">
                         <material-button class="back"
                                          (trigger)="cardClick()">
-                            {{wordList[cardIndex]}}
+                            {{vocabList[cardIndex].wordName}}
                         </material-button>
                     </div>
                 </div>
