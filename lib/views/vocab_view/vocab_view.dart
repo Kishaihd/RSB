@@ -41,11 +41,41 @@ class VocabView implements OnInit {
 //  SplayTreeMap<String, String> sortedVocab;
   String newWord = "";
   String newDef = "";
+//  bool setNoun = false;
+//  bool setPronoun = false;
+//  bool setAdj = false;
+//  bool setVerb = false;
+//  bool setAdverb = false;
+//  bool setPrep = false;
+//  bool setConjunc = false;
+//  bool setInterject = false;
+  String cat = "";
+  String subcat = "";
+//  bool isMem = false;
+//  bool tempMem = false;
+
+  Map<String, bool> wordOptions = {
+    "setNoun": false,
+    "setPronoun": false,
+    "setAdj": false,
+    "setVerb": false,
+    "setAdverb": false,
+    "setPrep": false,
+    "setConjunc": false,
+    "setInterject": false,
+    "isMem": false,
+    "tempMem": false,
+    "multiple": false
+  };
+
+  void changeOptionStatus(String opt) {
+    _log.info("$runtimeType::changeOptionStatus($opt) -- setting $opt to ${!wordOptions[opt]}");
+    wordOptions[opt] = ! wordOptions[opt]; // Change its truthiness?
+  }
 
   @override
   ngOnInit() async {
     _log.info("$runtimeType::ngonInit()");
-    // THIS ONLY RUNS ONE TIME TO FORMAT THE FIREBASE!
 //    await fbService.getVocabLists(fbService.fbUser.uid).then((Map<String, Map<String, String>> allLists) async {
     await fbService.getVocabLists(fbService.fbUser.uid).then((VocabularyList allLists) async {
       masterVocabList = allLists;
@@ -111,11 +141,21 @@ class VocabView implements OnInit {
     currentView = views.elementAt(newIndex);
   }
 
-  void addFull(String newName, [String newDef = "", bool setNoun = false, bool setPronoun = false, bool setAdj = false, bool setVerb = false, bool setAdverb = false, bool setPrep = false, bool setConjunc = false, bool setInterject = false, String cat = "", String subcat = "", bool isMem = false, bool tempMem = false]) {
-    _log.info("$runtimeType::addFull() adding word: ${fbService.currentLanguage}, $newName, $newDef, $setNoun, $setPronoun, $setAdj,$setVerb, $setAdverb, $setPrep, $setConjunc, $setInterject, $cat, $subcat, false, false)");
-    Word newWord = new Word(fbService.currentLanguage, newName, newDef, setNoun, setPronoun, setAdj,setVerb, setAdverb, setPrep, setConjunc, setInterject, cat, subcat, false, false);
+  ///todo: THIS (and in html)
+//  void addFull(String newName, [String newDef = "", bool setNoun = false, bool setPronoun = false, bool setAdj = false, bool setVerb = false, bool setAdverb = false, bool setPrep = false, bool setConjunc = false, bool setInterject = false, String cat = "", String subcat = "", bool isMem = false, bool tempMem = false]) {
+  void addFull(String newName, [String newDef = "", Map<String, bool> wOptions, String cat = "", String subcat = ""]) {
+    _log.info("$runtimeType::addFull() adding word: ${fbService.currentLanguage}, $newName, $newDef, noun: ${wOptions["setNoun"]}, pronoun: ${wOptions["setPronoun"]},adjective: ${wOptions["setAdj"]}, verb: ${wOptions["setVerb"]}, adverb: ${wOptions["setAdverb"]}, preposition: ${wOptions["setPrep"]}, conjunction: ${wOptions["setConjunc"]}, interjection: ${wOptions["setInterject"]}, $cat, $subcat)");
+//    Word newWord = new Word(fbService.currentLanguage, newName, newDef, setNoun, setPronoun, setAdj,setVerb, setAdverb, setPrep, setConjunc, setInterject, cat, subcat, false, false);
+    Map wMap = wOptions;
+//    wMap = wOptions;
+    wMap["language"] = fbService.currentLanguage;
+    wMap["wordName"] = newName;
+    wMap["definition"] = newDef;
+    wMap["category"] = cat;
+    wMap["subcategory"] = subcat;
+    Word newWord = new Word.fromMap(wMap);
     masterVocabList.addWord(newWord);
-    vocabList.add(newWord);
+//    vocabList.add(newWord);
     fbService.addWord(newWord);
   }
 
@@ -127,7 +167,7 @@ class VocabView implements OnInit {
 //    vocabList[word.toLowerCase()] = definition.toLowerCase();
 //    Word nw = new Word.quickAdd(fbService.currentLanguage, word, definition);
     masterVocabList.addWord(new Word.quickAdd(fbService.currentLanguage, word, definition));
-    vocabList.add(new Word.quickAdd(fbService.currentLanguage, word, definition));
+//    vocabList.add(new Word.quickAdd(fbService.currentLanguage, word, definition));
     fbService.addWordQuick(word.toLowerCase(), definition.toLowerCase());
     //newSetWords.add(description);
   }
