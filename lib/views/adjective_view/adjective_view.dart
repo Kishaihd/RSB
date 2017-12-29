@@ -12,7 +12,7 @@ import 'package:RSB/services/firebase_service.dart';
   styleUrls: const ['adjective_view.css'],
   templateUrl: 'adjective_view.html',
   directives: const [CORE_DIRECTIVES, materialDirectives],
-  providers: const [materialProviders],//, LoggerService],
+  providers: const [materialProviders]//, LoggerService],
 )
 class AdjectiveView { //implements OnInit {
   final LoggerService _log;
@@ -40,6 +40,7 @@ class AdjectiveView { //implements OnInit {
   Map _langDataMap = {};
   @Input()
   void set langDataMap(Map ldm) {
+
     _log.info("$runtimeType::set langDataMap()::ldm = $ldm");
     if (_langDataMap != ldm) {
       _langDataMap = ldm;

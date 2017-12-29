@@ -10,6 +10,16 @@
     flex-flow: row wrap;
 }
 
+.declension-name {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 4px;
+    border-radius: 10px;
+    /*border: 1px solid #110914;*/
+    background-color: lightskyblue;
+}
+
 .div-by-gender {
     display: flex;
     flex-flow: row wrap;

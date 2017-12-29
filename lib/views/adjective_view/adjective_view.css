@@ -8,12 +8,14 @@
 .declension-container {
     display: flex;
     flex-flow: row wrap;
+    /*border: 1px solid black;*/
 }
 
 .div-by-gender {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
+    border: 1px solid black;
 }
 
 .declension-table {
@@ -23,10 +25,13 @@
 
 .declension-header {
     background-color: lightblue;
+    padding: 1px;
+    border: 2px solid black;
 }
 
 .declension-body {
     padding: 1%;
+    border: 1px solid black;
 }
 
 .declension-row {

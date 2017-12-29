@@ -80,6 +80,7 @@ class VocabView implements OnInit {
     await fbService.getVocabLists(fbService.fbUser.uid).then((VocabularyList allLists) async {
       masterVocabList = allLists;
       vocabList = masterVocabList[fbService.currentLanguage];
+//      currentView = views[0];
     });
 //    _log.info("$runtimeType::ngOnInit()::learner.vocabLists = ${fbService.learner.vocabLists}");
   }

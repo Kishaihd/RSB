@@ -12,165 +12,78 @@
     },
     "russian" : {
       "adjectives" : {
-        "feminine" : [ {
-          "accusative" : {
-            "plural" : "*",
-            "singular" : "новую"
+        "new" : {
+          "singular": {
+            "feminine": {
+              "accusative": "новую",
+              "dative": "новой",
+              "genetive": "новой",
+              "instrumental": "новой",
+              "nominative": "новая",
+              "prepositional": "новой"
+            },
+            "masculine": {
+              "accusative": "*",
+              "dative": "новому",
+              "genetive": "нового",
+              "instrumental": "новым",
+              "nominative": "новый",
+              "prepositional": "новом"
+            },
+            "neuter": {
+              "accusative": "*",
+              "dative": "новому",
+              "genetive": "нового",
+              "instrumental": "новым",
+              "nominative": "новое",
+              "prepositional": "новом"
+            }
           },
-          "dative" : {
-            "plural" : "новым",
-            "singular" : "новой"
+          "plural": {
+            "accusative": "*",
+            "dative": "новым",
+            "genetive": "новых",
+            "instrumental": "новыми",
+            "nominative": "новые",
+            "prepositional": "новых"
+          }
+        },
+        "light blue" : {
+          "singular" : {
+            "feminine" : {
+              "accusative" : "cинюю",
+              "dative" : "синей",
+              "genetive" : "синей",
+              "instrumental" : "синей",
+              "nominative" : "синяя",
+              "prepositional" : "синей"
+            },
+            "masculine" : {
+              "accusative": "*",
+              "dative": "синому",
+              "genetive": "синего",
+              "instrumental": "синим",
+              "nominative": "синий",
+              "prepositional": "синем"
+            },
+            "neuter" : {
+              "accusative" : "синее",
+              "dative" : "синому",
+              "genetive" : "синего",
+              "instrumental" : "синим",
+              "nominative" : "синее",
+              "prepositional" : "синем"
+            }
           },
-          "genetive" : {
-            "plural" : "новых",
-            "singular" : "новой"
-          },
-          "instrumental" : {
-            "plural" : "новыми",
-            "singular" : "новой"
-          },
-          "nominative" : {
-            "plural" : "новые",
-            "singular" : "новая"
-          },
-          "prepositional" : {
-            "plural" : "новых",
-            "singular" : "новой"
-          },
-          "word" : "новая"
-        }, {
-          "accusative" : {
-            "plural" : "*",
-            "singular" : "cинюю"
-          },
-          "dative" : {
-            "plural" : "синим",
-            "singular" : "синей"
-          },
-          "genetive" : {
-            "plural" : "синих",
-            "singular" : "синей"
-          },
-          "instrumental" : {
-            "plural" : "синими",
-            "singular" : "синей"
-          },
-          "nominative" : {
-            "plural" : "синие",
-            "singular" : "синяя"
-          },
-          "prepositional" : {
-            "plural" : "синих",
-            "singular" : "синей"
-          },
-          "word" : "синяя"
-        } ],
-        "masculine" : [ {
-          "accusative" : {
-            "plural" : "*",
-            "singular" : "*"
-          },
-          "dative" : {
-            "plural" : "новым",
-            "singular" : "новому"
-          },
-          "genetive" : {
-            "plural" : "новых",
-            "singular" : "нового"
-          },
-          "instrumental" : {
-            "plural" : "новыми",
-            "singular" : "новым"
-          },
-          "nominative" : {
-            "plural" : "новые",
-            "singular" : "новый"
-          },
-          "prepositional" : {
-            "plural" : "новых",
-            "singular" : "новом"
-          },
-          "word" : "новый"
-        }, {
-          "accusative" : {
-            "plural" : "*",
-            "singular" : "*"
-          },
-          "dative" : {
-            "plural" : "синим",
-            "singular" : "синому"
-          },
-          "genetive" : {
-            "plural" : "синих",
-            "singular" : "синего"
-          },
-          "instrumental" : {
-            "plural" : "синими",
-            "singular" : "синим"
-          },
-          "nominative" : {
-            "plural" : "синие",
-            "singular" : "синий"
-          },
-          "prepositional" : {
-            "plural" : "синих",
-            "singular" : "синем"
-          },
-          "word" : "синий"
-        } ],
-        "neuter" : [ {
-          "accusative" : {
-            "plural" : "*",
-            "singular" : "*"
-          },
-          "dative" : {
-            "plural" : "новым",
-            "singular" : "новому"
-          },
-          "genetive" : {
-            "plural" : "новых",
-            "singular" : "нового"
-          },
-          "instrumental" : {
-            "plural" : "новыми",
-            "singular" : "новым"
-          },
-          "nominative" : {
-            "plural" : "новые",
-            "singular" : "новый"
-          },
-          "prepositional" : {
-            "plural" : "новых",
-            "singular" : "новом"
-          },
-          "word" : "новый"
-        }, {
-          "accusative" : {
-            "plural" : "*",
-            "singular" : "синее"
-          },
-          "dative" : {
-            "plural" : "синим",
-            "singular" : "синому"
-          },
-          "genetive" : {
-            "plural" : "синих",
-            "singular" : "синего"
-          },
-          "instrumental" : {
-            "plural" : "синими",
-            "singular" : "синим"
-          },
-          "nominative" : {
-            "plural" : "синие",
-            "singular" : "синее"
-          },
-          "prepositional" : {
-            "plural" : "синих",
-            "singular" : "синем"
-          },
-          "word" : "синий"
-        } ]
+          "plural" : {
+            "accusative": "*",
+            "dative": "синим",
+            "genetive": "синих",
+            "instrumental": "синими",
+            "nominative": "синие",
+            "prepositional": "синих"
+          }
+        }
       },
       "nouns" : {
         "first declension" : [ {
@@ -515,6 +428,7 @@
       "declensionGroups" : [ "first declension", "second declension", "third declension" ],
       "declensionsOrderPreference" : [ "nominative", "accusative", "genetive", "prepositional", "dative", "instrumental" ],
       "genders" : [ "masculine", "feminine", "neuter" ],
+      "number" : ["singular", "plural"],
       "hasConjugations" : "true",
       "hasDeclensions" : "true",
       "hasGender" : "true"
@@ -587,45 +501,548 @@
       }
     },
     "i8TSwVSuzSaJYs4gAm6eeqfqwEa2" : {
-      "russian" : {
-        "a witness" : "свидетель",
-        "according to" : "по мнению",
-        "actions" : "действия",
-        "bear" : "медведь",
-        "cell" : "клетка",
-        "decision" : "решение",
-        "describe" : "описывать ",
-        "destiny" : "судьба ",
-        "exertion" : "напряжение",
-        "ghost" : "привидение",
-        "growth" : "рост",
-        "hydrogen" : "водород",
-        "in order to" : "чтобы",
-        "liquid" : "жидкость",
-        "mammal" : "млекопитающих ",
-        "murder" : "убийство ",
-        "opinion " : "мнение",
-        "oxygen" : "кислород ",
-        "premise" : "предпосылка ",
-        "properties" : "свойства ",
-        "right away" : "сразу ",
-        "ripple " : "рябь",
-        "satire" : "сатира",
-        "shape" : "форм",
-        "suffering" : "страдание",
-        "the government" : "правительство ",
-        "thief " : "вор ",
-        "to be made up from" : "состоять из",
-        "to defend" : "защищать",
-        "to exist" : "существовать",
-        "to make a decision" : "принять решение",
-        "to pass a law" : "принять закон",
-        "vacate" : "освобождать "
-      },
-      "spanish" : {
-        "heart" : "corazon",
-        "hello" : "hola"
-      }
+      "russian" : [ {
+        "category" : "",
+        "definition" : "свидетель",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "a witness"
+      }, {
+        "category" : "",
+        "definition" : "по мнению",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "according to"
+      }, {
+        "category" : "",
+        "definition" : "действия",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "actions"
+      }, {
+        "category" : "",
+        "definition" : "клетка",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "cell"
+      }, {
+        "category" : "",
+        "definition" : "решение",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "decision"
+      }, {
+        "category" : "",
+        "definition" : "описывать ",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "describe"
+      }, {
+        "category" : "",
+        "definition" : "судьба ",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "destiny"
+      }, {
+        "category" : "",
+        "definition" : "напряжение",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "exertion"
+      }, {
+        "category" : "",
+        "definition" : "привидение",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "ghost"
+      }, {
+        "category" : "",
+        "definition" : "рост",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "growth"
+      }, {
+        "category" : "",
+        "definition" : "водород",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "hydrogen"
+      }, {
+        "category" : "",
+        "definition" : "чтобы",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "in order to"
+      }, {
+        "category" : "",
+        "definition" : "жидкость",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "liquid"
+      }, {
+        "category" : "",
+        "definition" : "млекопитающих ",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "mammal"
+      }, {
+        "category" : "",
+        "definition" : "убийство ",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "murder"
+      }, {
+        "category" : "",
+        "definition" : "мнение",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "opinion "
+      }, {
+        "category" : "",
+        "definition" : "кислород ",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "oxygen"
+      }, {
+        "category" : "",
+        "definition" : "предпосылка ",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "premise"
+      }, {
+        "category" : "",
+        "definition" : "свойства ",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "properties"
+      }, {
+        "category" : "",
+        "definition" : "сразу ",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "right away"
+      }, {
+        "category" : "",
+        "definition" : "рябь",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "ripple "
+      }, {
+        "category" : "",
+        "definition" : "сатира",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "satire"
+      }, {
+        "category" : "",
+        "definition" : "форм",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "shape"
+      }, {
+        "category" : "",
+        "definition" : "страдание",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "suffering"
+      }, {
+        "category" : "",
+        "definition" : "правительство ",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "the government"
+      }, {
+        "category" : "",
+        "definition" : "вор ",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "thief "
+      }, {
+        "category" : "",
+        "definition" : "состоять из",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "to be made up from"
+      }, {
+        "category" : "",
+        "definition" : "защищать",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "to defend"
+      }, {
+        "category" : "",
+        "definition" : "существовать",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "to exist"
+      }, {
+        "category" : "",
+        "definition" : "принять решение",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "to make a decision"
+      }, {
+        "category" : "",
+        "definition" : "принять закон",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "to pass a law"
+      }, {
+        "category" : "",
+        "definition" : "освобождать ",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "vacate"
+      }, {
+        "category" : "",
+        "definition" : "создавать",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "to create"
+      }, {
+        "category" : "",
+        "definition" : "посадили в тюрьму",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "russian",
+        "subcategory" : "",
+        "wordName" : "jailed "
+      } ],
+      "spanish" : [ {
+        "category" : "",
+        "definition" : "corazon",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "spanish",
+        "subcategory" : "",
+        "wordName" : "heart"
+      }, {
+        "category" : "",
+        "definition" : "hola",
+        "isAdjective" : false,
+        "isAdverb" : false,
+        "isConjunction" : false,
+        "isMemorized" : false,
+        "isNoun" : false,
+        "isPreposition" : false,
+        "isPronoun" : false,
+        "isTempMemorized" : false,
+        "isVerb" : false,
+        "language" : "spanish",
+        "subcategory" : "",
+        "wordName" : "hello"
+      } ]
     }
   }
 }

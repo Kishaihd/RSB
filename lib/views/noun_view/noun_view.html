@@ -3,7 +3,7 @@
 <!--</div>-->
 <div *ngFor="let declension of declensionGroups" class="div-by-gender">
     <div class="declension-wrapper">
-        <div>{{declension}}</div>
+        <span class="declension-name"><strong>{{declension}}</strong></span>
         <div class="declension-container">
             <div *ngFor="let decMap of nounMap[declension]">
             <!--<div class="div-by-gender">-->
