@@ -80,14 +80,14 @@ class VocabView implements OnInit {
     await fbService.getVocabLists(fbService.fbUser.uid).then((VocabularyList allLists) async {
       masterVocabList = allLists;
       vocabList = masterVocabList[fbService.currentLanguage];
-//      currentView = views[0];
+      currentView = views[1];
+      currentView = views[0];
     });
 //    _log.info("$runtimeType::ngOnInit()::learner.vocabLists = ${fbService.learner.vocabLists}");
   }
 
   VocabView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType");
-    currentView = views[0];
   }
 
   void changeEditMode() {
