@@ -76,6 +76,7 @@ class AdjectiveView { //implements OnInit {
       }
     }
   }
+
   AdjectiveView(LoggerService this._log) {
     _log.info("$runtimeType");
     currentView = views.elementAt(0); // 0th index should be first view.

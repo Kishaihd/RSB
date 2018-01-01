@@ -1,8 +1,10 @@
+import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:RSB/services/logger_service.dart';
 import 'package:RSB/services/firebase_service.dart';
 import 'package:RSB/models/word.dart';
+import 'package:dart_toast/dart_toast.dart';
 
 @Component(
   selector: 'vocab-view',
@@ -68,6 +70,16 @@ class VocabView implements OnInit {
     "multiple": false
   };
 
+  VocabView(LoggerService this._log, this.fbService) {
+    _log.info("$runtimeType");
+    if (vocabList == null || vocabList.isEmpty) {
+      currentView = views[1];
+    }
+    else {
+      currentView = views[0];
+    }
+  }
+
   void changeOptionStatus(String opt) {
     _log.info("$runtimeType::changeOptionStatus($opt) -- setting $opt to ${!wordOptions[opt]}");
     wordOptions[opt] = ! wordOptions[opt]; // Change its truthiness?
@@ -76,23 +88,22 @@ class VocabView implements OnInit {
   @override
   ngOnInit() async {
     _log.info("$runtimeType::ngonInit()");
-//    await fbService.getVocabLists(fbService.fbUser.uid).then((Map<String, Map<String, String>> allLists) async {
     await fbService.getVocabLists(fbService.fbUser.uid).then((VocabularyList allLists) async {
       masterVocabList = allLists;
       vocabList = masterVocabList[fbService.currentLanguage];
-      currentView = views[1];
-      currentView = views[0];
+      if (vocabList == null || vocabList.isEmpty) {
+        currentView = views[1];
+      }
+      else {
+        currentView = views[0];
+      }
     });
-//    _log.info("$runtimeType::ngOnInit()::learner.vocabLists = ${fbService.learner.vocabLists}");
-  }
-
-  VocabView(LoggerService this._log, this.fbService) {
-    _log.info("$runtimeType");
   }
 
   void changeEditMode() {
     _log.info("$runtimeType()::changeEditMode()");
     editMode = (!editMode);
+    new Toast("Toast!", "The toastiest toast", position: ToastPos.bottomCenter);
   }
 
   void changeListView() {

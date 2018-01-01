@@ -13,7 +13,7 @@ import 'package:RSB/views/vocab_view/vocab_view.dart';
   directives: const [CORE_DIRECTIVES, materialDirectives, NounView, AdjectiveView, VocabView],
   providers: const [materialProviders]
 )
-class LanguageView implements OnInit {
+class LanguageView { //} implements OnInit {
   final LoggerService _log;
 
   String _currentLang = "";
@@ -50,6 +50,10 @@ class LanguageView implements OnInit {
   Map get languageMetaMap => _languageMetaMap;
 
 
+  LanguageView(LoggerService this._log) {
+    _log.info("$runtimeType");
+  }
+
   void _initMe() {
     _log.info("$runtimeType::_initMe()");
     _log.info("$runtimeType::_initMe() -- _currentLang = $_currentLang");
@@ -63,13 +67,10 @@ class LanguageView implements OnInit {
     }
   }
 
-  @override
-  ngOnInit() {
-   _log.info("$runtimeType::ngOnInit()");
-  }
+//  @override
+//  ngOnInit() {
+//   _log.info("$runtimeType::ngOnInit()");
+//  }
 
-  LanguageView(LoggerService this._log) {
-    _log.info("$runtimeType");
-  }
 
 }

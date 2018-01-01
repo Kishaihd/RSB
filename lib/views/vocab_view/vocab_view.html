@@ -1,4 +1,3 @@
-<!--<h2>Add new words below!</h2>-->
 <div class="wrapper">
     <div class="menuButtons">
         <span class="menu-left">
@@ -10,18 +9,20 @@
                 </div>
             </material-dropdown-select>
         </span>
-        <span  class="menu-right">
-            <material-button *ngIf="currentView == views[0]" icon (click)="changeEditMode()">
+        <span class="menu-right">
+            <material-button id="lockunlock" *ngIf="currentView == views[0]" icon (click)="changeEditMode()">
                 <material-icon *ngIf="editMode == true" icon="lock_open"></material-icon>
                 <material-icon *ngIf="editMode == false" icon="lock_outline"></material-icon>
             </material-button>
             <material-button *ngIf="currentView == views[1]" icon (click)="changeListWordView()">
                 <material-icon icon="swap_horiz"></material-icon>
             </material-button>
-            <material-button *ngIf="currentView == views[1] && defVisible == false" checked="true" icon (click)="changeListView()">
+            <material-button *ngIf="currentView == views[1] && defVisible == false" checked="true" icon
+                             (click)="changeListView()">
                 <material-icon icon="visibility_off"></material-icon>
             </material-button>
-            <material-button *ngIf="currentView == views[1] && defVisible == true" checked="false" icon (click)="changeListView()">
+            <material-button *ngIf="currentView == views[1] && defVisible == true" checked="false" icon
+                             (click)="changeListView()">
                 <material-icon icon="visibility"></material-icon>
             </material-button>
             <material-button *ngIf="currentView == views[2]" icon (click)="changeCardView()">
@@ -29,7 +30,6 @@
             </material-button>
         </span>
     </div>
-
 
 
     <div *ngIf="currentView == views[0]">
@@ -41,33 +41,33 @@
             </material-input>
             <material-input label="Add definition"
                             [disabled]="editMode == true"
-                            autoFocus floatingLabel style="width:40%"
+                            floatingLabel style="width:40%"
                             [(ngModel)]="newDef">
             </material-input>
             <material-button
-                          (trigger)="addQuick(newWord, newDef); newWord = newDef = '';"
-                          [disabled]="newWord == null || newWord.isEmpty">
+                    (trigger)="addQuick(newWord, newDef); newWord = newDef = '';"
+                    [disabled]="newWord == null || newWord.isEmpty">
                 <material-icon icon="add_box"></material-icon>
             </material-button>
         </span>
 
         <!--<material-expansionpanel name="Additional Word Information" expanded="false" showSaveCancel="true" saveText="Add Word" closeOnSave="false" (save)="addFull(newWord, newDef, setNoun, setPronoun, setAdj, setVerb, setAdverb, setPrep, setConjunc, setInterject, cat, subcat, isMem, tempMem)">-->
-            <!--<material-dropdown-select slide="y" class="menu-vocab-drop">-->
-                <!--<div *ngFor="let option of wordOptions; let i=index">-->
-                    <!--<material-select-item (trigger)="changeOptionStatus(option)" class="menu-vocab-item">-->
-                        <!--{{option}}-->
-                    <!--</material-select-item>-->
-                <!--</div>-->
-            <!--</material-dropdown-select>-->
-            <!--<div *ngIf="wordOptions['multiple'] == true">-->
-                <!--Multiple options!-->
-            <!--</div>-->
+        <!--<material-dropdown-select slide="y" class="menu-vocab-drop">-->
+        <!--<div *ngFor="let option of wordOptions; let i=index">-->
+        <!--<material-select-item (trigger)="changeOptionStatus(option)" class="menu-vocab-item">-->
+        <!--{{option}}-->
+        <!--</material-select-item>-->
+        <!--</div>-->
+        <!--</material-dropdown-select>-->
+        <!--<div *ngIf="wordOptions['multiple'] == true">-->
+        <!--Multiple options!-->
+        <!--</div>-->
         <!--</material-expansionpanel>-->
 
         <!--<hr>-->
         <!--<span *ngIf="masterVocabList[fbService.currentLanguage] != null && masterVocabList[fbService.currentLanguage].isNotEmpty">-->
-            <!--<hr>-->
-            <!--&lt;!&ndash;<glyph id="arrow-glyph" icon="keyboard_arrow_down"></glyph>&ndash;&gt;-->
+        <!--<hr>-->
+        <!--&lt;!&ndash;<glyph id="arrow-glyph" icon="keyboard_arrow_down"></glyph>&ndash;&gt;-->
         <!--</span>-->
         <p *ngIf="masterVocabList[fbService.currentLanguage] == null || masterVocabList[fbService.currentLanguage].isEmpty">
             Vocabulary words will show up here. :)
@@ -77,14 +77,15 @@
             <hr>
             <ul *ngFor="let word of masterVocabList[fbService.currentLanguage]; let i=index">
                 <!--<li *ngFor="let word of newWords; let i=index">-->
-                <li> <!--; let i=index"-->
+                <li>
                     <span class="vocab-row">
-                        <material-checkbox [disabled]="editMode == true" #done materialTooltip="Mark word as memorized"></material-checkbox>
+                        <material-checkbox [disabled]="editMode == true" #done
+                                           materialTooltip="Mark word as memorized"></material-checkbox>
                         <span [class.odd-row]="i % 2 == 1" class="wordAndDef">
                             <span [class.done]="done.checked" class="word"> {{word.wordName}} </span>
                             <span [class.done]="done.checked" class="def"> {{word.definition}} </span>
                         </span>
-                        <material-button *ngIf="editMode == true"  class="li-remove" (trigger)="remove(word)">
+                        <material-button *ngIf="editMode == true" class="li-remove" (trigger)="remove(word)">
                                 <material-icon class="delete-icon" icon="delete"></material-icon>
                         </material-button>
                     </span>
@@ -97,16 +98,14 @@
     <div *ngIf="currentView == views[1]">
         <div *ngIf="listOrderWordFirst == true">
             <ol *ngFor="let word of masterVocabList[fbService.currentLanguage]; let i=index">
-                <!--<span>-->
-                    <li [class.odd-row]="i % 2 == 1" class="list-div">
+                <li [class.odd-row]="i % 2 == 1" class="list-div">
                         <span class="word">
                             {{word.wordName}}
                         </span>
-                        <span *ngIf="defVisible == true" class="def">
+                    <span *ngIf="defVisible == true" class="def">
                             {{word.definition}}
                         </span>
-                    </li>
-                <!--</span>-->
+                </li>
             </ol>
         </div>
 
@@ -170,17 +169,4 @@
             </div>
         </div>
     </div>
-
-<!--<article class="flashcard">-->
-<!--<label *ngIf="showingWord == true">-->
-<!--<section class="front">-->
-<!--Front of the flashcard!-->
-<!--</section>-->
-<!--</label>-->
-<!--<label *ngIf="showingWord == false">-->
-<!--<section class="back">-->
-<!--Back of the flashcard!-->
-<!--</section>-->
-<!--</label>-->
-<!--</article>-->
 </div>
