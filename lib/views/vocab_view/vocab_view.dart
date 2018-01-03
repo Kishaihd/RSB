@@ -4,7 +4,8 @@ import 'package:angular_components/angular_components.dart';
 import 'package:RSB/services/logger_service.dart';
 import 'package:RSB/services/firebase_service.dart';
 import 'package:RSB/models/word.dart';
-import 'package:dart_toast/dart_toast.dart';
+//import 'package:dart_toast/dart_toast.dart';
+import 'package:RSB/src/dart_toast/dart_toast.dart';
 
 @Component(
   selector: 'vocab-view',
@@ -103,7 +104,8 @@ class VocabView implements OnInit {
   void changeEditMode() {
     _log.info("$runtimeType()::changeEditMode()");
     editMode = (!editMode);
-    new Toast("Toast!", "The toastiest toast", position: ToastPos.bottomCenter);
+    //THIS WORKED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //new Toast("Toast!", "Click me to go to the list!", () => changeVocabView(1), position: ToastPos.bottomCenter);
   }
 
   void changeListView() {
@@ -178,7 +180,7 @@ class VocabView implements OnInit {
 //    defList.add(definition.toLowerCase());
 //    vocabList[word.toLowerCase()] = definition.toLowerCase();
 //    Word nw = new Word.quickAdd(fbService.currentLanguage, word, definition);
-    masterVocabList.addWord(new Word.quickAdd(fbService.currentLanguage, word, definition));
+    ///masterVocabList.addWord(new Word.quickAdd(fbService.currentLanguage, word, definition));
 //    vocabList.add(new Word.quickAdd(fbService.currentLanguage, word, definition));
     fbService.addWordQuick(word.toLowerCase(), definition.toLowerCase());
     //newSetWords.add(description);
@@ -186,6 +188,8 @@ class VocabView implements OnInit {
 //  String remove(int index) => newListWords.removeAt(index);
   void remove(Word oldWord) {
     _log.info("$runtimeType()::remove(${oldWord.wordName})");
+    Word tempWord = oldWord;
+    new Toast("Removed ${oldWord.wordName}", "Made a mistake? Click me to undo!", () => reAdd(tempWord), position: ToastPos.bottomCenter);
 //    int idx = wordList.indexOf(word);
 //    wordList.removeWhere((String wrd) => wrd == word.wordName);
 //    defList.removeWhere((String df) => df == word.definition);
@@ -198,5 +202,12 @@ class VocabView implements OnInit {
 //    fbService.learner.vocabLists.removeWord(oldWord);
 
 //    fbService.removeWord(word);
+  }
+
+  void reAdd(Word word) {
+    _log.info("$runtimeType()::reAdd(${word.wordName})");
+    masterVocabList.addWord(word);
+    vocabList.add(word);
+    fbService.addWord(word);
   }
 }
