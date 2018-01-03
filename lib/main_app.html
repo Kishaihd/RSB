@@ -1,32 +1,34 @@
-<login-view *ngIf="fbService?.fbUser == null"></login-view>
+<login-view *ngIf="fbService?.fbUser == null" class="fit layout vertical center-center"></login-view>
 
-
-<div *ngIf="fbService?.fbUser != null" class="wrapper">
-    <div class="topMenu">
-        <span>
-            <material-dropdown-select iconName="menu" slide="x">
-                <div *ngFor="let view of views; let i=index">
-                    <material-select-item (trigger)="changeMenu(i)">
+<div *ngIf="fbService?.fbUser != null" class="fit layout vertical center-center">
+    <div class="top-menu">
+            <material-dropdown-select iconName="menu" slide="x" class="view-selector">
+                <div *ngFor="let view of views; let i = index">
+                    <material-select-item (trigger)="changeMenu(i)" class="view-item">
                         {{view}}
                     </material-select-item>
                 </div>
             </material-dropdown-select>
-        </span>
-        <span>{{langMsg}}</span>
-        <!--<span *ngIf="language == null || language == '' " class="nowViewingLang">No language selected.</span>-->
-        <!--<span *ngIf="language != null && language != '' " class="nowViewingLang">Now viewing: {{language}}</span>-->
+        <lang-msg [language]="fbService.currentLanguage"></lang-msg>
     </div>
 
+    <menu-view *ngIf="currentView == 'Main Menu'"
+                [availableLanguages]="fbService.languageList"
+                [myLanguages]="fbService?.learner?.myLanguages">
+    </menu-view>
 
-    <menu-view *ngIf="currentView == 'menuView'"></menu-view>
-    <language-view *ngIf="currentView == 'languageView'" [lang]="language"></language-view>
+    <language-view *ngIf="currentView == 'Explore Language'"
+                    [currentLang]="fbService?.currentLanguage"
+                    [langDataMap]="fbService?.languagesData"
+                    [langMetaMap]="fbService?.languagesMeta">
+    </language-view>
+
     <div>
         <hr>
     </div>
     <section class="user-bar">
-        <!--<img class="icon user-avatar" [src]="fbService.fbUser?.photoURL">-->
-        <span id="user-info">Signed in as: {{fbService.fbUser.displayName}}</span>
-        <span id="logoutBtn">
+        <span id="user-info">Signed in as: {{fbService?.fbUser?.displayName}}</span>
+        <span id="logout-btn">
             <div>
                 Logout
             </div>

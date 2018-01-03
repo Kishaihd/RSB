@@ -1,17 +1,196 @@
 /*:host {*/
     /*display: flex;*/
-    /*!*align-items: stretch;*!*/
-    /*!*width: 100%;*!*/
-    /*flex-flow: column;*/
-    /*align-items: stretch;*/
+/*!*flex-flow: column nowrap;*!*/
+/*!*justify-content: space-around;*!*/
+/*!*!*flex-direction: column;*!*!*/
+/*!*}*!*/
+.wrapper {
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    /*justify-content: center;*/
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+ol {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    /*display: flex;*/
+    align-items: center;
+    /*justify-content: space-between;*/
+    line-height: 3em;
+}
+
+li:hover {
+    background-color: #EEEEEE;
+}
+
+/*li material-checkbox {*/
+    /*vertical-align: middle;*/
 /*}*/
 
-.wrapper {
+/*li span material-fab {*/
+    /*!*display: flex;*!*/
+    /*align-self: flex-end;*/
+    /*float: right;*/
+    /*vertical-align: middle;*/
+/*}*/
+
+.wordDelete {
+    color: dimgrey;
+}
+
+.li-remove {
+    /*display: flex;*/
+    /*align-self: center;*/
+    /*justify-self: flex-end;*/
+    /*justify-content: flex-end;*/
+}
+
+.delete-icon {
+    color: red;
+}
+
+.done {
+    /*text-decoration: dimgrey;*/
+    color: lightgrey;
+}
+
+.menu-vocab-drop {
+    margin: 2px;
+}
+
+.menu-vocab-item {
+    padding: 1em;
+}
+
+.menuButtons {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    /*border: 1px solid black;*/
+}
+.menu-left {
+    justify-self: flex-start;
+    flex-grow: 2;
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-self: flex-start;*/
+}
+
+.menu-left material-dropdown-select {
+    flex-grow: 2;
+    /*align-self: flex-start;*/
+}
+
+.menu-right {
+    justify-self: flex-end;
+}
+
+.wordAndDef {
+    display: flex;
+    flex: 1;
+    /*flex-flow: row nowrap;*/
+    justify-self: flex-start;
+    justify-content: space-between;
+}
+
+#word-input {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.odd-row {
+    background-color: #eef7fa;
+}
+
+.list-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.vocab-row {
     display: flex;
     flex-flow: row;
 }
 
-/*#listComponent {*/
+.word {
     /*display: flex;*/
+    justify-self: flex-start;
+}
 
+.def {
+    /*display: flex;*/
+    justify-self: flex-end;
+}
+
+#arrow-glyph {
+    display: flex;
+    justify-self: flex-end;
+    padding-left: 8px;
+    /*align-self: flex-end;*/
+}
+
+.card-flow {
+    display: flex;
+    flex-flow: row nowrap;
+    align-content: center;
+    justify-content: space-between;
+    font-size: 2em;
+}
+
+.card {
+    /*display: flex;*/
+    border: black double;
+    /*width: 80%;*/
+    width: 100%;
+    /*min-width: 80%;*/
+    /*padding-top: 40%;*/
+    /*padding-bottom: 40%;*/
+    padding-top: 50%;
+    padding-bottom: 50%;
+    justify-content: center;
+    /*align-content: center;*/
+
+}
+
+.front {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.back {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.card-change-btn {
+    display: flex;
+    align-self: center;
+}
+
+.mbtn {
+    /*display: flex;*/
+    /*height: 500px;*/
+}
+
+/*.card-button material-button {*/
+/*height: 100%;*/
+/*width: 100%;*/
 /*}*/
+
+/*.card-flow material-button {*/
+/*!*align-self: center;*!*/
+/*}*/
+

@@ -1,16 +1,90 @@
-
-.declensions {
+.declension-wrapper {
     display: flex;
-    justify-content: space-between;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.declension-container {
+    display: flex;
     flex-flow: row wrap;
 }
 
+.declension-name {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 4px;
+    border-radius: 10px;
+    /*border: 1px solid #110914;*/
+    background-color: lightskyblue;
+}
 
+.div-by-gender {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
 
+.declension-table {
+    border: solid 2px black;
+    margin: 2px;
+}
 
+.declension-header {
+    background-color: lightblue;
+}
 
+.declension-body {
+    padding: 1%;
+}
 
-/*class NounView*/
+.declension-row {
+    background-color: lightblue;
+}
 
+.case-name {
+    background-color: lightgray;
+}
 
+.declension-item {
+    border: solid 1px black;
+}
+
+.declension-spacer {
+    /*border: solid 1px black;*/
+}
+/*.declensions-column {*/
+    /*grid-area: case;*/
+/*}*/
+
+/*.singular-grid {*/
+    /*grid-area: sing;*/
+/*}*/
+
+/*.plural-grid {*/
+    /*grid-area: plur;*/
+/*}*/
+
+/*.header-sing {*/
+    /*grid-area: hs;*/
+/*}*/
+
+/*.header-pl {*/
+    /*grid-area: hp;*/
+/*}*/
+
+/*.container {*/
+    /*display: grid;*/
+    /*grid-template-columns: 10% 1% 10% 10% 10% 1% 10% 10% 10%;*/
+    /*grid-template-rows: auto;*/
+    /*grid-template-areas:*/
+        /*". . hs hs hs . hp hp hp"*/
+        /*"case . sing sing sing . plur plur plur"*/
+        /*"case . sing sing sing . plur plur plur"*/
+        /*"case . sing sing sing . plur plur plur"*/
+        /*"case . sing sing sing . plur plur plur"*/
+        /*"case . sing sing sing . plur plur plur"*/
+        /*"case . sing sing sing . plur plur plur";*/
+/*}*/
 

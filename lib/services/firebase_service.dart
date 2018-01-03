@@ -1,399 +1,281 @@
-///todo:: currentLanguage is being called on null somewhere...
-
-import 'dart:html';
 import 'dart:async';
-
-import 'package:angular2/core.dart';
-import 'package:firebase/firebase.dart' as firebase;
-
-//import 'package:firebase/src/assets/assets.dart';
+import 'package:angular/angular.dart';
 import 'package:RSB/services/logger_service.dart';
 import 'package:RSB/models/learner.dart';
+import 'package:firebase/firebase.dart' as firebase;
+import 'package:RSB/models/word.dart';
 
-@Injectable() ///todo: added OnInit to FirebaseService. --is it right?
-class FirebaseService implements OnInit {
-  ///todo: check this once errors are resolved.
+@Injectable()
+class FirebaseService {
   static const String USER_META = "usermeta";
   static const String USER_DATA = "userdata";
+  static const String VOCAB_LISTS = "vocabLists";
 
   final LoggerService _log;
+  Learner learner;
+  firebase.User fbUser;
 
   firebase.Auth _fbAuth;
   firebase.GoogleAuthProvider _fbGoogleAuthProvider;
-  firebase.Database _fbDatabase; // = firebase.database();
-  firebase.Storage _fbStorage;
-  firebase.DatabaseReference fbUserData;
-  firebase.DatabaseReference fbUserMeta; // = database.ref("test");
-  firebase.DatabaseReference fbSingUserMeta; // = database.ref("test");
-  firebase.DatabaseReference fbSingUserData;
-  firebase.DatabaseReference fbLangList; // = database.ref("test");
+  firebase.Database _fbDatabase;
+  // Language database reference
   firebase.DatabaseReference fbLangData;
   firebase.DatabaseReference fbLangMeta;
-  firebase.DatabaseReference fbVocabListData;
-  firebase.DatabaseReference fbVocabListMeta;
-  firebase.StorageReference userStorage; // Unnecessary?
+  // User database reference
+  firebase.DatabaseReference fbLanguagesList;
+  firebase.DatabaseReference fbUserData;
+  firebase.DatabaseReference fbUserMeta;
+  firebase.DatabaseReference fbVocabLists;
 
-  firebase.User fbUser;
-  Learner learner;
+  //Languages info
+  Map languagesData = {};
+  Map languagesMeta = {};
+  List<String> languageList = [];
+  String currentLanguage = "";
 
-  /* Users info */
-  Map _userDataMap = {};
-  Map _userMetaMap = {};
-
-  Map _singleUserData = {};
-  Map _singleUserMeta = {};
-
-
-  /* Languages info */
-  String selectedLanguage = "";
-  Map<String, String> vocabMeta = {};
-  Map<String, Map<String, Map<String, String>>> allUsersVocabLists = {};
-  Map<String, Map<String, String>> singleUsersVocabLists = {};
-//  bool hasLanguage = false;
-  Map tempData = {};
-  Map allLangMeta = {};
-  Map singleLangMeta = {};
-  List<String> languages = [];
-  Map<String,Map<String, Map<String, Map<String, dynamic>>>> fullLanguageData = {};
-  Map<String, Map<String, Map<String, dynamic>>> singleLangData = {};
+  // User info
+  Map<String, dynamic> userData = {};
+//  Map userMeta = {};
+//  Map<String, Map<String, String>> vocabLists = {};
+  VocabularyList vocabLists;
 
   FirebaseService(LoggerService this._log) {
-    _log.info("$runtimeType()");
-//    learner = new Learner(_log);
+    _log.info("$runtimeType");
     firebase.initializeApp(
         apiKey: "AIzaSyDSWfGxdhpUUIkDQiIkb0xtK-IFfIYrMFQ",
         authDomain: "langstudbud.firebaseapp.com",
         databaseURL: "https://langstudbud.firebaseio.com",
-        storageBucket: "gs://langstudbud.appspot.com/");
+        storageBucket: "gs://langstudbud.appspot.com/"
+    );
 
     _fbGoogleAuthProvider = new firebase.GoogleAuthProvider();
     _fbAuth = firebase.auth();
     _fbAuth.onAuthStateChanged.listen(_authChanged);
     _fbDatabase = firebase.database();
-    fbUserMeta = _fbDatabase.ref("usermeta");
-    fbUserData = _fbDatabase.ref("userdata");
-    fbLangList = _fbDatabase.ref("languagesList");
-    fbLangData = _fbDatabase.ref("languagesData");
+    fbLanguagesList = _fbDatabase.ref("languagesList");
     fbLangMeta = _fbDatabase.ref("languagesMeta");
-    fbVocabListData = _fbDatabase.ref("vocabLists");
-    fbVocabListMeta = _fbDatabase.ref("vocabMeta");
-//    fbStorageRoot = _fbStorage.ref("/");  // Unnecessary?
+    fbLangData = _fbDatabase.ref("languagesData");
+
+    vocabLists = new VocabularyList(_log, {});
   }
 
-  @override
-  ngOnInit() {
-    getUserMeta();
-    getAllLangMeta();
-    getLangList();
-    getVocabMeta();
-    getAllLangData(); // Necessary?
-  }
-
-  /*** Try to simplify initialization, write functions to get all da shits. ***/
-
-  Future<bool> isUserInDatabase(String userID) async {
-    bool isUserInDB = false;
-    if (_userMetaMap == null || _userMetaMap.isEmpty) {
-      fbUserMeta.onValue.listen((firebase.QueryEvent e) async {
-        if (e.snapshot.exists()) {
-          _userMetaMap = await e.snapshot.exportVal();
-          _log.info("$runtimeType()::_userMetaMap.onValue.listen::${e.snapshot.exportVal().toString()}");
-        }
+  Future getLanguagesData() async {
+    _log.info("$runtimeType::getLanguagesData()");
+    if (languagesData.isEmpty) {
+//      fbLangData = _fbDatabase.ref("languagesData");
+      fbLangData.onValue.listen((firebase.QueryEvent e) async {
+        languagesData = await e.snapshot.val();
       });
     }
-    if (_userMetaMap.containsKey(userID)) {
-      isUserInDB = true;
-    }
-    return isUserInDB;
+    return languagesData;
   }
 
-  Future<Map> getUserMeta() async {
-    _log.info("$runtimeType()::getUserMeta()");
-    if (_userMetaMap == null || _userMetaMap.isEmpty) {
-      ///todo: Are two async calls necessary?
-      fbUserMeta.onValue.listen((firebase.QueryEvent e) async {
-        if (e.snapshot.exists()) {
-          _userMetaMap = await e.snapshot.exportVal();
-          _log.info("$runtimeType()::_userMetaMap.onValue.listen::${e.snapshot.exportVal().toString()}");
-        }
+  Future getLanguagesMeta() async {
+    _log.info("$runtimeType::getLanguagesMeta()");
+    if (languagesMeta.isEmpty) {
+//      fbLangMeta = _fbDatabase.ref("languagesMeta");
+      fbLangMeta.onValue.listen((firebase.QueryEvent e) async {
+        languagesMeta = await e.snapshot.val();
       });
     }
-    return _userMetaMap;
+    return languagesMeta;
   }
 
-  Future<Map> _getAllUserData() async {
-    _log.info("$runtimeType()::_getAllUserData()");
-    if (_userDataMap == null || _userDataMap.isEmpty) {
+  Future<List<String>> getLanguageList() async {
+    if (languageList == null || languageList.isEmpty) {
+      _log.info("$runtimeType::getLanguageList()");
+//      fbLanguagesList = _fbDatabase.ref("languagesList");
+      fbLanguagesList.onValue.listen((firebase.QueryEvent e) async {
+        languageList = await e.snapshot.val();
+        _log.info("$runtimeType::getLanguageList()-- languageList snapshot = ${e.snapshot.val()}");
+        _log.info("$runtimeType::getLanguageList()-- languageList = ${languageList}");
+        _log.info("$runtimeType::getLanguageList()-- languageList snapshot.runtimeType = ${e.snapshot.val().runtimeType}");
+      });
+    }
+    return languageList;
+  }
+
+//  List<String> getLangList() {
+//    List ll;
+//    getLanguageList().then((llist){
+//      ll = llist;
+//      return llist;
+//    });
+//    return ll;
+//  }
+
+
+  Future<Map> getUserData(String userID) async {
+    _log.info("$runtimeType::getUserData($userID)");
+    if (userData == null || userData.isEmpty) {
+      _log.info("$runtimeType::getUserData($userID) == null!");
+      fbUserData = _fbDatabase.ref("$USER_DATA/$userID");
       fbUserData.onValue.listen((firebase.QueryEvent e) async {
-        if (e.snapshot.exists()) {
-          _userDataMap = await e.snapshot.exportVal();
-          _log.info("$runtimeType()::_userDataMap.onValue.listen::${e.snapshot.exportVal().toString()}");
+        userData = await e.snapshot.val();
+        learner = new Learner.fromMap(_log, userData);
+        _log.info("$runtimeType::getUserData()::learner info = ${learner}");
+        _log.info("$runtimeType::getUserData()::fbUser info = ${fbUser}");
+        if (learner.existsInDB == false) {
+          _log.info("$runtimeType::getUserData() --User does not already exist in database!");
+          _log.info("$runtimeType::getUserData() --Updating user... learner.existsInDB = ${learner.existsInDB}");
+          learner.existsInDB = true;
+          _log.info("$runtimeType::getUserData() --Updating user... learner.existsInDB = ${learner.existsInDB}");
+          _log.info("$runtimeType::getUserData() --Adding to database--->${learner.toMap()}");
         }
+        if (userData.containsKey('currentLanguage') && userData['currentLanguage'].isNotEmpty) {
+          _log.info("$runtimeType::getUserData()::userData.containsKey('currentLanguage') == ${userData.containsKey('currentLanguage')}");
+          currentLanguage = userData['currentLanguage'];
+        }
+        else {
+          _log.info("$runtimeType::getUserData()::languageList = $languageList");
+          currentLanguage = languageList[0];
+        }
+        _log.info("$runtimeType::getUserData()::userData = $userData");
       });
+      return userData; // This seems entirely unnecessary.
     }
-    return _userDataMap;
+    return userData;
   }
 
-  Future<Map> getSingleUserData(String userID) async {
-    _log.info("$runtimeType()::getSingleUserData()");
-//    String dbRefPath = USER_DATA + userID;
-//    if (_userDataMap == null || _userDataMap.isEmpty) {
-//      fbUserData.onValue.listen((firebase.QueryEvent e) async {
-//        if (e.snapshot.exists()) {
-//          _userDataMap = await e.snapshot.exportVal();
-//          _log.info("$runtimeType()::_userDataMap.onValue.listen::${e.snapshot.exportVal().toString()}");
-//        }
+//  Future getUserMeta(String userID) async {
+//    _log.info("$runtimeType::getUserMeta($userID)");
+//    if (userMeta == null || userMeta.isEmpty) {
+//      fbUserMeta = _fbDatabase.ref("$USER_META/$userID");
+//      fbUserMeta.onChildAdded.listen((firebase.QueryEvent e) async {
+//        userMeta = await e.snapshot.val();
+//        _log.info("$runtimeType::getUserMeta()::userMeta = $userMeta");
 //      });
 //    }
-    try {
-      fbSingUserData = _fbDatabase.ref("$USER_DATA/$userID");
-      fbSingUserData.onValue.listen((firebase.QueryEvent e) async {
-        _singleUserData = await e.snapshot.exportVal();
-      });
-    }
-    catch (er) {
-      _log.info("$runtimeType()::getSingleUserData()::error -- $er");
-      _log.info("$runtimeType()::getSingleUserData()::userData not present in database!");
-      _singleUserData = {};
-    }
+//    return userMeta;
+//  }
 
-    return _singleUserData;
-  }
-
-  Future<Map> getSingleUserMeta(String userID) async {
-    _log.info("$runtimeType()::getSingleUserMeta()");
-    try {
-      fbSingUserMeta = _fbDatabase.ref("$USER_META/$userID");
-      fbSingUserMeta.onValue.listen((firebase.QueryEvent e) async {
-        _singleUserMeta = await e.snapshot.exportVal();
-      });
+  Future getVocabLists(String userID) async {
+    _log.info("$runtimeType::getVocabLists($VOCAB_LISTS/$userID)");
+    if (learner?.vocabLists != null && learner.vocabLists.isNotEmpty) {
+      return learner.vocabLists;
     }
-    catch (er) {
-      _log.info("$runtimeType()::getSingleUserMeta()::error -- $er");
-      _log.info("$runtimeType()::getSingleUserMeta()::userMeta not present in database!");
-      _singleUserMeta = {};
-    }
-
-    return _singleUserData;
-  }
-
-  Future<Map<String, Map<String, String>>> getAllLangMeta() async {
-    _log.info("$runtimeType()::getAllLangMeta()");
-    if (allLangMeta == null || allLangMeta.isEmpty) {
-      fbLangMeta.onValue.listen((firebase.QueryEvent e) async {
-        allLangMeta = await e.snapshot.exportVal();
-        _log.info("$runtimeType()::languageMeta.onValue.listen::${e.snapshot.exportVal().toString()}");
-      });
-    }
-    return allLangMeta;
-  }
-
-  Future<Map<String, String>> getSingleLangMeta(String lang) async {
-    _log.info("$runtimeType()::getSingleLangMeta($lang)");
-    if (allLangMeta != null && allLangMeta.isNotEmpty) {
-      singleLangMeta = allLangMeta[lang];
-    }
-    else {
-      fbLangMeta.onValue.listen((firebase.QueryEvent e) async {
-        _log.info("$runtimeType()::languageMeta.onValue.listen::${e.snapshot.exportVal().toString()}");
-        allLangMeta = await e.snapshot.exportVal();
-        singleLangMeta = allLangMeta[lang];
-      });
-    }
-    return singleLangMeta;
-  }
-
-  Future<Map<String,Map<String, Map<String, Map<String, dynamic>>>>> getAllLangData() async {
-    if (fullLanguageData == null || fullLanguageData.isEmpty) {
-      fbLangData.onValue.listen((firebase.QueryEvent e) async {
-        _log.info("$runtimeType()::languageData.onValue.listen::${e.snapshot.exportVal().toString()}");
-        fullLanguageData = await e.snapshot.exportVal();
-        _log.info("$runtimeType()::fullLanguageData::${fullLanguageData.toString()}");
-      });
-    }
-    return fullLanguageData;
-  }
-
-  Future<Map<String, Map<String, Map<String, dynamic>>>> getSingleLangData(String lang) async {
-    _log.info("$runtimeType()::getSingleLangData($lang)");
-    if (fullLanguageData != null && fullLanguageData.isNotEmpty) {
-      singleLangData = fullLanguageData[lang];
-    }
-    else {
-      fbLangData.onValue.listen((firebase.QueryEvent e) async {
-        fullLanguageData = await e.snapshot.exportVal();
-        singleLangData = fullLanguageData[lang];
-      });
-    }
-    return singleLangData;
-  }
-
-
-  Future<List> getLangList() async {
-    if (languages != null && languages.isNotEmpty) {
-      return languages;
-    }
-    else {
-      fbLangList.onValue.listen((firebase.QueryEvent e) async {
-        _log.info("$runtimeType()::languages::${e.snapshot.exportVal().toString()}");
-        tempData = await e.snapshot.exportVal();
-        tempData.forEach((String notUsed, String lang) {
-          _log.info("Adding language $lang");
-          languages.add(lang);
+    if (vocabLists == null || vocabLists.isEmpty) {
+      fbVocabLists = _fbDatabase.ref("$VOCAB_LISTS/$userID");
+      fbVocabLists.onValue.listen((firebase.QueryEvent e) async {
+        Map<String, List<Map<String, String>>> tempyMap;
+        tempyMap = await e.snapshot.val();
+        tempyMap.forEach((String l, List<Map<String, String>> lw) {
+          learner.vocabLists.masterList[l] = [];
+          lw.forEach((Map<String, String> wm) {
+//            learner.vocabLists.masterList[l].add(new Word.RUN_ONLY_ONCE(l, w, d));
+          learner.vocabLists.masterList[l].add(new Word.fromMap(wm));
+//            vocabLists.addWord(new Word.RUN_ONLY_ONCE(l, w, d));
+//            learner.vocabLists.addWord(new Word.RUN_ONLY_ONCE(l, w, d));
+            _log.info("$runtimeType::getVocabLists() vocabLists.masterList[$l].add(new Word($wm)");
+          });
         });
-//        selectedLanguage = languages[0];
+//        fbVocabLists.update(learner.vocabLists.toMap());
+//        vocabLists = await e.snapshot.val();
+//        learner.vocabLists = vocabLists;
+        _log.info("$runtimeType::getVocabLists()::vocabLists = ${e.snapshot.val()}");
       });
-      return languages;
+      return learner.vocabLists;
     }
+//    if (vocabLists == null || vocabLists.isEmpty) {
+//      fbVocabLists = _fbDatabase.ref("$VOCAB_LISTS/$userID");
+//      fbVocabLists.onValue.listen((firebase.QueryEvent e) async {
+//        vocabLists = await e.snapshot.val();
+//        learner.vocabLists = vocabLists;
+//        _log.info("$runtimeType::getVocabLists()::vocabLists = ${e.snapshot.val()}");
+//      });
+//    }
+//    return vocabLists;
   }
 
-  // I think this will not be used.
-  Future<firebase.StorageReference> getUserStorage(String userID) async {
-//    if (_userMetaMap.containsKey(userID) ) {
-    bool isThere = await isUserInDatabase(userID);
-    if (isThere == true)  {
-      _log.info("$userID exists as user storage!");
+  String getCurrentLanguage() {
+    _log.info("$runtimeType::getCurrentLanguage()");
+    if (learner?.currentLanguage == null || learner.currentLanguage.isEmpty) {
+      if (languageList == null || languageList.isEmpty) {
+        return "";
+      }
+      else {
+//        return languageList[0];
+      return "boners";
+      }
     }
     else {
-      _log.info("$userID does not already exist in storage. Will this create a new bucket?");
+      currentLanguage = learner.currentLanguage;
+      return learner.currentLanguage;
     }
-    ///todo: Will this create a new storage bucket for user if not present?
-    userStorage = await _fbStorage.ref("/$userID");
-
-    return userStorage;
-  }
-
-  Future<Map<String, String>> getVocabMeta() async {
-    if (vocabMeta == null || vocabMeta.isEmpty) {
-      fbVocabListMeta.onValue.listen((firebase.QueryEvent e) async {
-        vocabMeta = await e.snapshot.exportVal();
-      });
-    }
-    return vocabMeta;
-  }
-
-  Future<Map<String,Map<String,String>>> getVocabLists(String userID) async {
-    if (allUsersVocabLists == null || allUsersVocabLists.isEmpty) {
-      fbVocabListData.onValue.listen((firebase.QueryEvent e) async {
-        _log.info("$runtimeType()::vocabList.onValue.listen::${e.snapshot.exportVal().toString()}");
-        allUsersVocabLists = await e.snapshot.exportVal();
-        _log.info("$runtimeType():: storedVocabLists:: ${singleUsersVocabLists.toString()}");
-      });
-    }
-    if (allUsersVocabLists.containsKey(userID)) {
-      singleUsersVocabLists = allUsersVocabLists[userID];
-    }
-    return singleUsersVocabLists;
-  }
-
-  /*** } // end FirebaseService() constructor. ***/
-
-
-  Future<Null> completeLearner() async {
-//    Map<String, Map<String,
-    if (learner == null) {
-
-    }
-    else {
-      try {
-        _singleUserMeta = await getSingleUserMeta(learner.uid);
-      }
-      catch (er) {
-        _log.info("$runtimeType()::completeLearner()::userMeta::--$er");
-      }
-      try {
-        _singleUserMeta = await getSingleUserData(learner.uid);
-      }
-      catch (er) {
-        _log.info("$runtimeType()::completeLearner()::userData::--$er");
-      }
-
-      if (_singleUserMeta["myLanguages"] != null && _singleUserMeta["myLanguages"].isNotEmpty) {
-        learner.myLanguages = _singleUserMeta["myLanguages"].values();
-      }
-    }
-    ///todo: finish this.
-    ///todo: pass in values to all components, like <noun-view [someData]="passed-in-data"></noun-view>
-//    learner.allLanguagesMeta
-//    learner.allLanguagesData
   }
 
   _authChanged(firebase.User newUser) async {
-    _log.info("$runtimeType()::_authChanged()");
-//    _log.info("$runtimeType()::newUser.runtimeType:${newUser.runtimeType}");
-    fbUser = newUser;
-//    _log.info("$runtimeType()::fbUser.runtimeType:${fbUser.runtimeType}");
-//    _log.info("$runtimeType()::newUser::${newUser.toString()}");
-    if (newUser != null) {
-//      _log.info("$runtimeType()::newUser.uid::${newUser.uid}");
-      _log.info("$runtimeType()::newUser.displayName::${newUser.displayName}");
-//      _log.info("$runtimeType()::newUser.email::${newUser.email}");
-      if (_userMetaMap != null) {
-        _log.info("$runtimeType()::_userMetaMap::${_userMetaMap.toString()}");
-//        learner = new Learner.fromMap(_log, _userDataMap);
-        if (_userMetaMap.containsKey(newUser.uid)) {
-          completeLearner();
-        }
-      }
-      else {
-        learner = new Learner.constructNewLearner(_log, newUser.uid, newUser.displayName, newUser.email);
-        await getUserMeta();
-        if (_userMetaMap.containsKey(newUser.uid)) { // They exist in the database.
-          completeLearner();
-        }
-        else {
-
-        }
-      }
-
+    if (newUser == null) {
+      _log.info("$runtimeType::_authChanged(null)");
     }
-  } // end _authChanged
+    if (newUser != null) {
+      _log.info("$runtimeType::_authChanged($newUser)");
+      fbUser = newUser;
+//      await getUserMeta(newUser.uid);
+      getUserData(newUser.uid).then((newLearner) async {
+        learner = new Learner.fromMap(_log, newLearner);
+        _log.info("$runtimeType::_authChanged()::newLearner = $newLearner");
+        _log.info("$runtimeType::_authChanged()::learner = $learner");
+        currentLanguage = getCurrentLanguage();
+        await getVocabLists(fbUser.uid); //.then((allLists) async {
+//          _log.info("$runtimeType::_authChanged()::allLists = $allLists");
+//          learner.vocabLists = allLists;
+//          _log.info("$runtimeType::_authChanged()::learner.vocabLists = ${learner.vocabLists}");
+//          });
+        });
+//      learner = new Learner.fromMap(_log, userData);
+//      learner.vocabLists = vocabLists;
+    }
+  }
 
   Future signIn() async {
     try {
       await _fbAuth.signInWithPopup(_fbGoogleAuthProvider);
-      _log.info("$runtimeType::login() -- logging in...");
+      _log.info("$runtimeType::signIn() --signing in...");
     }
     catch (error) {
-      _log.info("$runtimeType::login() -- $error");
+      _log.info("$runtimeType::signIn() -- $error");
     }
   }
 
   void signOut() {
-    _log.info("$runtimeType::logout()");
+    _log.info("$runtimeType::signOut()");
     _fbAuth.signOut();
   }
 
-  Future<Null> changeLang(String lang) async {
-    if (selectedLanguage != null && selectedLanguage.isEmpty) { // First time picking; easy.
-      // Set current language to the selected language.
-      selectedLanguage = lang;
-      // Get language metadata
-      singleLangMeta = await getSingleLangMeta(lang);
+  Future<Null> updateLearnerInDB() async {
+    _log.info("$runtimeType::updateLearnerInDB() -- learner = ${learner.toMap()}");
+    _log.info("$runtimeType::updateLearnerInDB() --fbUserData = $fbUserData");
+    _log.info("$runtimeType::updateLearnerInDB() --fbUserData.toString() = ${fbUserData.toString()}");
+//    await fbUserData.update(learner.toMap());
 
-      // Get the language data for the selected language.
-      singleLangData = await getSingleLangData(lang);
-//    }
-//    else {
-      learner.changeLang(lang); // This should handle all cases I care about...
-    }
+    _log.info("$runtimeType::updateLearnerInDB -- vocab lists = ${learner.vocabLists}");
+//    await fbVocabLists.update(learner.vocabLists);
   }
 
-} //end class FirebaseService
+  Future<Null> addWord(Word newWord) async {
+    _log.info("$runtimeType::addWord() -- adding ${newWord.wordName}");
+    learner.vocabLists.addWord(newWord);
+    await fbVocabLists.update(learner.vocabLists.toMap());
+  }
 
+  Future<Null> addWordQuick(String newWord, [String def = ""]) async {
+    _log.info("$runtimeType::addQuickWord($newWord, $def)");
+    _log.info("$runtimeType::addQuickWord() -- learner.vocabLists = ${learner.vocabLists}");
+    _log.info("$runtimeType::addQuickWord() -- learner.vocabLists[$currentLanguage] = ${learner.vocabLists[currentLanguage]}");
+//    learner.vocabLists[currentLanguage][newWord] = def;
+//    Word nw = new Word.quickAdd(currentLanguage, newWord, def);
+    learner.vocabLists.masterList[currentLanguage].add(new Word.quickAdd(currentLanguage, newWord, def)); //= nw; //new Word.quickAdd(currentLanguage, newWord, def);
+    await fbVocabLists.update(learner.vocabLists.toMap()); ///todo: make this function.
+  }
 
-//  void _newMessage(firebase.QueryEvent event) {
-////    Message msg = new Message.fromMap(event.snapshot.val());
-////    Message.add(msg);
-//
-////    print(msg.text);
-//  }
-
-
-//  _registerUser(String email, String password) {
-////    if (email.isNotEmpty && password.isNotEmpty) {
-////      _fbAuth.createUserWithEmailAndPassword(email, password);
-////
-////    }
-//  }
-//}
+  // Don't try to remove words until we're done... D:
+  Future<Null> removeWord(Word oldWord) async {
+    _log.info("$runtimeType::removeQuickWord($oldWord)");
+    _log.info("$runtimeType::removeQuickWord() -- learner.vocabLists = ${learner.vocabLists}");
+    _log.info("$runtimeType::removeQuickWord() -- learner.vocabLists[$currentLanguage] = ${learner.vocabLists[currentLanguage]}");
+//    learner.vocabLists.masterList[currentLanguage].remove(oldWord);
+    learner.vocabLists.removeWord(oldWord);
+    await fbVocabLists.update(learner.vocabLists.toMap());
+  }
+} // end class FirebaseService

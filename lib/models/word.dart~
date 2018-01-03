@@ -1,0 +1,35 @@
+///todo: Create word class!
+/* properties:
+   String lang1 (or 'wordName'? // Word in user's native language
+   String lang2 (or 'wordDef'?  // Word in second language.
+   String lang3?  // Word in next language?
+
+   String language (that the word came from)
+
+
+   ///todo: Create superWord class?
+   /*
+      When a word is added to a vocab list, 
+      if that word has been defined in another language, 
+      a 
+   */
+
+class Word {
+  String wordName;
+  String definition;
+
+  String secondLanguage;
+
+  bool isMemorized;
+  bool tempMemorizedFlag;
+
+
+  void markAsMemorized(String word) {
+    isMemorized = true;
+  }
+
+  /* Have a timer set up for each word, so it can be set to
+    memorized permanently, 
+    memorized for a day, 3 days, a week, or two weeks? 
+  */
+}

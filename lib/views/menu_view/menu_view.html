@@ -1,3 +1,50 @@
-<div>
-    Menu View
-</div>
+<!--<div>-->
+    <!--Menu View-->
+<!--</div>-->
+
+<material-tab-panel>
+    <material-tab label="Change Language">
+        <div *ngIf="myLanguages != null">
+            <div *ngFor="let lang of myLanguages">
+                <div *ngIf="lang == fbService.currentLanguage">
+                    <material-button class="lang-btn" icon>
+                        <material-icon icon="turned_in"></material-icon>
+                        <strong>{{lang}}</strong>
+                    </material-button>
+                </div>
+                <div *ngIf="lang != fbService.currentLanguage">
+                    <material-button class="lang-btn" icon (trigger)="switchToLanguage(lang)">
+                        <material-icon icon="turned_in_not"></material-icon>
+                        {{lang}}
+                    </material-button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="myLanguages == null">
+            You have not added any languages yet!
+        </div>
+    </material-tab>
+    <material-tab label="Add Language">
+        <div *ngIf="unaddedLanguages != null">
+            <div *ngFor="let language of unaddedLanguages">
+                <div>
+                    <material-button class="lang-btn" (trigger)="addLanguage(language)" icon>
+                        <material-icon icon="add_box"></material-icon>
+                        {{language}}
+                    </material-button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="unaddedLanguages == null" class="loading-langs">
+            <div *ngFor="let idx of numLanguages">
+                <material-button class="lang-btn" icon>
+                    <material-icon icon="add_box"></material-icon>
+                    ---------
+                </material-button>
+            </div>
+        </div>
+    </material-tab>
+    <material-tab label="Settings">
+        Settings --coming soon!
+    </material-tab>
+</material-tab-panel>

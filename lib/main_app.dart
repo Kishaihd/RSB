@@ -1,68 +1,85 @@
-/* AngularDart info: https://webdev.dartlang.org/angular
-   Components info: https://webdev.dartlang.org/components */
 
-import 'package:angular2/angular2.dart';
+import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
-import 'package:RSB/services/firebase_service.dart';
 import 'package:RSB/services/logger_service.dart';
-import 'models/learner.dart';
+import 'package:RSB/services/firebase_service.dart';
 import 'views/login_view/login_view.dart';
 import 'views/menu_view/menu_view.dart';
-//import 'views/vocab_list_component/vocab_list_component.dart';
-//import 'views/noun_view/noun_view.dart';
 import 'views/language_view/language_view.dart';
-//import 'models/learner.dart';
-//import 'views/verb_view/verb_view.dart';
+import 'views/language_message/lang_msg.dart';
+//import 'src/todo_list/todo_list_component.dart';
 
 @Component(
   selector: 'main-app',
   styleUrls: const ['main_app.css'],
   templateUrl: 'main_app.html',
-  directives: const [CORE_DIRECTIVES, materialDirectives, LoginView, MenuView, LanguageView],
+  directives: const [CORE_DIRECTIVES, materialDirectives, LoginView, MenuView, LanguageView, LanguageMessage], //, TodoListComponent],
   providers: const [materialProviders],
 )
 class MainApp implements OnInit {
   final LoggerService _log;
   final FirebaseService fbService;
 
-  String language = "";
-  String langMsg = "";
-
   List<String> views = const [
-    "menuView",
-    "languageView"
+    "Main Menu",
+    "Explore Language"
   ];
-
   String currentView;
+
+  List<String> languages = [];
+  List<String> myLanguages = [];
+
+//  List<String> getLangs() {
+//    if (languages.isEmpty) {
+//      fbService.getLanguageList().then((ll) {
+//        languages = ll;
+//        return ll;
+//      });
+//    }
+//    else {
+//      return languages;
+//    }
+//    return languages;
+//  }
 
   @override
   ngOnInit() async {
-    await fbService.completeLearner();
-    if (fbService?.learner?.currentLanguage != null && fbService.learner.currentLanguage.isNotEmpty) {
-      language = fbService.learner.currentLanguage;
-      langMsg = "Now viewing ${language}";
+    _log.info("$runtimeType::ngOnInit()");
+    languages = await fbService.getLanguageList();
+    _log.info("$runtimeType::ngOnInit()::languages = $languages");
+    await fbService.getLanguagesData();
+    await fbService.getLanguagesMeta();
+    if (fbService.fbUser != null) {
+      _log.info("$runtimeType::ngOnInit()::fbService.fbUser = ${fbService.fbUser}");
+      fbService.getUserData(fbService.fbUser.uid).then((newLearner) {
+        _log.info("$runtimeType::ngOnInit():: newLearner: keys =  ${newLearner.keys}\nValues = ${newLearner.values}");
+        _log.info("$runtimeType::ngOnInit():: newLearner.myLanguages =  ${newLearner['myLanguages']}");
+//        _log.info("$runtimeType::ngOnInit():: fbService.learner.myLanguages =  ${fbService?.learner?.myLanguages}");
+  //      myLanguages = newLearner
+  //          fbService?.learner?.myLanguages;
+      });
     }
-    else {
-      language = "";
-      langMsg = "No language selected.";
-    }
+//    myLanguages = fbService.learner.myLanguages;
   }
 
   MainApp(LoggerService this._log, this.fbService) {
-    _log.info("$runtimeType()");
-//    _log.info("$runtimeType()::fbService.selectedLanguage::${fbService.selectedLanguage}");
-    currentView = views[0];
+    _log.info("$runtimeType");
+    currentView = views.elementAt(0);
   }
 
+//  List<String> getLangList() {
+//    if (fbService.languageList == null || fbService.languageList.isEmpty) {
+//      fbService.getLanguageList().then((llist) {
+//        languages = llist;
+//        return llist;
+//      });
+//    }
+//    return languages;
+//  }
+
   void changeMenu(int idx) {
+    _log.info("$runtimeType::changeMenu(${views.elementAt(idx)})");
     currentView = views[idx];
   }
 
-//  void showMenu() {
-//
-//  }
-//
-//  void showKnowledge() {
-//
-//  }
 }

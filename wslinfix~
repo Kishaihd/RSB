@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo "Removing .idea/workspace.xml"
+rm .idea/workspace.xml
+
+echo "Removing .idea/libraries/Dart_Packages.xml"
+rm .idea/libraries/Dart_Packages.xml
+
+echo "Running pub get"
+pub get
+
+echo "Complete!"

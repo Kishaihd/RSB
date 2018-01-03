@@ -1,51 +1,42 @@
-<div>
-    Noun View
+<!--<div>-->
+    <!--Noun View-->
+<!--</div>-->
+<div *ngFor="let declension of declensionGroups" class="div-by-gender">
+    <div class="declension-wrapper">
+        <span class="declension-name"><strong>{{declension}}</strong></span>
+        <div class="declension-container">
+            <div *ngFor="let decMap of nounMap[declension]">
+            <!--<div class="div-by-gender">-->
+                <table class="declension-table">
+                    <tbody class="declension-body">
+                        <tr>
+                            <td rowspan="1" class="declension-row"></td>
+                            <td rowspan="8" colspan="5" class="declension-spacer"></td>
+                            <td colspan="1" class="declension-header"><strong>Singular</strong></td>
+                            <td rowspan="8" colspan="5" class="declension-spacer"></td>
+                            <td colspan="1" class="declension-header"><strong>Plural</strong></td>
+                            <td rowspan="8"></td>
+                        </tr>
+                        <tr *ngFor="let d of decOrder">
+                            <td class="case-name">{{d}}</td>
+                            <td>{{decMap[d]['singular']}}</td>
+                            <td>{{decMap[d]['plural']}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div *ngIf="nounDataMap.isEmpty" class="declensions">
-    No Declensions! [empty?]
-</div>
+<!--<div *ngIf="nounMap == null || nounMap.isEmpty">No noun data available.</div>-->
+<!--<div *ngIf="nounMap != null && nounMap.isNotEmpty">{{nounMap}}</div>-->
 
-<!--<div *ngIf="fbService.learner.languageMeta['hasDeclensions'] != null && fbService.fbService.learner.languageMeta['hasDeclensions'] != null && fbService.learner.languageMeta['hasDeclensions'] == true" class="declensions">-->
-<div *ngIf="nounDataMap.isNotEmpty" class="declensions">
-    HAS DECLENSIONS!
-    <span>
-        <table>
-            <tr>
-                <th>Case</th>
-            </tr>
-            <tr>
-                <th>Acc</th>
-                <td>Word</td>
-            </tr>
-        </table>
-    </span>
-    <span>
-        <table>
-            <tr>
-                <th>Case</th>
-            </tr>
-            <tr>
-                <th>Acc</th>
-                <td>Word</td>
-            </tr>
-        </table>
-    </span>
-    <span>
-        <table>
-            <tr>
-                <th>Case</th>
-            </tr>
-            <tr>
-                <th>Acc</th>
-                <td>Word</td>
-            </tr>
-        </table>
-    </span>
-</div>
-<!--<table *ngIf=" == false">-->
-    <!--DECLENSIONS!-->
-    <!--<tr>-->
-        <!--<th></th>-->
-    <!--</tr>-->
-<!--</table>-->
+<!--<div *ngIf="langMetaMap == null || langMetaMap.isEmpty">No noun meta data available.</div>-->
+<!--<div *ngIf="langMetaMap != null && langMetaMap.isNotEmpty">{{langMetaMap}}</div>-->
+
+<!--<div *ngIf="genders == null || genders.isEmpty">No genders found</div>-->
+<!--<div *ngIf="genders != null && genders.isNotEmpty">{{genders}}</div>-->
+
+<!--<div *ngIf="decOrder == null || decOrder.isEmpty">No declension order specified</div>-->
+<!--<div *ngIf="decOrder != null && decOrder.isNotEmpty">{{decOrder}}</div>-->

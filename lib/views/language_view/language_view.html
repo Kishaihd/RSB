@@ -1,17 +1,21 @@
-<material-tab-panel>
+<material-tab-panel class="mat-tab-panel">
     <material-tab class="mat-tab" label="Nouns">
-        <noun-view [_nounDataMap]="nounData" [_nounMetaMap]="nounMeta"></noun-view>
-            <!--Tab 1!-->
+        <noun-view [langDataMap]="currentLangData"
+                   [langMetaMap]="currentLangMeta">
+        </noun-view>
     </material-tab>
-
+    <material-tab class="mat-tab" label="Adjectives">
+        <adj-view [langDataMap]="currentLangData"
+                  [langMetaMap]="currentLangMeta">
+        </adj-view>
+    </material-tab>
     <material-tab class="mat-tab" label="Verbs">
-        <div>
-            This is tab 2!
-        </div>
-
+        <!--<verb-view-->
+        Coming soon!
+        <!--</verb-view>-->
     </material-tab>
-
     <material-tab class="mat-tab" label="Vocab">
-        <vocab-view [vocabList]="vocab" class="voc-view"></vocab-view>
+        <vocab-view class="mat-tab">
+        </vocab-view>
     </material-tab>
 </material-tab-panel>
