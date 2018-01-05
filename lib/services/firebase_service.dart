@@ -195,7 +195,7 @@ class FirebaseService {
       }
       else {
 //        return languageList[0];
-      return "boners";
+      return "No language data found!";
       }
     }
     else {
@@ -253,11 +253,27 @@ class FirebaseService {
 //    await fbVocabLists.update(learner.vocabLists);
   }
 
+  Future<Null> updateVocabLists() async {
+    await fbVocabLists.update(learner.vocabLists.toMap());
+  }
+
   Future<Null> addWord(Word newWord) async {
     _log.info("$runtimeType::addWord() -- adding ${newWord.wordName}");
     learner.vocabLists.addWord(newWord);
     await fbVocabLists.update(learner.vocabLists.toMap());
   }
+
+  Future<Null> updateWord(Word newInfo) async {
+    _log.info("$runtimeType::updateWord() -- updating ${newInfo.wordName}");
+    learner.vocabLists.updateWord(newInfo);
+    await fbVocabLists.update(learner.vocabLists.toMap());
+  }
+
+//  Future<Null> updateWordType(String type) async {
+//    _log.info("$runtimeType::updateWordType() -- updatingType ${type}");
+//    learner.vocabLists.updateWord(newInfo);
+//    await fbVocabLists.update(learner.vocabLists.toMap());
+//  }
 
   Future<Null> addWordQuick(String newWord, [String def = ""]) async {
     _log.info("$runtimeType::addQuickWord($newWord, $def)");

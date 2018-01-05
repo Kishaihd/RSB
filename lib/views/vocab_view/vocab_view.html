@@ -51,71 +51,119 @@
             </material-button>
         </span>
 
-        <!--<material-expansionpanel name="Additional Word Information" expanded="false" showSaveCancel="true" saveText="Add Word" closeOnSave="false" (save)="addFull(newWord, newDef, setNoun, setPronoun, setAdj, setVerb, setAdverb, setPrep, setConjunc, setInterject, cat, subcat, isMem, tempMem)">-->
-        <!--<material-dropdown-select slide="y" class="menu-vocab-drop">-->
-        <!--<div *ngFor="let option of wordOptions; let i=index">-->
-        <!--<material-select-item (trigger)="changeOptionStatus(option)" class="menu-vocab-item">-->
-        <!--{{option}}-->
-        <!--</material-select-item>-->
-        <!--</div>-->
-        <!--</material-dropdown-select>-->
-        <!--<div *ngIf="wordOptions['multiple'] == true">-->
-        <!--Multiple options!-->
-        <!--</div>-->
-        <!--</material-expansionpanel>-->
-
-        <!--<hr>-->
-        <!--<span *ngIf="masterVocabList[fbService.currentLanguage] != null && masterVocabList[fbService.currentLanguage].isNotEmpty">-->
-        <!--<hr>-->
-        <!--&lt;!&ndash;<glyph id="arrow-glyph" icon="keyboard_arrow_down"></glyph>&ndash;&gt;-->
-        <!--</span>-->
         <p *ngIf="masterVocabList[fbService.currentLanguage] == null || masterVocabList[fbService.currentLanguage].isEmpty">
             Vocabulary words will show up here. :)
         </p>
 
         <div *ngIf="masterVocabList[fbService.currentLanguage] != null && masterVocabList[fbService.currentLanguage].isNotEmpty">
             <hr>
-            <ul *ngFor="let word of masterVocabList[fbService.currentLanguage]; let i=index">
-                <!--<li *ngFor="let word of newWords; let i=index">-->
-                <li>
-                    <span class="vocab-row">
-                        <material-checkbox [disabled]="editMode == true" #done
-                                           materialTooltip="Mark word as memorized"></material-checkbox>
-                        <span [class.odd-row]="i % 2 == 1" class="wordAndDef">
-                            <span [class.done]="done.checked" class="word"> {{word.wordName}} </span>
-                            <span [class.done]="done.checked" class="def"> {{word.definition}} </span>
+            <material-expansionpanel-set *ngFor="let word of masterVocabList[fbService.currentLanguage]; let i=index">
+                <material-expansionpanel flat (save)="updateWord(word)" name="{{word.wordName}}" secondaryText="{{word.definition}}">
+                    <span class="wordAndDef">
+                        <span>
+                            <div>
+                                Memorized: {{word.isMemorized}}
+                                <!--</span>-->
+                            </div>
+                            <div *ngIf="editWordInfo == true">
+                                <!--<span>-->
+                                Word type: <material-dropdown-select [buttonText]="word.getWordType()" slide="y">
+                                    <div *ngFor="let type of word.wordTypes.keys">
+                                        <material-select-item (trigger)="word.setWordType(type)" class="menu-vocab-item">
+                                            {{type}}
+                                        </material-select-item>
+                                    </div>
+                                </material-dropdown-select>
+                            </div>
+                            <div *ngIf="editWordInfo == false">
+                                <!--<span>-->
+                                Word type: {{word.getWordType()}}
+                            </div>
+
+                            <div *ngIf="editWordInfo == true">
+                                <!--<span>-->
+                                Category: <material-dropdown-select [buttonText]="word.getCategory()" slide="y">
+                                    <div *ngFor="let cat of word.categories.keys">
+                                        <material-select-item (trigger)="word.setCategory(cat)" class="menu-vocab-item">
+                                            {{cat}}
+                                        </material-select-item>
+                                    </div>
+                                </material-dropdown-select>
+                            </div>
+                            <div *ngIf="editWordInfo == false">
+                                <!--<span>-->
+                                Category: {{word.getCategory()}}
+                            </div>
+                                <!--</span>-->
+                                <!--<span>-->
+                            <div *ngIf="editWordInfo == true">
+                                Sub-category: <material-dropdown-select [buttonText]="word.getSubcategory()" slide="y">
+                                    <div *ngIf="word?.getCategory() == null || word.getCategory() == '' || word.getCategory() == 'unspecified'">
+                                        {{word.getSubcategory()}}
+                                    </div>
+                                    <div *ngIf="word?.getCategory() != null && word.getCategory() != '' && word.getCategory() != 'unspecified'">
+                                        <div *ngFor="let subcat of word.categories[word.getCategory()]">
+                                            <material-select-item (trigger)="word.setSubcategory(subcat)" class="menu-vocab-item">
+                                                {{subcat}}
+                                            </material-select-item>
+                                        </div>
+                                    </div>
+                                </material-dropdown-select>
+                                <!--</span>-->
+                            </div>
+                            <div *ngIf="editWordInfo == false">
+                                Sub-category: {{word.getSubcategory()}}
+                                <!--</span>-->
+                            </div>
                         </span>
-                        <material-button *ngIf="editMode == true" class="li-remove" (trigger)="remove(word)">
-                                <material-icon class="delete-icon" icon="delete"></material-icon>
-                        </material-button>
+                        <span>
+                            <material-button (trigger)="editWordMode()">
+                                <material-icon icon="mode_edit"></material-icon>
+                            </material-button>
+                        </span>
+                    <!--<span [class.odd-row]="i % 2 == 1" class="wordAndDef">-->
+                        <!--<span [class.done]="done.checked" class="word"> {{word.wordName}} </span>-->
+                        <!--<span [class.done]="done.checked" class="def"> {{word.definition}} </span>-->
+                    <!--</span>-->
                     </span>
-                </li>
-            </ul>
+                </material-expansionpanel>
+                <material-button *ngIf="editMode == true" class="li-remove" (trigger)="remove(word)">
+                    <material-icon class="delete-icon" icon="delete"></material-icon>
+                </material-button>
+            </material-expansionpanel-set>
         </div>
 
     </div>
 
-    <div *ngIf="currentView == views[1]">
+    <div *ngIf="currentView == views[1]" class="wordListView">
         <div *ngIf="listOrderWordFirst == true">
-            <ol *ngFor="let word of masterVocabList[fbService.currentLanguage]; let i=index">
+            <ol *ngFor="let word of masterVocabList[fbService.currentLanguage]; let i=index" class="wordList">
                 <li [class.odd-row]="i % 2 == 1" class="list-div">
-                        <span class="word">
-                            {{word.wordName}}
-                        </span>
-                    <span *ngIf="defVisible == true" class="def">
+                    <span>
+                        <material-checkbox #done
+                                           materialTooltip="Mark word as memorized">
+                        </material-checkbox>
+                    </span>
+                    <span [class.done]="done.checked"  class="word">
+                        {{word.wordName}}
+                    </span>
+                    <span *ngIf="defVisible == true" [class.done]="done.checked" class="def">
                             {{word.definition}}
-                        </span>
+                    </span>
                 </li>
             </ol>
         </div>
 
-        <div *ngIf="listOrderWordFirst == false">
-            <ol *ngFor="let word of masterVocabList[fbService.currentLanguage]; let i=index">
+        <div *ngIf="listOrderWordFirst == false" class="wordListView">
+            <ol *ngFor="let word of masterVocabList[fbService.currentLanguage]; let i=index" class="wordList">
+                <material-checkbox #done
+                                   materialTooltip="Mark word as memorized">
+                </material-checkbox>
                 <li [class.odd-row]="i % 2 == 1" class="list-div">
-                        <span class="word">
+                        <span [class.done]="done.checked" class="def">
                             {{word.definition}}
                         </span>
-                    <span *ngIf="defVisible == true" class="def">
+                    <span *ngIf="defVisible == true" [class.done]="done.checked" class="word">
                             {{word.wordName}}
                         </span>
                 </li>
@@ -136,26 +184,26 @@
                 </div>
                 <div class="card">
                     <div *ngIf="showingWord == true && cardOrderWordFirst == true">
-                        <material-button class="front"
+                        <material-button clear-size class="front"
                                          (trigger)="cardClick()">
                             {{vocabList[cardIndex].wordName}}
                         </material-button>
                     </div>
                     <div *ngIf="showingWord == false && cardOrderWordFirst == true">
-                        <material-button class="back"
+                        <material-button clear-size class="back"
                                          (trigger)="cardClick()">
                             {{vocabList[cardIndex].definition}}
                         </material-button>
                     </div>
 
                     <div *ngIf="showingWord == true && cardOrderWordFirst == false">
-                        <material-button class="front"
+                        <material-button clear-size class="front"
                                          (trigger)="cardClick()">
                             {{vocabList[cardIndex].definition}}
                         </material-button>
                     </div>
                     <div *ngIf="showingWord == false && cardOrderWordFirst == false">
-                        <material-button class="back"
+                        <material-button clear-size class="back"
                                          (trigger)="cardClick()">
                             {{vocabList[cardIndex].wordName}}
                         </material-button>

@@ -115,6 +115,7 @@ li:hover {
 
 .list-div {
     display: flex;
+    width: 100%;
     justify-content: space-between;
 }
 
@@ -145,7 +146,7 @@ li:hover {
     flex-flow: row nowrap;
     align-content: center;
     justify-content: space-between;
-    font-size: 2em;
+    /*font-size: 2em;*/
 }
 
 .card {
@@ -164,13 +165,17 @@ li:hover {
 }
 
 .front {
-    display: block;
+    /*display: block;*/
+    /*font-size: 100%;*/
+    font-size: 3em;
     height: 100%;
     width: 100%;
 }
 
 .back {
-    display: block;
+    /*display: block;*/
+    /*font-size: 100%;*/
+    font-size: 3em;
     height: 100%;
     width: 100%;
 }

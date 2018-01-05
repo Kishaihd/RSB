@@ -32,6 +32,7 @@ class VocabView implements OnInit {
 //  List<String> wordList = [];
 //  List<String> defList = [];
   bool editMode = false;
+  bool editWordInfo = false;
   bool menuVisible = false;
   bool defVisible = true;
   bool listOrderWordFirst = true;
@@ -57,19 +58,19 @@ class VocabView implements OnInit {
 //  bool isMem = false;
 //  bool tempMem = false;
 
-  Map<String, bool> wordOptions = {
-    "setNoun": false,
-    "setPronoun": false,
-    "setAdj": false,
-    "setVerb": false,
-    "setAdverb": false,
-    "setPrep": false,
-    "setConjunc": false,
-    "setInterject": false,
-    "isMem": false,
-    "tempMem": false,
-    "multiple": false
-  };
+//  Map<String, bool> wordOptions = {
+//    "setNoun": false,
+//    "setPronoun": false,
+//    "setAdj": false,
+//    "setVerb": false,
+//    "setAdverb": false,
+//    "setPrep": false,
+//    "setConjunc": false,
+//    "setInterject": false,
+//    "isMem": false,
+//    "tempMem": false,
+//    "multiple": false
+//  };
 
   VocabView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType");
@@ -81,10 +82,10 @@ class VocabView implements OnInit {
     }
   }
 
-  void changeOptionStatus(String opt) {
-    _log.info("$runtimeType::changeOptionStatus($opt) -- setting $opt to ${!wordOptions[opt]}");
-    wordOptions[opt] = ! wordOptions[opt]; // Change its truthiness?
-  }
+//  void changeOptionStatus(String opt) {
+//    _log.info("$runtimeType::changeOptionStatus($opt) -- setting $opt to ${!wordOptions[opt]}");
+//    wordOptions[opt] = ! wordOptions[opt]; // Change its truthiness?
+//  }
 
   @override
   ngOnInit() async {
@@ -101,6 +102,12 @@ class VocabView implements OnInit {
     });
   }
 
+  void editWordMode() {
+    editWordInfo = !editWordInfo;
+//    if (editWordInfo == false) {
+//      fbService.updateVocabLists();
+//    }
+  }
   void changeEditMode() {
     _log.info("$runtimeType()::changeEditMode()");
     editMode = (!editMode);
@@ -157,21 +164,47 @@ class VocabView implements OnInit {
 
   ///todo: THIS (and in html)
 //  void addFull(String newName, [String newDef = "", bool setNoun = false, bool setPronoun = false, bool setAdj = false, bool setVerb = false, bool setAdverb = false, bool setPrep = false, bool setConjunc = false, bool setInterject = false, String cat = "", String subcat = "", bool isMem = false, bool tempMem = false]) {
-  void addFull(String newName, [String newDef = "", Map<String, bool> wOptions, String cat = "", String subcat = ""]) {
-    _log.info("$runtimeType::addFull() adding word: ${fbService.currentLanguage}, $newName, $newDef, noun: ${wOptions["setNoun"]}, pronoun: ${wOptions["setPronoun"]},adjective: ${wOptions["setAdj"]}, verb: ${wOptions["setVerb"]}, adverb: ${wOptions["setAdverb"]}, preposition: ${wOptions["setPrep"]}, conjunction: ${wOptions["setConjunc"]}, interjection: ${wOptions["setInterject"]}, $cat, $subcat)");
+  void addFull(String newName, [String newDef = "", String cat = "", String subcat = "", String type = ""]) {
+    _log.info("$runtimeType::addFull()"); // adding word: ${fbService.currentLanguage}, $newName, $newDef, noun: ${wOptions["setNoun"]}, pronoun: ${wOptions["setPronoun"]},adjective: ${wOptions["setAdj"]}, verb: ${wOptions["setVerb"]}, adverb: ${wOptions["setAdverb"]}, preposition: ${wOptions["setPrep"]}, conjunction: ${wOptions["setConjunc"]}, interjection: ${wOptions["setInterject"]}, $cat, $subcat)");
 //    Word newWord = new Word(fbService.currentLanguage, newName, newDef, setNoun, setPronoun, setAdj,setVerb, setAdverb, setPrep, setConjunc, setInterject, cat, subcat, false, false);
-    Map wMap = wOptions;
-//    wMap = wOptions;
-    wMap["language"] = fbService.currentLanguage;
-    wMap["wordName"] = newName;
-    wMap["definition"] = newDef;
-    wMap["category"] = cat;
-    wMap["subcategory"] = subcat;
-    Word newWord = new Word.fromMap(wMap);
-    masterVocabList.addWord(newWord);
+//    Map wMap;
+    Word newWord = new Word.temp();//.fromMap(wMap);
+    newWord.tempMemorizedFlag = false;
+    newWord.isMemorized = false;
+    newWord.language = fbService.currentLanguage;
+    newWord.wordName = newName;
+    newWord.definition = newDef;
+    newWord.category = cat;
+    newWord.subcategory = subcat;
+    newWord.setWordType(type);
+//    masterVocabList.addWord(newWord);
 //    vocabList.add(newWord);
     fbService.addWord(newWord);
   }
+
+  void updateWord(Word newInfo) {
+    _log.info("$runtimeType()::updateWord(${newInfo.wordName}, ${newInfo.definition})");
+    editWordInfo = false; // Take it out of edit mode, since the expansion panel closes too.
+    fbService.updateWord(newInfo);
+  }
+
+//  void updateWordType(Word w, String type) {
+//    _log.info("$runtimeType()::updateWordType(${type})");
+//    w.setWordType(type);
+//    fbService.updateWord(w);
+//  }
+//
+//  void updateWordCat(Word w, String cat) {
+//    _log.info("$runtimeType()::updateWordCat(${cat})");
+//    w.category = cat;
+//    fbService.updateWord(w);
+//  }
+//
+//  void updateWordSubcat(Word w, String subcat) {
+//    _log.info("$runtimeType()::updateWordSubcat(${subcat})");
+//    w.subcategory = subcat;
+//    fbService.updateWord(w);
+//  }
 
   void addQuick(String word, [String definition = ""]) {
     _log.info("$runtimeType()::add($word, $definition)");
