@@ -11,6 +11,10 @@
     /*justify-content: center;*/
 }
 
+.hidden {
+    visibility: hidden;
+}
+
 ul {
     list-style: none;
     padding-left: 0;
@@ -71,6 +75,18 @@ li:hover {
     padding: 1em;
 }
 
+.wordInfo {
+    /*padding: 1em;*/
+    font-size: 0.85em;
+    padding: 4px;
+    /*border: 1px solid black;*/
+}
+
+.wordInfoMem {
+    font-size: 0.85em;
+    padding: 7px;
+}
+
 .menuButtons {
     flex-grow: 1;
     display: flex;
@@ -109,6 +125,11 @@ li:hover {
     flex-flow: row nowrap;
 }
 
+.dropdown-thing {
+    display: flex;
+    align-items: flex-start;
+}
+
 .odd-row {
     background-color: #eef7fa;
 }
@@ -117,6 +138,11 @@ li:hover {
     display: flex;
     width: 100%;
     justify-content: space-between;
+}
+
+.list-div span material-checkbox {
+    display: flex;
+    align-items: flex-end;
 }
 
 .vocab-row {
@@ -157,8 +183,8 @@ li:hover {
     /*min-width: 80%;*/
     /*padding-top: 40%;*/
     /*padding-bottom: 40%;*/
-    padding-top: 50%;
-    padding-bottom: 50%;
+    padding-top: 40%;
+    padding-bottom: 40%;
     justify-content: center;
     /*align-content: center;*/
 
@@ -167,7 +193,7 @@ li:hover {
 .front {
     /*display: block;*/
     /*font-size: 100%;*/
-    font-size: 3em;
+    font-size: 2em;
     height: 100%;
     width: 100%;
 }
@@ -175,7 +201,7 @@ li:hover {
 .back {
     /*display: block;*/
     /*font-size: 100%;*/
-    font-size: 3em;
+    font-size: 2em;
     height: 100%;
     width: 100%;
 }

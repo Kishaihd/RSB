@@ -21,6 +21,7 @@ class Word {
   String category;
   String subcategory;
 
+  List<String> examples = [];
   // Part of speech
 //  bool isNoun = false;
 //  bool isPronoun = false;
@@ -32,7 +33,7 @@ class Word {
 //  bool isInterjection = false;
 //  bool isGerund = false;
 
-  Map<String, bool> wordTypes = {
+  static Map<String, bool> wordTypes = {
     "noun" : false,
     "pronoun" : false,
     "adjective" : false,
@@ -56,7 +57,7 @@ class Word {
     //    comes in.
   }
 
-  Word(String fromLang, String newName, [String newDef = "", bool setNoun = false, bool setPronoun = false, bool setAdj = false, bool setVerb = false, bool setAdverb = false, bool setPrep = false, bool setConjunc = false, bool setInterject = false, String cat = "", String subcat = "", bool isMem = false, bool tempMem = false]) {
+  Word(String fromLang, String newName, [String newDef = "", bool setNoun = false, bool setPronoun = false, bool setAdj = false, bool setVerb = false, bool setAdverb = false, bool setPrep = false, bool setConjunc = false, bool setInterject = false, String cat = "", String subcat = "", bool isMem = false, bool tempMem = false, String example = ""]) {
     language = fromLang;
     wordName = newName;
     definition = newDef;
@@ -72,6 +73,7 @@ class Word {
     subcategory = subcat;
     isMemorized = isMem;
     tempMemorizedFlag = tempMem;
+    examples.add(example);
   }
 
   String getCategory() => category == "" ? "unspecified" : category;
@@ -145,7 +147,7 @@ class Word {
     memorized permanently, 
     memorized for a day, 3 days, a week, or two weeks? 
   */
-  Map<String, List<String>> categories = {
+  static Map<String, List<String>> categories = {
     "general/other" : [
       "other"
     ],

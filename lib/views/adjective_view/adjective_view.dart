@@ -30,7 +30,8 @@ class AdjectiveView { //implements OnInit {
 
 //  List<Map> mascList = [];
   List<String> decOrder = [];
-  List<String> genders = [];
+  List<String> _genders = [];
+  List<String> genderAbbreviations = [];
   Map adjMap = {};
 
   // Each idx is another example.
@@ -58,6 +59,8 @@ class AdjectiveView { //implements OnInit {
     }
   }
   Map get langMetaMap => _langMetaMap;
+  List<String> get genders => genderAbbreviations;
+  List<String> get fullGenders => _genders;
 
   void _initMe() {
     _log.info("$runtimeType::_initMe()");
@@ -71,10 +74,25 @@ class AdjectiveView { //implements OnInit {
           decOrder = _langMetaMap['declensionsOrderPreference'];
         }
         if (_langMetaMap['hasGender'] == 'true') {
-          genders = _langMetaMap['genders'];
+          _genders = _langMetaMap['genders'];
+          makeAbbreviationList(_genders);
         }
       }
     }
+  }
+
+  void makeAbbreviationList(List<String> genders) {
+    genders.forEach((String g) {
+      if (g == "masculine") {
+        genderAbbreviations.add("Masc.");
+      }
+      else if (g == "feminine") {
+        genderAbbreviations.add("Fem.");
+      }
+      else if (g == "neuter") {
+        genderAbbreviations.add("Neut.");
+      }
+    });
   }
 
   AdjectiveView(LoggerService this._log) {
@@ -207,5 +225,5 @@ class AdjectiveView { //implements OnInit {
 //  }
 
 
-} // end class NounView
+} // end class AdjectiveView
 

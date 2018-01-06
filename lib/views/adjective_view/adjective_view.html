@@ -26,7 +26,7 @@
 
                 <tr *ngFor="let d of decOrder">
                     <td>{{d}}</td>
-                    <td *ngFor="let g of genders">{{adjMap[adjWord]["singular"][g][d]}}</td>
+                    <td *ngFor="let g of fullGenders">{{adjMap[adjWord]["singular"][g][d]}}</td>
                     <td>{{adjMap[adjWord]['plural'][d]}}</td>
                 </tr>
 

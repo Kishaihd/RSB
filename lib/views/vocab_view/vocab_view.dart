@@ -32,6 +32,7 @@ class VocabView implements OnInit {
 //  List<String> wordList = [];
 //  List<String> defList = [];
   bool editMode = false;
+  bool panelOpen = false;
   bool editWordInfo = false;
   bool menuVisible = false;
   bool defVisible = true;
@@ -43,8 +44,8 @@ class VocabView implements OnInit {
   int cardIndex = 0;
 
 //  SplayTreeMap<String, String> sortedVocab;
-  String newWord = "";
-  String newDef = "";
+  String wordName = "";
+  String wordDef = "";
 //  bool setNoun = false;
 //  bool setPronoun = false;
 //  bool setAdj = false;
@@ -53,11 +54,12 @@ class VocabView implements OnInit {
 //  bool setPrep = false;
 //  bool setConjunc = false;
 //  bool setInterject = false;
-  String cat = "";
-  String subcat = "";
+  String wordType = "";
+  String wordCat = "";
+  String wordSubcat = "";
 //  bool isMem = false;
 //  bool tempMem = false;
-
+  String wordExample = "";
 //  Map<String, bool> wordOptions = {
 //    "setNoun": false,
 //    "setPronoun": false,
@@ -71,6 +73,16 @@ class VocabView implements OnInit {
 //    "tempMem": false,
 //    "multiple": false
 //  };
+  String getWord() => wordName;
+  String getDef() => wordDef;
+  String getType() => wordType;
+  String getCat() => wordCat;
+  String getSubcat() => wordSubcat;
+  String getExample() => wordExample;
+
+  List<String> get wordTypes => Word.wordTypes.keys;
+  List<String> get categories => Word.categories.keys;
+  List<String> get subcategories => wordCat == '' ? [] : Word.categories[wordCat];
 
   VocabView(LoggerService this._log, this.fbService) {
     _log.info("$runtimeType");
@@ -164,22 +176,30 @@ class VocabView implements OnInit {
 
   ///todo: THIS (and in html)
 //  void addFull(String newName, [String newDef = "", bool setNoun = false, bool setPronoun = false, bool setAdj = false, bool setVerb = false, bool setAdverb = false, bool setPrep = false, bool setConjunc = false, bool setInterject = false, String cat = "", String subcat = "", bool isMem = false, bool tempMem = false]) {
-  void addFull(String newName, [String newDef = "", String cat = "", String subcat = "", String type = ""]) {
+  void addFull(String newName, [String newDef = "", String newCat = "", String newSubcat = "", String newType = "", String newExample = ""]) {
     _log.info("$runtimeType::addFull()"); // adding word: ${fbService.currentLanguage}, $newName, $newDef, noun: ${wOptions["setNoun"]}, pronoun: ${wOptions["setPronoun"]},adjective: ${wOptions["setAdj"]}, verb: ${wOptions["setVerb"]}, adverb: ${wOptions["setAdverb"]}, preposition: ${wOptions["setPrep"]}, conjunction: ${wOptions["setConjunc"]}, interjection: ${wOptions["setInterject"]}, $cat, $subcat)");
 //    Word newWord = new Word(fbService.currentLanguage, newName, newDef, setNoun, setPronoun, setAdj,setVerb, setAdverb, setPrep, setConjunc, setInterject, cat, subcat, false, false);
 //    Map wMap;
-    Word newWord = new Word.temp();//.fromMap(wMap);
-    newWord.tempMemorizedFlag = false;
-    newWord.isMemorized = false;
-    newWord.language = fbService.currentLanguage;
-    newWord.wordName = newName;
-    newWord.definition = newDef;
-    newWord.category = cat;
-    newWord.subcategory = subcat;
-    newWord.setWordType(type);
-//    masterVocabList.addWord(newWord);
-//    vocabList.add(newWord);
-    fbService.addWord(newWord);
+    if (newName != '' && newName.isNotEmpty) {
+      Word newWord = new Word.temp();//.fromMap(wMap);
+      newWord.tempMemorizedFlag = false;
+      newWord.isMemorized = false;
+      newWord.language = fbService.currentLanguage;
+      newWord.wordName = newName;
+      newWord.definition = newDef;
+      newWord.category = newCat;
+      newWord.subcategory = newSubcat;
+      newWord.setWordType(newType);
+      newWord.examples.add(newExample);
+  //    masterVocabList.addWord(newWord);
+  //    vocabList.add(newWord);
+      wordName = wordDef= wordCat = wordSubcat = wordType = wordExample = "";
+      fbService.addWord(newWord);
+    }
+    else {
+      new Toast.error(title: "Error: ", message: "Word cannot be blankd!", position: ToastPos.bottomCenter); //, duration: Duration(seconds: 6));
+//      new Toast("Error: ", "Word cannot be blank!", null, ToastType.error, ToastPos.bottomCenter, duration: 6);
+    }
   }
 
   void updateWord(Word newInfo) {
@@ -208,15 +228,8 @@ class VocabView implements OnInit {
 
   void addQuick(String word, [String definition = ""]) {
     _log.info("$runtimeType()::add($word, $definition)");
-    // I think this does the above two functions in one line.
-//    wordList.add(word.toLowerCase());
-//    defList.add(definition.toLowerCase());
-//    vocabList[word.toLowerCase()] = definition.toLowerCase();
-//    Word nw = new Word.quickAdd(fbService.currentLanguage, word, definition);
-    ///masterVocabList.addWord(new Word.quickAdd(fbService.currentLanguage, word, definition));
-//    vocabList.add(new Word.quickAdd(fbService.currentLanguage, word, definition));
+    wordName = wordDef= wordCat = wordSubcat = wordType = wordExample = "";
     fbService.addWordQuick(word.toLowerCase(), definition.toLowerCase());
-    //newSetWords.add(description);
   }
 //  String remove(int index) => newListWords.removeAt(index);
   void remove(Word oldWord) {
