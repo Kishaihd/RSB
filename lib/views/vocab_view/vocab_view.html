@@ -55,21 +55,26 @@
         </span>
         <span>
             <material-expansionpanel flat name="Add more word data" (open)="panelOpen = true" (close)="panelOpen = false" (save)="addFull(getWord(), getDef(), getCat(), getSubcat(), getType(), getExample())">
+                <div>
                     Word type: <material-dropdown-select [buttonText]="getType()" slide="y">
-                    <div *ngFor="let t of wordTypes">
-                        <material-select-item (trigger)="wordType = t" class="dropdown-thing">
-                            {{t}}
-                        </material-select-item>
-                    </div>
-                </material-dropdown-select>
+                        <div *ngFor="let t of wordTypes">
+                            <material-select-item (trigger)="wordType = t" class="dropdown-thing">
+                                {{t}}
+                            </material-select-item>
+                        </div>
+                    </material-dropdown-select>
+                </div>
+                <div>
                     Category: <material-dropdown-select [buttonText]="getCat()" slide="y">
-                    <div *ngFor="let c of categories">
-                        <material-select-item (trigger)="wordCat = c" class="dropdown-thing">
-                            <!--class="wordInfo"-->
-                            {{c}}
-                        </material-select-item>
-                    </div>
-                </material-dropdown-select>
+                        <div *ngFor="let c of categories">
+                            <material-select-item (trigger)="wordCat = c" class="dropdown-thing">
+                                <!--class="wordInfo"-->
+                                {{c}}
+                            </material-select-item>
+                        </div>
+                    </material-dropdown-select>
+                </div>
+                <div>
                     Subcategory: <material-dropdown-select *ngIf="wordCat != ''" [buttonText]="getSubcat()" slide="y">
                         <div *ngFor="let sc of subcategories">
                             <material-select-item class="dropdown-thing" (trigger)="wordSubcat = sc">
@@ -78,11 +83,10 @@
                             </material-select-item>
                         </div>
                     </material-dropdown-select>
-                    <span *ngIf="wordCat == ''">
-                        __
-                    </span>
+                </div>
+                    <span *ngIf="wordCat == ''">__</span>
                 <div>
-                    <material-input label="Example sentence: "
+                    <material-input label="Example use: "
                                     floatingLabel style="width:40%"
                                     [(ngModel)]="wordExample">
                     </material-input>
@@ -96,6 +100,7 @@
         </p>
 
         <div *ngIf="masterVocabList[fbService.currentLanguage] != null && masterVocabList[fbService.currentLanguage].isNotEmpty">
+            <hr>
             <hr>
             <material-expansionpanel-set *ngFor="let word of masterVocabList[fbService.currentLanguage]; let i=index">
                 <material-expansionpanel flat (save)="updateWord(word)" name="{{word.wordName}}" secondaryText="{{word.definition}}">

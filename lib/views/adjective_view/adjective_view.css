@@ -20,7 +20,7 @@
 
 .declension-table {
     border: solid 2px black;
-    margin: 2px;
+    margin: 1px;
 }
 
 .declension-header {
@@ -30,7 +30,7 @@
 }
 
 .declension-body {
-    padding: 1%;
+    padding: 1px;
     border: 1px solid black;
 }
 

@@ -6,6 +6,7 @@
 .mat-tab-panel {
     display: flex;
     flex-flow: column;
+    align-items: center;
 }
 
 .mat-tab {
