@@ -74,7 +74,7 @@
                         </div>
                     </material-dropdown-select>
                 </div>
-                <div>
+                <div *ngIf="wordCat != ''">
                     Subcategory: <material-dropdown-select *ngIf="wordCat != ''" [buttonText]="getSubcat()" slide="y">
                         <div *ngFor="let sc of subcategories">
                             <material-select-item class="dropdown-thing" (trigger)="wordSubcat = sc">
@@ -84,7 +84,9 @@
                         </div>
                     </material-dropdown-select>
                 </div>
-                    <span *ngIf="wordCat == ''">__</span>
+                <div *ngIf="wordCat == ''">
+                        Subcategory: __
+                </div>
                 <div>
                     <material-input label="Example use: "
                                     floatingLabel style="width:40%"
