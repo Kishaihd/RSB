@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b30632c7-62c8-41e2-80b3-19c967f95773" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/langstudbud-export_List&lt;Word&gt;.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/lib/views/vocab_view/vocab_view.html" afterPath="$PROJECT_DIR$/lib/views/vocab_view/vocab_view.html" />
+      <change beforePath="$PROJECT_DIR$/lib/views/language_view/language_view.css" afterPath="$PROJECT_DIR$/lib/views/language_view/language_view.css" />
+      <change beforePath="$PROJECT_DIR$/lib/views/vocab_view/vocab_view.css" afterPath="$PROJECT_DIR$/lib/views/vocab_view/vocab_view.css" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,21 +20,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="word.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/models/word.dart">
+      <file leaf-file-name="vocab_view.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/views/vocab_view/vocab_view.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="810">
-              <caret line="54" column="18" lean-forward="false" selection-start-line="54" selection-start-column="18" selection-end-line="54" selection-end-column="18" />
+            <state relative-caret-position="98">
+              <caret line="215" column="70" lean-forward="true" selection-start-line="215" selection-start-column="70" selection-end-line="215" selection-end-column="70" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vocab_view.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/views/vocab_view/vocab_view.html">
+      <file leaf-file-name="vocab_view.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/views/vocab_view/vocab_view.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="71" column="37" lean-forward="true" selection-start-line="71" selection-start-column="37" selection-end-line="71" selection-end-column="37" />
+            <state relative-caret-position="150">
+              <caret line="166" column="29" lean-forward="true" selection-start-line="166" selection-start-column="29" selection-end-line="166" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -85,11 +82,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="language_view.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="language_view.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/views/language_view/language_view.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="1" lean-forward="false" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+            <state relative-caret-position="210">
+              <caret line="14" column="21" lean-forward="true" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -190,10 +187,10 @@
         <option value="$PROJECT_DIR$/lib/views/adjective_view/adjective_view.dart" />
         <option value="$PROJECT_DIR$/lib/views/adjective_view/adjective_view.html" />
         <option value="$PROJECT_DIR$/lib/views/vocab_view/vocab_view.dart" />
-        <option value="$PROJECT_DIR$/lib/views/vocab_view/vocab_view.css" />
         <option value="$PROJECT_DIR$/lib/views/adjective_view/adjective_view.css" />
-        <option value="$PROJECT_DIR$/lib/views/language_view/language_view.css" />
         <option value="$PROJECT_DIR$/lib/views/vocab_view/vocab_view.html" />
+        <option value="$PROJECT_DIR$/lib/views/vocab_view/vocab_view.css" />
+        <option value="$PROJECT_DIR$/lib/views/language_view/language_view.css" />
       </list>
     </option>
   </component>
@@ -409,12 +406,12 @@
       <workItem from="1515088311510" duration="11880000" />
       <workItem from="1515185406801" duration="21520000" />
       <workItem from="1515211756045" duration="2099000" />
-      <workItem from="1515214203719" duration="1658000" />
+      <workItem from="1515214203719" duration="3554000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="288894000" />
+    <option name="totallyTimeSpent" value="290790000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -664,13 +661,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/vocab_view/vocab_view.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="176" column="0" lean-forward="true" selection-start-line="176" selection-start-column="0" selection-end-line="176" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/src/dart_toast/dart_toast.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -696,10 +686,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/language_view/language_view.css">
+    <entry file="file://$PROJECT_DIR$/lib/views/adjective_view/adjective_view.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="1" lean-forward="false" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+        <state relative-caret-position="90">
+          <caret line="6" column="7" lean-forward="false" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
           <folding />
         </state>
       </provider>
@@ -712,18 +702,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/adjective_view/adjective_view.html">
+    <entry file="file://$PROJECT_DIR$/lib/views/vocab_view/vocab_view.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="7" lean-forward="false" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+        <state relative-caret-position="98">
+          <caret line="215" column="70" lean-forward="true" selection-start-line="215" selection-start-column="70" selection-end-line="215" selection-end-column="70" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/vocab_view/vocab_view.html">
+    <entry file="file://$PROJECT_DIR$/lib/views/vocab_view/vocab_view.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="71" column="37" lean-forward="true" selection-start-line="71" selection-start-column="37" selection-end-line="71" selection-end-column="37" />
+        <state relative-caret-position="150">
+          <caret line="166" column="29" lean-forward="true" selection-start-line="166" selection-start-column="29" selection-end-line="166" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/language_view/language_view.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="21" lean-forward="true" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
           <folding />
         </state>
       </provider>
